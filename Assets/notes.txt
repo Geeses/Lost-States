@@ -1,0 +1,26 @@
+Map:
+	-Bestehend aus Matrix
+	-Matrix aus Feldern
+	-Feld kann einen Spieler beherbergen ODER nicht überquerbar sein
+	-Feld kann sich in einer bestimmten Zone befinden
+		-neutrale, sichere, gefährliche Zone
+	-muss beim betreten von nem Spieler die eigene Eventliste auslösen
+		-Eventliste kann subscribed werden für zusätzliche Ereignisse (Manipulationen)
+		
+	(maybe Tilemap + Tiles?)
+
+Player:
+	- kann am Zug sein
+	- Muss eine Bewegungskarte spielen
+		-muss sich solange bewegen bis die Bewegungskarte aufgebraucht ist
+	(wie sehen andere die Karte die der Spieler spielt?)
+		-> jeder hat ein untersuchbares Interface, wo alles abgelagert ist
+		-> wenn eine Bewegungskarte gespielt wurde, flashed kurz die Zahl in der Farbe neben der
+		   figur auf
+
+
+
+Cards:
+	MovementCards
+	ChestCards
+	EventCards
