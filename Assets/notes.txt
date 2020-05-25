@@ -6,8 +6,12 @@ Map:
 		-neutrale, sichere, gefährliche Zone
 	-muss beim betreten von nem Spieler die eigene Eventliste auslösen
 		-Eventliste kann subscribed werden für zusätzliche Ereignisse (Manipulationen)
-		
-	(maybe Tilemap + Tiles?)
+	
+
+	-Felder einer Zone sollten einfach lesbar sein	
+	-Süden (-Y) Norden (Y) für no confusion
+	-Events der Felder müssen dynamisch je nach Ereignisskarte beeinflussbar sein ...	
+	- evlt doch pathfinding integrieren ... wegen ZehnFelderTrick Karte .... und Chronos
 
 Player:
 	- kann am Zug sein

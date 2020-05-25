@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 1988663504460967192, guid: e1342f1bfcb47c5499cc8f19588c6432,
         type: 3}
       propertyPath: m_Name
-      value: SafeZoneTile
+      value: SafeZoneTile Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3878886433086386715, guid: e1342f1bfcb47c5499cc8f19588c6432,
         type: 3}
@@ -70,17 +70,22 @@ PrefabInstance:
     - target: {fileID: 4132425287491864328, guid: e1342f1bfcb47c5499cc8f19588c6432,
         type: 3}
       propertyPath: m_Color.r
-      value: 0.5764706
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4132425287491864328, guid: e1342f1bfcb47c5499cc8f19588c6432,
         type: 3}
       propertyPath: m_Color.g
-      value: 0.46274513
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4132425287491864328, guid: e1342f1bfcb47c5499cc8f19588c6432,
         type: 3}
       propertyPath: m_Color.b
-      value: 0.28627452
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4132425287491864328, guid: e1342f1bfcb47c5499cc8f19588c6432,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7d71085ec27570b4db26df295c5c8651, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1342f1bfcb47c5499cc8f19588c6432, type: 3}
