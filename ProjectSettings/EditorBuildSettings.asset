@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_Imports/Photon/PhotonUnityNetworking/Demos/DemoSlotRacer/SlotCar-Scene.unity
-    guid: 711b38c07f2cf904f81b3422c67f1825
+    path: Assets/_Imports/Photon/PhotonUnityNetworking/Demos/PunCockpit/PunCockpit-Scene.unity
+    guid: 9d6d60c803e244e51ba945a84b88757d
   m_configObjects: {}

@@ -1,7 +1,45 @@
+Lobbystuff:
+	-Play
+		-> Liste mit allen Lobbies
+			
+			-Lobby hat:
+			LobbyName PlayerName Playercount Ping
+	-Exit
+
+
+--------------------------------------------
+
 Map:
 	-Bestehend aus Matrix
 	-Matrix aus Feldern
-	-Feld kann einen Spieler beherbergen ODER nicht überquerbar sein
+	-3 Arten von Felder, jeweils eine Art für jede Zone (Safe, Neutral, Danger)
+		-> jeweils ein eigenes Prefab
+
+	Felder werden sehr oft verwandelt (durch Karten oder Manipulationen)
+	daher sollte eine "verwandlung" sehr einfach sein
+
+	UND, da es eine million "Arten" gibt (vor allen Manipulationen) sollten diese vielleicht nicht statisch definiert sein
+	aber geht das?
+	Muss ja, wegen dem Sprite
+	Generell muss das Feld:
+	-eigenes Sprite besitzen
+	-Funktion OnStep() besitzen (schreit nach Interface, also jeweils eine Klasse ...)
+	-es muss ja irgendwie für jedes Feld eine eigene Funktionalität definiert sein, also muss ja eine eigene Klasse existieren
+		-Ober
+
+	sowas wie 
+
+	field.fieldType = new 
+
+
+
+	Generell brauchen wir kein Eventsystem, da ein Feld immer nur ein "Typ" sein kann,
+	jedoch müssen wir hier das System so offen wie möglich halten ... Was wenn wir das doch so haben wollen? (hidden Manipulationen)
+
+
+
+
+
 	-Feld kann sich in einer bestimmten Zone befinden
 		-neutrale, sichere, gefährliche Zone
 	-muss beim betreten von nem Spieler die eigene Eventliste auslösen
