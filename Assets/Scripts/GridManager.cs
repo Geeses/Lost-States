@@ -12,13 +12,14 @@ public class GridManager : MonoBehaviour
     void Awake()
     {
         Grid grid = gameObject.GetComponentInParent(typeof(Grid)) as Grid;
-        float cellSize = grid.cellSize.x;
+        float cellSizeX = grid.cellSize.x;
+        float cellSizeZ = grid.cellSize.z;
 
-        tileArray = CreateTileArray(cellSize);
+        tileArray = CreateTileArray(cellSizeX, cellSizeZ);
     }
 
 
-    GameObject[,] CreateTileArray(float cellSize_)
+    GameObject[,] CreateTileArray(float cellSizeX_, float cellSizeZ_)
     {
         // initialize min and max values for x and z dimensions, setting them by comparing to transforms of children
         float xmin = Mathf.Infinity;
@@ -52,8 +53,8 @@ public class GridManager : MonoBehaviour
         }
 
         // calculate rows in x and z dimension
-        float xrows = (Mathf.Abs(xmin - xmax) / cellSize_) + 1;
-        float zrows = (Mathf.Abs(zmin - zmax) / cellSize_) + 1;
+        float xrows = (Mathf.Abs(xmin - xmax) / cellSizeX_) + 1;
+        float zrows = (Mathf.Abs(zmin - zmax) / cellSizeZ_) + 1;
 
 
         GameObject [,] array = new GameObject[(int)xrows, (int)zrows];
@@ -67,7 +68,7 @@ public class GridManager : MonoBehaviour
         {
             for (int x = 0; x <= (int)xrows; x++) 
             {
-                Vector3 checkvector = new Vector3(xmin + (x * cellSize_), 0f, zmax - (z * cellSize_));
+                Vector3 checkvector = new Vector3(xmin + (x * cellSizeX_), 0f, zmax - (z * cellSizeZ_));
 
                 foreach (GameObject child in children)
                 {
