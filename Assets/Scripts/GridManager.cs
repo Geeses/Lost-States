@@ -12,7 +12,8 @@ public class GridManager : MonoBehaviour
     void Awake()
     {
         Grid grid = gameObject.GetComponentInParent(typeof(Grid)) as Grid;
-        float cellSize = grid.cellSize.x;
+        float cellSizeX = grid.cellSize.x;
+        float cellSizeZ = grid.cellSize.y;
 
         tileArray = CreateTileArray(cellSize);
     }
