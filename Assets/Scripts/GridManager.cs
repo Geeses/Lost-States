@@ -6,9 +6,19 @@ public class GridManager : MonoBehaviour
 {
     [SerializeField]
     private List<GameObject> children;
-    public GameObject [,] tilearray;
+
+    public GameObject [,] tileArray;
 
     void Awake()
+    {
+        Grid grid = gameObject.GetComponentInParent(typeof(Grid)) as Grid;
+        float cellSize = grid.cellSize.x;
+
+        tileArray = CreateTileArray(cellSize);
+    }
+
+
+    GameObject[,] CreateTileArray(float cellSize_)
     {
         // initialize min and max values for x and z dimensions, setting them by comparing to transforms of children
         float xmin = Mathf.Infinity;
@@ -42,16 +52,11 @@ public class GridManager : MonoBehaviour
         }
 
         // calculate rows in x and z dimension
-        float xrows = Mathf.Abs(xmin - xmax) + 1;
-        float zrows = Mathf.Abs(zmin - zmax) + 1;
+        float xrows = (Mathf.Abs(xmin - xmax) / cellSize_) + 1;
+        float zrows = (Mathf.Abs(zmin - zmax) / cellSize_) + 1;
 
-        // check if row-vars are decimals, if so an exception is thrown as no valid array can be created
-        if(xrows % 1 != 0 || zrows % 1 != 0)
-        {
-            throw new System.Exception("Cannot create a valid Array! (Distances between tiles cannot be decimal)");
-        }
 
-        tilearray = new GameObject[(int)xrows, (int)zrows];
+        GameObject [,] array = new GameObject[(int)xrows, (int)zrows];
 
         /* put every element from the GameObject List from above in the right spot of the array by taking
            the top left most tile of all tiles (the one that would be if its not a rectangle) as starting
@@ -62,17 +67,17 @@ public class GridManager : MonoBehaviour
         {
             for (int x = 0; x <= (int)xrows; x++) 
             {
-                Vector3 checkvector = new Vector3(xmin + x, 0f, zmax - z);
+                Vector3 checkvector = new Vector3(xmin + (x * cellSize_), 0f, zmax - (z * cellSize_));
 
                 foreach (GameObject child in children)
                 {
                     if(child.transform.position == checkvector)
                     {
-                        if (tilearray[x,z] != null)
+                        if (array[x,z] != null)
                         {  
                             throw new System.Exception(string.Format("Position {0} in the grid has multiple assigned tiles! (It may only have one per cell)", checkvector));
                         }
-                        tilearray[x,z] = child;
+                        array[x,z] = child;
                     } 
                 }
             }          
@@ -83,15 +88,18 @@ public class GridManager : MonoBehaviour
         {
             for (int j = 0; j < xrows; j++)
             {
-                if(tilearray[j,i] == null)
+                if(array[j,i] == null)
                 {
                     print(j.ToString() + "||" + i.ToString() + " " + "null");
                 }
                 else
                 {
-                    print(j.ToString() + "||" + i.ToString() + " " + tilearray[j,i].transform.position.ToString());
+                    print(j.ToString() + "||" + i.ToString() + " " + array[j,i].transform.position.ToString("F2"));
                 }
             }
         }
+
+        return array;
+
     }
 }
