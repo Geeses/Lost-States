@@ -4,15 +4,15 @@ using UnityEngine.UIElements;
 public class BattleLogFactory : MonoBehaviour
 {
     [SerializeField]
-    VisualTreeAsset m_ListEntryTemplate;
+    VisualTreeAsset listEntryTemplate;
 
     void OnEnable()
     {
         var uiDocument = GetComponent<UIDocument>();
 
         var listController = new BattleLogListController();
-        listController.InitializeList(uiDocument.rootVisualElement, m_ListEntryTemplate);
+        listController.InitializeList(uiDocument.rootVisualElement, listEntryTemplate);
         var logger = LogData.shared;
-        logger.setBattleLogListDependency(listController);
+        logger.SetBattleLogListDependency(listController);
     }
 }

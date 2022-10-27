@@ -6,7 +6,7 @@ public sealed class LogData {
     public List<string> logList = new List<string>();
 
     // Lock Object for thread safety
-    private static readonly object Instancelock = new object();
+    private static readonly object instanceLock = new object();
     private static LogData instance = null;
     
 
@@ -19,7 +19,7 @@ public sealed class LogData {
     public static LogData shared {
         get {
                 if (instance == null) {
-                    lock (Instancelock) {
+                    lock (instanceLock) {
                         if (instance == null) {
                             instance = new LogData();
                             Debug.Log("Instance of LogData created");
@@ -30,7 +30,7 @@ public sealed class LogData {
         }
     }
 
-    public void setBattleLogListDependency(BattleLogListController battlelogList) {
+    public void SetBattleLogListDependency(BattleLogListController battlelogList) {
         _battlelogList = battlelogList;
         Debug.Log("Dependency of BattleLogList created");
     }
