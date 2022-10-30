@@ -11,12 +11,18 @@ public class CameraController : MonoBehaviour
 
     [Header("Options")]
     public float panSpeed = 1f;
+    public Vector2 panningZone = new Vector2(5, 18);
     public CursorLockMode cursorMode = CursorLockMode.Confined;
     public float minZoomValue = 0.5f;
+    public float maxZoomValue = 1.5f;
     public float zoomSpeed = 1f;
+    public float fieldOfView = 70;
 
+    private float zoomValue = 70f;
     private Vector2 _mousePositionScreenRelative;
     private Vector2 _mousePosition;
+
+    private const int UnityScrollValue = 120;
 
     [SerializeField] private List<Selectable> _selectedObjects = new List<Selectable>();
 
@@ -25,33 +31,47 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
+        Camera.main.fieldOfView = fieldOfView;
         Cursor.lockState = cursorMode;
         InputManager.Instance.PlayerInputActions.Player.Select.performed += Select;
         InputManager.Instance.PlayerInputActions.Player.Look.performed += UpdateMousePosition;
+        InputManager.Instance.PlayerInputActions.Player.Zoom.performed += Zoom;
     }
 
-    private void UpdateMousePosition(InputAction.CallbackContext obj)
+    private void Zoom(InputAction.CallbackContext ctx)
     {
-        MousePosition = obj.ReadValue<Vector2>();
+        float value = ctx.ReadValue<Vector2>().y;
+
+        if ((value < 0 && fieldOfView * maxZoomValue > zoomValue) || (value > 0 && fieldOfView * minZoomValue < zoomValue))
+        {
+            // unity ready for each wheel scroll +120 for up or -120 for down so we normalize it
+            zoomValue -= value / (UnityScrollValue * zoomSpeed);
+            Camera.main.fieldOfView = zoomValue;
+        }
+    }
+
+    private void UpdateMousePosition(InputAction.CallbackContext ctx)
+    {
+        MousePosition = ctx.ReadValue<Vector2>();
         MousePositionScreenRelative = new Vector2(MousePosition.x / Screen.width, MousePosition.y / Screen.height);
     }
 
     private void FixedUpdate()
     {
-        if(MousePositionScreenRelative.x >= 0.95f)
+        if(MousePositionScreenRelative.x >= 0.95f && Camera.main.transform.position.x <= panningZone.x)
         {
             PanCamera(Vector2.right);
         }
-        else if (MousePositionScreenRelative.x <= 0.05f)
+        if (MousePositionScreenRelative.x <= 0.05f && Camera.main.transform.position.x >= -panningZone.x)
         {
             PanCamera(Vector2.left);
         }
 
-        if(MousePositionScreenRelative.y >= 0.95f)
+        if(MousePositionScreenRelative.y >= 0.95f && Camera.main.transform.position.y <= panningZone.y)
         {
             PanCamera(Vector2.up);
         }
-        else if (MousePositionScreenRelative.y <= 0.05f)
+        if (MousePositionScreenRelative.y <= 0.05f && Camera.main.transform.position.y >= -panningZone.y)
         {
             PanCamera(Vector2.down);
         }
