@@ -1,0 +1,60 @@
+#char-bar {
+    background-color: rgb(236, 224, 195);
+    translate: 0 0;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    scale: 1 1;
+    position: absolute;
+    left: 91%;
+    top: 25%;
+    right: 0;
+    bottom: 0;
+    width: 39%;
+    height: 13%;
+    max-height: 13%;
+    border-left-width: 3px;
+    border-right-width: 0;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+    border-left-color: rgb(144, 133, 101);
+    border-right-color: rgb(144, 133, 101);
+    border-top-color: rgb(144, 133, 101);
+    border-bottom-color: rgb(144, 133, 101);
+    min-height: 13%;
+    background-image: url('project://database/Assets/Sprites/UI/UIEnemyInterfaceBG.png?fileID=2800000&guid=96bb217f78aa8eb458e0417f3d6b6ecd&type=3#UIEnemyInterfaceBG');
+}
+
+#char-bar:hover {
+    transition-property: translate;
+    transition-duration: 0.5s;
+    translate: -73% 0;
+}
+
+#char-fig {
+    width: 17%;
+    background-color: rgba(127, 127, 127, 0);
+    height: 150%;
+    left: 4px;
+    top: -9px;
+    right: 0;
+    bottom: 0;
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+#char-cards {
+    background-color: rgba(56, 56, 56, 0);
+    top: -7%;
+    width: 26px;
+    height: 140%;
+    border-right-width: 0;
+    border-left-color: rgba(0, 0, 0, 0.59);
+    border-right-color: rgba(0, 0, 0, 0.59);
+    border-top-color: rgba(0, 0, 0, 0.59);
+    border-bottom-color: rgba(0, 0, 0, 0.59);
+    left: 1%;
+}
