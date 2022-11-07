@@ -18,9 +18,10 @@ public class CameraController : MonoBehaviour
     public float zoomSpeed = 1f;
     public float fieldOfView = 70;
 
-    private float zoomValue = 70f;
+    private float _zoomValue;
     private Vector2 _mousePositionScreenRelative;
     private Vector2 _mousePosition;
+    private Camera cam;
 
     private const int UnityScrollValue = 120;
 
@@ -28,10 +29,12 @@ public class CameraController : MonoBehaviour
 
     public Vector2 MousePositionScreenRelative { get => _mousePositionScreenRelative; set => _mousePositionScreenRelative = value; }
     public Vector2 MousePosition { get => _mousePosition; set => _mousePosition = value; }
+    public Camera Camera { get => cam; set => cam = value; }
 
     void Start()
     {
-        Camera.main.fieldOfView = fieldOfView;
+        cam = GetComponent<Camera>();
+        cam.fieldOfView = fieldOfView;
         Cursor.lockState = cursorMode;
         InputManager.Instance.PlayerInputActions.Player.Select.performed += Select;
         InputManager.Instance.PlayerInputActions.Player.Look.performed += UpdateMousePosition;
@@ -42,11 +45,11 @@ public class CameraController : MonoBehaviour
     {
         float value = ctx.ReadValue<Vector2>().y;
 
-        if ((value < 0 && fieldOfView * maxZoomValue > zoomValue) || (value > 0 && fieldOfView * minZoomValue < zoomValue))
+        if ((value < 0 && fieldOfView * maxZoomValue > _zoomValue) || (value > 0 && fieldOfView * minZoomValue < _zoomValue))
         {
             // unity ready for each wheel scroll +120 for up or -120 for down so we normalize it
-            zoomValue -= value / (UnityScrollValue * zoomSpeed);
-            Camera.main.fieldOfView = zoomValue;
+            _zoomValue -= value / (UnityScrollValue * zoomSpeed);
+            cam.fieldOfView = _zoomValue;
         }
     }
 
@@ -58,20 +61,20 @@ public class CameraController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(MousePositionScreenRelative.x >= 0.95f && Camera.main.transform.position.x <= panningZone.x)
+        if(MousePositionScreenRelative.x >= 0.95f && cam.transform.position.x <= panningZone.x)
         {
             PanCamera(Vector2.right);
         }
-        if (MousePositionScreenRelative.x <= 0.05f && Camera.main.transform.position.x >= -panningZone.x)
+        if (MousePositionScreenRelative.x <= 0.05f && cam.transform.position.x >= -panningZone.x)
         {
             PanCamera(Vector2.left);
         }
 
-        if(MousePositionScreenRelative.y >= 0.95f && Camera.main.transform.position.y <= panningZone.y)
+        if(MousePositionScreenRelative.y >= 0.95f && cam.transform.position.y <= panningZone.y)
         {
             PanCamera(Vector2.up);
         }
-        if (MousePositionScreenRelative.y <= 0.05f && Camera.main.transform.position.y >= -panningZone.y)
+        if (MousePositionScreenRelative.y <= 0.05f && cam.transform.position.y >= -panningZone.y)
         {
             PanCamera(Vector2.down);
         }
@@ -85,7 +88,7 @@ public class CameraController : MonoBehaviour
 
     private void Select(InputAction.CallbackContext context)
     {
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(new Vector3(MousePosition.x, MousePosition.y, -Camera.main.transform.position.z)), Vector2.zero);
+        RaycastHit2D hit = Physics2D.Raycast(cam.ScreenToWorldPoint(new Vector3(MousePosition.x, MousePosition.y, -cam.transform.position.z)), Vector2.zero);
 
         if (hit.collider != null)
         {
