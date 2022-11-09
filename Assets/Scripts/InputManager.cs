@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputManager : MonoBehaviour
+public class InputManager : NetworkBehaviour
 {
     private PlayerInput _playerInput;
     private PlayerInputActions _playerInputActions;
@@ -64,6 +65,10 @@ public class InputManager : MonoBehaviour
             {
                 Selectable selectable = objectHit.GetComponent<Selectable>();
 
+                // if we dont own the player, we cant select it
+                if (!selectable.IsOwner && objectHit.CompareTag("Player"))
+                    return;
+
                 if (!selectable.Selected)
                 {
                     selectable.Select();
@@ -85,15 +90,18 @@ public class InputManager : MonoBehaviour
 
         if (hit.collider != null)
         {
-            Transform objectHit = hit.transform;
+            Selectable objectHit = hit.transform.GetComponent<Selectable>();
 
             if (objectHit.CompareTag("Selectable"))
             {
-                if(_selectedObject != null)
+                if (_selectedObject != null)
                 {
                     if (_selectedObject.CompareTag("Player"))
                     {
-                        _selectedObject.GetComponent<Player>().Move(objectHit.GetComponent<Selectable>());
+                        // get cellposition from tilemap, convert it to GridCoordinates and move client to the grid position
+                        Vector3Int cellPosition = GridManager.Instance.Tilemap.LocalToCell(objectHit.transform.position);
+                        GridCoordinates coordinates = new GridCoordinates(cellPosition.x, cellPosition.y);
+                        _selectedObject.GetComponent<Player>().MoveServerRpc(coordinates);
                     }
                 }
             }
