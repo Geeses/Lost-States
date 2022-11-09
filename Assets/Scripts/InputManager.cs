@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,10 @@ public class InputManager : MonoBehaviour
     private PlayerInput _playerInput;
     private PlayerInputActions _playerInputActions;
     private static InputManager s_instance;
+    private Camera _cam;
+    private CameraController _cameraController;
+
+    [SerializeField] private Selectable _selectedObject;
 
     public static InputManager Instance { get { return s_instance; } }
     public PlayerInput PlayerInput { get => _playerInput; set => _playerInput = value; }
@@ -30,5 +35,68 @@ public class InputManager : MonoBehaviour
 
         PlayerInputActions = new PlayerInputActions();
         PlayerInputActions.Player.Enable();
+    }
+
+    private void Start()
+    {
+        _cam = Camera.main;
+        _cameraController = _cam.GetComponent<CameraController>();
+
+        PlayerInputActions.Player.Select.performed += Select;
+        PlayerInputActions.Player.Move.performed += Move;
+    }
+
+    private void OnDisable()
+    {
+        PlayerInputActions.Player.Select.performed -= Select;
+        PlayerInputActions.Player.Move.performed -= Move;
+    }
+
+    private void Select(InputAction.CallbackContext context)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(_cam.ScreenToWorldPoint(new Vector3(_cameraController.MousePosition.x, _cameraController.MousePosition.y, -_cam.transform.position.z)), Vector2.zero);
+
+        if (hit.collider != null)
+        {
+            Transform objectHit = hit.transform;
+
+            if (objectHit.CompareTag("Selectable") || objectHit.CompareTag("Player"))
+            {
+                Selectable selectable = objectHit.GetComponent<Selectable>();
+
+                if (!selectable.Selected)
+                {
+                    selectable.Select();
+
+                    if (_selectedObject != null)
+                    {
+                        _selectedObject.Unselect();
+                    }
+
+                    _selectedObject = selectable;
+                }               
+            }
+        }
+    }
+
+    private void Move(InputAction.CallbackContext obj)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(_cam.ScreenToWorldPoint(new Vector3(_cameraController.MousePosition.x, _cameraController.MousePosition.y, -_cam.transform.position.z)), Vector2.zero);
+
+        if (hit.collider != null)
+        {
+            Transform objectHit = hit.transform;
+
+            if (objectHit.CompareTag("Selectable"))
+            {
+                if(_selectedObject != null)
+                {
+                    if (_selectedObject.CompareTag("Player"))
+                    {
+                        _selectedObject.GetComponent<Player>().Move(objectHit.GetComponent<Selectable>());
+                    }
+                }
+            }
+        }
     }
 }
