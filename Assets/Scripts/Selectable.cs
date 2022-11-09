@@ -14,16 +14,23 @@ public class Selectable : MonoBehaviour
 
     public virtual void Select()
     {
-        Debug.Log(gameObject.name + " selected.");
         _spriteRenderer.material.color = Color.red;
         selected = true;
     }
 
     public virtual void Unselect()
     {
-        Debug.Log(gameObject.name + " unselected.");
         _spriteRenderer.material.color = Color.white;
         selected = false;
     }
 
+    public virtual void Highlight()
+    {
+        _spriteRenderer.material.color = Color.green;
+    }
+
+    public virtual void Unhighlight()
+    {
+        _spriteRenderer.material.color = Color.white;
+    }
 }

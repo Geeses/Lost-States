@@ -25,7 +25,6 @@ public class CameraController : MonoBehaviour
 
     private const int UnityScrollValue = 120;
 
-    [SerializeField] private List<Selectable> _selectedObjects = new List<Selectable>();
 
     public Vector2 MousePositionScreenRelative { get => _mousePositionScreenRelative; set => _mousePositionScreenRelative = value; }
     public Vector2 MousePosition { get => _mousePosition; set => _mousePosition = value; }
@@ -36,9 +35,36 @@ public class CameraController : MonoBehaviour
         cam = GetComponent<Camera>();
         cam.fieldOfView = fieldOfView;
         Cursor.lockState = cursorMode;
-        InputManager.Instance.PlayerInputActions.Player.Select.performed += Select;
+        _zoomValue = fieldOfView;
+
         InputManager.Instance.PlayerInputActions.Player.Look.performed += UpdateMousePosition;
         InputManager.Instance.PlayerInputActions.Player.Zoom.performed += Zoom;
+    }
+
+    private void FixedUpdate()
+    {
+        if (MousePositionScreenRelative.x >= 0.95f && cam.transform.position.x <= panningZone.x)
+        {
+            PanCamera(Vector2.right);
+        }
+        if (MousePositionScreenRelative.x <= 0.05f && cam.transform.position.x >= -panningZone.x)
+        {
+            PanCamera(Vector2.left);
+        }
+
+        if (MousePositionScreenRelative.y >= 0.95f && cam.transform.position.y <= panningZone.y)
+        {
+            PanCamera(Vector2.up);
+        }
+        if (MousePositionScreenRelative.y <= 0.05f && cam.transform.position.y >= -panningZone.y)
+        {
+            PanCamera(Vector2.down);
+        }
+    }
+
+    private void OnDisable()
+    {
+        InputManager.Instance.PlayerInputActions.Player.Look.performed -= UpdateMousePosition;
     }
 
     private void Zoom(InputAction.CallbackContext ctx)
@@ -57,72 +83,6 @@ public class CameraController : MonoBehaviour
     {
         MousePosition = ctx.ReadValue<Vector2>();
         MousePositionScreenRelative = new Vector2(MousePosition.x / Screen.width, MousePosition.y / Screen.height);
-    }
-
-    private void FixedUpdate()
-    {
-        if(MousePositionScreenRelative.x >= 0.95f && cam.transform.position.x <= panningZone.x)
-        {
-            PanCamera(Vector2.right);
-        }
-        if (MousePositionScreenRelative.x <= 0.05f && cam.transform.position.x >= -panningZone.x)
-        {
-            PanCamera(Vector2.left);
-        }
-
-        if(MousePositionScreenRelative.y >= 0.95f && cam.transform.position.y <= panningZone.y)
-        {
-            PanCamera(Vector2.up);
-        }
-        if (MousePositionScreenRelative.y <= 0.05f && cam.transform.position.y >= -panningZone.y)
-        {
-            PanCamera(Vector2.down);
-        }
-    }
-
-    private void OnDisable()
-    {
-        InputManager.Instance.PlayerInputActions.Player.Select.performed -= Select;
-        InputManager.Instance.PlayerInputActions.Player.Look.performed -= UpdateMousePosition;
-    }
-
-    private void Select(InputAction.CallbackContext context)
-    {
-        RaycastHit2D hit = Physics2D.Raycast(cam.ScreenToWorldPoint(new Vector3(MousePosition.x, MousePosition.y, -cam.transform.position.z)), Vector2.zero);
-
-        if (hit.collider != null)
-        {
-            Transform objectHit = hit.transform;
-
-            if (objectHit.tag == "Selectable")
-            {
-                Selectable selectable = objectHit.GetComponent<Selectable>();
-
-                if (!selectable.Selected)
-                {
-                    foreach (var unit in _selectedObjects)
-                    {
-                        unit.Unselect();
-                    }
-
-                    _selectedObjects.Clear();
-                    _selectedObjects.Add(selectable);
-                    selectable.Select();
-                }
-            }
-            else
-            {
-                if (_selectedObjects.Count > 0)
-                {
-                    foreach (var selectable in _selectedObjects)
-                    {
-                        selectable.Unselect();
-                    }
-
-                    _selectedObjects.Clear();
-                }
-            }
-        }
     }
 
     private void PanCamera(Vector2 direction)
