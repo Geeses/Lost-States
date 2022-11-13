@@ -52,4 +52,14 @@ public class GridManager : MonoBehaviour
         }
 
     }
+
+    public void HighlightAdjacentTiles(Tile tile)
+    {
+
+    }
+
+    public void UnhighlightAdjacentTiles(Tile tile)
+    {
+
+    }
 }
