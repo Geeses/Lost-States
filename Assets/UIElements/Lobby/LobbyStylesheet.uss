@@ -1,14 +1,18 @@
-.button {
-    -unity-font-style: bold;
-    color: rgba(0, 0, 0, 255);
-    position: relative;
-    right: -26%;
-}
-
 .button:hover {
-    background-color: rgba(255, 255, 255, 255);
+    background-color: rgb(255, 255, 255);
 }
 
 .button:active {
-    background-color: rgba(156, 217, 181, 255);
+    background-color: rgb(156, 217, 181);
+}
+
+.button {
+    -unity-font-style: bold;
+    color: rgb(0, 0, 0);
+    position: relative;
+    right: auto;
+    left: -326px;
+    width: 10%;
+    height: 5%;
+    flex-direction: column;
 }
