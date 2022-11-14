@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UIElements/Lobby/LobbyStylesheet.uss?fileID=7433441132597879392&amp;guid=3599bfcd6db72ef49a916700db40c34a&amp;type=3#LobbyStylesheet" />
+    <ui:GroupBox name="Box" style="height: 90%; width: 99%; justify-content: flex-start; align-items: flex-end; flex-direction: row; flex-wrap: nowrap; left: 0; bottom: -48px; top: 4%; background-color: rgb(82, 53, 53);">
+        <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" style="top: 2%; right: 0; left: 43%; position: absolute; width: 20%;" />
+        <ui:Button tabindex="-1" text="Button" display-tooltip-when-elided="true" name="Button" class="button" style="flex-direction: column; left: auto;" />
+        <ui:Button tabindex="-1" text="Exit" display-tooltip-when-elided="true" name="ExitButton" style="top: 1%; right: 1%; width: 5%; height: 5%; position: absolute; font-size: 11%;" />
+        <ui:ListView focusable="true" style="width: 80%; height: 70%; left: 11%; position: absolute; top: 14%;" />
+        <ui:Button tabindex="-1" text="Button" display-tooltip-when-elided="true" name="Button" class="button" style="flex-direction: column; left: auto;" />
+        <ui:Button tabindex="-1" text="Button" display-tooltip-when-elided="true" name="Button" class="button" style="flex-direction: column; left: auto; white-space: nowrap; -unity-text-align: upper-left;" />
+    </ui:GroupBox>
+</ui:UXML>
