@@ -1,9 +1,9 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UIElements/Lobby/LobbyStylesheet.uss?fileID=7433441132597879392&amp;guid=3599bfcd6db72ef49a916700db40c34a&amp;type=3#LobbyStylesheet" />
     <ui:GroupBox name="Box" style="height: 101%; width: 100%; justify-content: flex-start; align-items: flex-end; flex-direction: row; flex-wrap: nowrap; left: -4px; bottom: auto; top: -8px; background-color: rgb(108, 64, 64); right: auto;">
-        <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" style="top: 2%; right: 0; left: 45%; position: absolute; width: 20%;" />
-        <ui:Button tabindex="-1" text="Exit" display-tooltip-when-elided="true" name="ExitButton" style="top: 1%; right: 1%; width: 5%; height: 5%; position: absolute; font-size: 11%;" />
-        <ui:ListView focusable="true" style="width: 80%; height: 70%; left: 16%; position: relative; top: -18%;" />
+        <ui:Label tabindex="-1" text="Lobby" display-tooltip-when-elided="true" style="top: 2%; right: 0; left: 45%; position: absolute; width: 7%; -unity-font-style: bold; font-size: 20px;" />
+        <ui:Button tabindex="-1" text="Exit" display-tooltip-when-elided="true" name="ExitButton" class="exitButton" style="top: -93%; right: -94%; width: 5%; height: 5%; position: relative; font-size: 11%;" />
+        <ui:ListView focusable="true" style="width: 80%; height: 70%; left: 16%; position: relative; top: -18%; border-left-color: rgba(22, 19, 19, 255); border-right-color: rgba(22, 19, 19, 255); border-top-color: rgba(22, 19, 19, 255); border-bottom-color: rgba(22, 19, 19, 255); border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px;" />
         <ui:Button tabindex="-1" text="Create" display-tooltip-when-elided="true" class="button" style="justify-content: flex-start; right: auto;" />
         <ui:Button tabindex="-1" text="Joyn" display-tooltip-when-elided="true" class="button" style="right: auto;" />
         <ui:Button tabindex="-1" text="Refresh" display-tooltip-when-elided="true" class="button" style="right: auto;" />

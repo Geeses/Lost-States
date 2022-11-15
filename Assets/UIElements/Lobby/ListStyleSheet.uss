@@ -1,0 +1,18 @@
+.label:hover {
+    background-color: rgba(255, 255, 255, 255);
+}
+
+.label {
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-left-color: rgba(0, 0, 0, 255);
+    border-right-color: rgba(0, 0, 0, 255);
+    border-top-color: rgba(0, 0, 0, 255);
+    border-bottom-color: rgba(0, 0, 0, 255);
+    font-size: 18px;
+    -unity-text-align: upper-left;
+    -unity-text-outline-width: 0;
+    background-color: rgba(142, 104, 104, 255);
+}
