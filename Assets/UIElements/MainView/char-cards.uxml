@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:GroupBox name="char-cards" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-top: 0; padding-bottom: 0; flex-direction: column-reverse; justify-content: flex-start; padding-right: 0;">
+        <ui:Label tabindex="-1" text="0" display-tooltip-when-elided="true" name="ressource-count" style="color: rgb(0, 0, 0); -unity-text-align: lower-center; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
+    </ui:GroupBox>
+</ui:UXML>
