@@ -10,6 +10,9 @@ public class MainView : MonoBehaviour
     public Button settingsButton;
     public VisualElement charFigures;
     public GroupBox charBarGroup;
+
+    [SerializeField]
+    VisualTreeAsset listEntryTemplate;
     public void Start()
     {
         // Each editor window contains a root VisualElement object
