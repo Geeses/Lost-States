@@ -6,23 +6,23 @@ using System.Linq;
 
 public class BattleLogListController {
 
-    VisualTreeAsset listEntryTemplate;
+    VisualTreeAsset _listEntryTemplate;
     ListView battlelogList;
-    Label bog;
+    Label log;
     private List<string> _logList;
     private LogData _logger;
 
     public void InitializeList(VisualElement root, VisualTreeAsset listElementTemplate) {
-        listEntryTemplate = listElementTemplate;
+        _listEntryTemplate = listElementTemplate;
 
         _logger = LogData.shared;
         _logList = _logger.logList;
 
         battlelogList = root.Q<ListView>("battlelog-list");
-        bog = root.Q<Label>("battlelog-cell");
+        log = root.Q<Label>("battlelog-cell");
         
         battlelogList.makeItem = () => {
-            var newListEntry = listEntryTemplate.Instantiate();
+            var newListEntry = _listEntryTemplate.Instantiate();
             var newListEntryLogic = new BattlelogCellController();
             newListEntry.userData = newListEntryLogic;
             newListEntryLogic.SetVisualElement(newListEntry);
