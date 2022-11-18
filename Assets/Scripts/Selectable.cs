@@ -7,11 +7,15 @@ public class Selectable : NetworkBehaviour, INetworkSerializable
 {
     protected bool selected;
 
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-    [SerializeField] private Collider2D _collider;
+    [SerializeField] protected SpriteRenderer _spriteRenderer;
+    [SerializeField] protected Collider2D _collider;
 
     public bool Selected { get => selected; protected set => selected = value; }
 
+    public virtual void Start()
+    {
+
+    }
 
     public virtual void Select()
     {

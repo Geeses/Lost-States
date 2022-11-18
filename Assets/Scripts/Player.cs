@@ -6,6 +6,18 @@ using Unity.Netcode;
 
 public class Player : Selectable
 {
+    public ulong clientId;
+
+    public override void Start()
+    {
+        base.Start();
+
+        if(!IsOwner)
+        {
+            _collider.enabled = false;
+        }
+    }
+
     [ServerRpc]
     public void MoveServerRpc(GridCoordinates coordinates)
     {        

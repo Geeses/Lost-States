@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3507176089168773052}
   - component: {fileID: 3507176089168773051}
   - component: {fileID: 3507176089168773050}
+  - component: {fileID: 1965864450}
   m_Layer: 0
   m_Name: InputManager
   m_TagString: Untagged
@@ -31,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3507176089168773051
 MonoBehaviour:
@@ -114,6 +115,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 18c7b06a-14b3-44f6-8e99-10359078b841
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7af845b7-15a8-4659-abcf-d3f27ea12c4a
+    m_ActionName: Player/Move[/Mouse/rightButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -131,3 +136,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 373d6ce1ab3aabe4a8c7c0121cce60ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _selectedObject: {fileID: 0}
+--- !u!114 &1965864450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3507176089168773053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
