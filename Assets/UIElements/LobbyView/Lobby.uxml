@@ -1,26 +1,13 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UIElements/LobbyView/Lobby.uss?fileID=7433441132597879392&amp;guid=f846ca0e00d71a04da7010667a24094e&amp;type=3#Lobby" />
-    <ui:VisualElement name="screen">
-        <ui:ListView focusable="true" name="lobby-list" />
-        <ui:VisualElement name="buttons" style="flex-direction: row; justify-content: center;">
-            <ui:Button tabindex="-1" text="Create" display-tooltip-when-elided="true" name="create-button" style="background-color: rgb(245, 245, 245);" />
+    <ui:VisualElement name="screen" style="flex-direction: column; justify-content: space-between; width: 100%; height: 100%;">
+        <ui:VisualElement name="top" style="width: 100%; top: 0;">
+            <ui:ListView focusable="true" name="lobby-list" />
         </ui:VisualElement>
-        <ui:VisualElement name="ready-cards" style="flex-direction: row; height: 100px; justify-content: center; background-color: rgb(152, 152, 152); padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; display: none; width: 100%; left: 0; top: 0; position: absolute;">
-            <ui:VisualElement class="player-cards" style="align-items: center;">
-                <ui:Label tabindex="-1" text="Player1" display-tooltip-when-elided="true" />
-                <ui:Toggle />
-            </ui:VisualElement>
-            <ui:VisualElement class="player-cards" style="align-items: center;">
-                <ui:Label tabindex="-1" text="Player2" display-tooltip-when-elided="true" />
-                <ui:Toggle />
-            </ui:VisualElement>
-            <ui:VisualElement class="player-cards" style="align-items: center;">
-                <ui:Label tabindex="-1" text="Player3" display-tooltip-when-elided="true" />
-                <ui:Toggle />
-            </ui:VisualElement>
-            <ui:VisualElement class="player-cards" style="align-items: center;">
-                <ui:Label tabindex="-1" text="Player4" display-tooltip-when-elided="true" />
-                <ui:Toggle />
+        <ui:VisualElement name="bottom" style="width: 100%; align-items: center; flex-direction: column-reverse;">
+            <ui:Label tabindex="-1" text="Create a new Lobby" display-tooltip-when-elided="true" name="player-info" />
+            <ui:VisualElement name="buttons" style="flex-direction: row; justify-content: center;">
+                <ui:Button tabindex="-1" text="Create" display-tooltip-when-elided="true" name="create-button" style="background-color: rgb(245, 245, 245);" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
