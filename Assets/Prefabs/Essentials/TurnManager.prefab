@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1457115577865565667}
-  - component: {fileID: 317678279}
-  - component: {fileID: 317678278}
+  - component: {fileID: 2085355186865935184}
+  - component: {fileID: 2105352661833660149}
   m_Layer: 0
   m_Name: TurnManager
   m_TagString: Untagged
@@ -31,9 +31,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &317678279
+--- !u!114 &2085355186865935184
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,7 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5416ade4369ab474ca4a585c4968ffd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &317678278
+  playerIdText: {fileID: 0}
+  currentTurnPlayerIdText: {fileID: 0}
+--- !u!114 &2105352661833660149
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

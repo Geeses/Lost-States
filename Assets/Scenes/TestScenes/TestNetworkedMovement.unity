@@ -590,17 +590,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &317678279 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 317678279, guid: 990c8a6187a3e25479ee56b9dbcb2ba0, type: 3}
-  m_PrefabInstance: {fileID: 1457115577569122086}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5416ade4369ab474ca4a585c4968ffd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &391639487
 GameObject:
   m_ObjectHideFlags: 0
@@ -1520,6 +1509,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1116157372 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2085355186865935184, guid: 990c8a6187a3e25479ee56b9dbcb2ba0, type: 3}
+  m_PrefabInstance: {fileID: 1457115577569122086}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5416ade4369ab474ca4a585c4968ffd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1410697520
 GameObject:
   m_ObjectHideFlags: 0
@@ -2215,7 +2215,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 317678279}
+      - m_Target: {fileID: 1116157372}
         m_TargetAssemblyTypeName: TurnManager, Assembly-CSharp
         m_MethodName: EndTurn
         m_Mode: 1
@@ -2405,7 +2405,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 317678278, guid: 990c8a6187a3e25479ee56b9dbcb2ba0, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 2914693044
+      value: 1110897585
       objectReference: {fileID: 0}
     - target: {fileID: 317678279, guid: 990c8a6187a3e25479ee56b9dbcb2ba0, type: 3}
       propertyPath: playerId
@@ -2471,7 +2471,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 2085355186865935184, guid: 990c8a6187a3e25479ee56b9dbcb2ba0, type: 3}
+      propertyPath: playerIdText
+      value: 
+      objectReference: {fileID: 1608115847}
+    - target: {fileID: 2085355186865935184, guid: 990c8a6187a3e25479ee56b9dbcb2ba0, type: 3}
+      propertyPath: currentTurnPlayerIdText
+      value: 
+      objectReference: {fileID: 92585602}
+    - target: {fileID: 2105352661833660149, guid: 990c8a6187a3e25479ee56b9dbcb2ba0, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3655494105
+      objectReference: {fileID: 0}
+    - target: {fileID: 5114297622130620467, guid: 990c8a6187a3e25479ee56b9dbcb2ba0, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1817879107
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 317678278, guid: 990c8a6187a3e25479ee56b9dbcb2ba0, type: 3}
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 990c8a6187a3e25479ee56b9dbcb2ba0, type: 3}
 --- !u!1001 &3507176089202766199
@@ -2484,7 +2501,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1965864450, guid: c67d44b898cc25246a2c563747fc2bd9, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 2487990848
+      value: 4060034592
+      objectReference: {fileID: 0}
+    - target: {fileID: 29249431611702565, guid: c67d44b898cc25246a2c563747fc2bd9, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2535659822
       objectReference: {fileID: 0}
     - target: {fileID: 3507176089168773052, guid: c67d44b898cc25246a2c563747fc2bd9, type: 3}
       propertyPath: m_RootOrder
@@ -2553,6 +2574,18 @@ PrefabInstance:
       propertyPath: LogLevel
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4133366637260916483, guid: b50cec6df116f274195c46d6ffe66988, type: 3}
+      propertyPath: NetworkConfig.PlayerPrefab
+      value: 
+      objectReference: {fileID: 3667005215213547534, guid: 82f3c7760168a1a42b5cedf1b0274dcf, type: 3}
+    - target: {fileID: 4133366637260916483, guid: b50cec6df116f274195c46d6ffe66988, type: 3}
+      propertyPath: NetworkConfig.NetworkPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4133366637260916483, guid: b50cec6df116f274195c46d6ffe66988, type: 3}
+      propertyPath: NetworkConfig.NetworkPrefabs.Array.data[0].Prefab
+      value: 
+      objectReference: {fileID: 3667005215213547534, guid: 82f3c7760168a1a42b5cedf1b0274dcf, type: 3}
     - target: {fileID: 5935124967399663275, guid: b50cec6df116f274195c46d6ffe66988, type: 3}
       propertyPath: m_RootOrder
       value: 2
