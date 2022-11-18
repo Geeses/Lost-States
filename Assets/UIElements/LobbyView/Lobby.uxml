@@ -1,24 +1,9 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UIElements/LobbyView/Lobby.uss?fileID=7433441132597879392&amp;guid=f846ca0e00d71a04da7010667a24094e&amp;type=3#Lobby" />
     <ui:VisualElement name="screen">
-        <ui:VisualElement name="waiting-cards" style="flex-direction: row; height: 100px; justify-content: center; background-color: rgb(152, 152, 152); padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px;">
-            <ui:VisualElement class="player-cards">
-                <ui:Label tabindex="-1" text="Waiting..." display-tooltip-when-elided="true" />
-            </ui:VisualElement>
-            <ui:VisualElement class="player-cards">
-                <ui:Label tabindex="-1" text="Waiting..." display-tooltip-when-elided="true" />
-            </ui:VisualElement>
-            <ui:VisualElement class="player-cards">
-                <ui:Label tabindex="-1" text="Waiting..." display-tooltip-when-elided="true" />
-            </ui:VisualElement>
-            <ui:VisualElement class="player-cards">
-                <ui:Label tabindex="-1" text="Waiting..." display-tooltip-when-elided="true" />
-            </ui:VisualElement>
-        </ui:VisualElement>
+        <ui:ListView focusable="true" name="lobby-list" />
         <ui:VisualElement name="buttons" style="flex-direction: row; justify-content: center;">
-            <ui:Button tabindex="-1" text="Leave" display-tooltip-when-elided="true" name="leave-button" style="background-color: rgb(212, 31, 24);" />
-            <ui:Button tabindex="-1" text="Ready" display-tooltip-when-elided="true" name="ready-button" style="background-color: rgb(16, 109, 28);" />
-            <ui:Button tabindex="-1" text="Start" display-tooltip-when-elided="true" name="start-button" style="background-color: rgb(245, 245, 245);" />
+            <ui:Button tabindex="-1" text="Create" display-tooltip-when-elided="true" name="create-button" style="background-color: rgb(245, 245, 245);" />
         </ui:VisualElement>
         <ui:VisualElement name="ready-cards" style="flex-direction: row; height: 100px; justify-content: center; background-color: rgb(152, 152, 152); padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; display: none; width: 100%; left: 0; top: 0; position: absolute;">
             <ui:VisualElement class="player-cards" style="align-items: center;">

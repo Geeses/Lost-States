@@ -4,27 +4,25 @@ using UnityEngine.UIElements;
 
 public class Lobby : EditorWindow
 {
-    [SerializeField]
-    private VisualTreeAsset m_VisualTreeAsset = default;
-
-    [MenuItem("Window/UI Toolkit/Lobby")]
-    public static void ShowExample()
+    VisualTreeAsset _listEntryTemplate;
+    ListView lobbyList;
+    public void InitializeList(VisualElement root, VisualTreeAsset listElementTemplate)
     {
-        Lobby wnd = GetWindow<Lobby>();
-        wnd.titleContent = new GUIContent("Lobby");
-    }
+        _listEntryTemplate = listElementTemplate;
 
-    public void CreateGUI()
-    {
-        // Each editor window contains a root VisualElement object
-        VisualElement root = rootVisualElement;
+        lobbyList = root.Q<ListView>("lobby-list");
 
-        // VisualElements objects can contain other VisualElement following a tree hierarchy.
-        VisualElement label = new Label("Hello World! From C#");
-        root.Add(label);
+        lobbyList.makeItem = () =>
+        {
+            var newListEntry = _listEntryTemplate.Instantiate();
+            var newListEntryLogic = new LobbyCell();
+            newListEntry.userData = newListEntryLogic;
+            newListEntryLogic.SetCell(newListEntry);
+            return newListEntry;
+        };
 
-        // Instantiate UXML
-        VisualElement labelFromUXML = m_VisualTreeAsset.Instantiate();
-        root.Add(labelFromUXML);
+        lobbyList.bindItem = (item, index) => {
+            (item.userData as BattlelogCellController).SetLogData();
+        };
     }
 }
