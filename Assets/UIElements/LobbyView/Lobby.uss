@@ -1,0 +1,6 @@
+.player-cards {
+    background-color: rgba(63, 63, 63, 255);
+    width: 80px;
+    margin-left: 5px;
+    margin-right: 5px;
+}

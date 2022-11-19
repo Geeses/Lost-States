@@ -637,11 +637,11 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 2
-  cloudProjectId: 
+  cloudProjectId: d057d4ed-ec94-4c74-823f-d7a618cdf623
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: Lost States
+  organizationId: cdarocha
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 

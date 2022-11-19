@@ -1,0 +1,64 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="char-cards" src="project://database/Assets/UIElements/MainView/char-cards.uxml?fileID=9197481963319205126&amp;guid=8d163903b4f73a842bc60b5442a20d7a&amp;type=3#char-cards" />
+    <Style src="project://database/Assets/UIElements/MainView/MainView.uss?fileID=7433441132597879392&amp;guid=9267c834f4ad1f54e8dc9ed6291a80fb&amp;type=3#MainView" />
+    <ui:VisualElement name="Screen" style="width: 100%; height: 100%; flex-direction: row; justify-content: space-between;">
+        <ui:VisualElement name="Left" style="align-items: flex-start; justify-content: space-between; flex-direction: column; width: 50%;">
+            <ui:GroupBox name="turn-counter" style="width: 10%; height: 60%; background-image: url(&apos;project://database/Assets/Art/UI/UITurnCounter.png?fileID=2800000&amp;guid=7d78389a8c4045840976e806d7c21202&amp;type=3#UITurnCounter&apos;); min-width: 60px; max-width: 100px;" />
+            <ui:VisualElement name="Center" style="width: 100%;">
+                <ui:Button tabindex="-1" name="battlelog-button" class="button" style="background-image: url(&apos;project://database/Assets/Art/UI/UIButtonBattlelog.png?fileID=2800000&amp;guid=f37859f5b90de584d83bc4e98aa1c9b2&amp;type=3#UIButtonBattlelog&apos;);" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Bottom" style="width: 100%; height: 15%; align-items: stretch; justify-content: flex-start; flex-direction: row;">
+                <ui:VisualElement name="character" style="background-image: url(&apos;project://database/Assets/Art/UI/UIPlayerInterfaceBG.png?fileID=2800000&amp;guid=d2cb23fead292864aae3c5726441b916&amp;type=3#UIPlayerInterfaceBG&apos;); padding-left: 2.5%; padding-right: 4%; padding-top: 2.5%; padding-bottom: 2.5%; width: 20%; height: 100%;">
+                    <ui:VisualElement name="image" style="background-image: url(&apos;project://database/Assets/Art/UI/UIIconPlayer04.png?fileID=2800000&amp;guid=43429500f97eb9a4db57d649aecf66fd&amp;type=3#UIIconPlayer04&apos;); width: 86%; height: 100%;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Right" style="justify-content: space-between; align-items: flex-end; flex-direction: column; width: 50%;">
+            <ui:GroupBox name="buttons-bar" style="flex-direction: row-reverse; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-top: 0; padding-bottom: 0; align-items: flex-start; justify-content: flex-start; width: 100%;">
+                <ui:Button tabindex="-1" display-tooltip-when-elided="true" name="shop-button" class="button" style="background-color: rgb(181, 173, 154); background-image: url(&apos;project://database/Assets/Art/UI/UIButtonShop.png?fileID=2800000&amp;guid=e728f1ee6a05fa5448e3208b44e6e7b6&amp;type=3#UIButtonShop&apos;);" />
+                <ui:Button tabindex="-1" display-tooltip-when-elided="true" name="settings-button" focusable="false" class="button" style="background-image: url(&apos;project://database/Assets/Art/UI/UIButtonOptions.png?fileID=2800000&amp;guid=23fd8bde407bb884b89a12e64e23a0d1&amp;type=3#UIButtonOptions&apos;);" />
+            </ui:GroupBox>
+            <ui:GroupBox name="char-bar-group" style="flex-wrap: nowrap; flex-direction: column; align-items: flex-start; justify-content: space-between; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; height: 30%; flex-grow: 0; flex-shrink: 0; width: 70%; min-width: 448px; min-height: 216px;">
+                <ui:GroupBox name="char-bar" style="flex-direction: row-reverse;">
+                    <ui:VisualElement class="char-card-box" style="flex-direction: row-reverse;">
+                        <ui:Instance template="char-cards" name="char-cards" />
+                        <ui:Instance template="char-cards" name="char-cards" />
+                        <ui:Instance template="char-cards" name="char-cards" />
+                        <ui:Instance template="char-cards" name="char-cards" />
+                        <ui:Instance template="char-cards" name="char-cards" />
+                        <ui:Instance template="char-cards" name="char-cards" />
+                        <ui:Instance template="char-cards" name="char-cards" />
+                    </ui:VisualElement>
+                    <ui:GroupBox name="char-fig" style="background-image: url(&apos;project://database/Assets/Art/UI/UIIconPlayer01.png?fileID=2800000&amp;guid=57487ecffe27b2649851d988d96f8223&amp;type=3#UIIconPlayer01&apos;); -unity-slice-left: 0;" />
+                </ui:GroupBox>
+                <ui:GroupBox name="char-bar" style="flex-direction: row;">
+                    <ui:GroupBox name="char-fig" style="background-image: url(&apos;project://database/Assets/Art/UI/UIIconPlayer02.png?fileID=2800000&amp;guid=d296b53c78fb5e74a9f1f5127002f6e7&amp;type=3#UIIconPlayer02&apos;);" />
+                    <ui:VisualElement class="char-card-box">
+                        <ui:Instance template="char-cards" name="char-cards" />
+                        <ui:Instance template="char-cards" name="char-cards" />
+                        <ui:Instance template="char-cards" name="char-cards" />
+                        <ui:Instance template="char-cards" name="char-cards" />
+                        <ui:Instance template="char-cards" name="char-cards" />
+                        <ui:Instance template="char-cards" name="char-cards" />
+                        <ui:Instance template="char-cards" name="char-cards" />
+                    </ui:VisualElement>
+                </ui:GroupBox>
+                <ui:GroupBox name="char-bar" style="background-color: rgb(255, 255, 233); flex-direction: row;">
+                    <ui:GroupBox name="char-fig" style="background-image: url(&apos;project://database/Assets/Art/UI/UIIconPlayer03.png?fileID=2800000&amp;guid=c6797f2ea626fc448932d1cab719f948&amp;type=3#UIIconPlayer03&apos;);" />
+                    <ui:VisualElement class="char-card-box">
+                        <ui:Instance template="char-cards" name="char-cards" />
+                        <ui:Instance template="char-cards" name="char-cards" />
+                        <ui:Instance template="char-cards" name="char-cards" />
+                        <ui:Instance template="char-cards" name="char-cards" />
+                        <ui:Instance template="char-cards" name="char-cards" />
+                        <ui:Instance template="char-cards" name="char-cards" />
+                        <ui:Instance template="char-cards" name="char-cards" />
+                    </ui:VisualElement>
+                </ui:GroupBox>
+            </ui:GroupBox>
+            <ui:VisualElement name="Bottom" style="flex-direction: row-reverse; justify-content: flex-start; align-items: flex-end; width: 100%;">
+                <ui:Button tabindex="-1" display-tooltip-when-elided="true" name="alert-button" class="button" style="background-image: url(&apos;project://database/Assets/Art/UI/UIButtonGoals.png?fileID=2800000&amp;guid=40e7d177dc4fb9541872d592ae69c992&amp;type=3#UIButtonGoals&apos;); flex-direction: row-reverse; align-items: flex-end; justify-content: space-between; flex-shrink: 1;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
