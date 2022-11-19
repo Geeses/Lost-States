@@ -12,6 +12,7 @@ public class NetworkManagerUI : MonoBehaviour
     [SerializeField] private TMPro.TMP_Text moveCountText;
     [SerializeField] private TMPro.TMP_Text playerId;
     [SerializeField] private TMPro.TMP_Text currentTurnPlayerId;
+    [SerializeField] private TMPro.TMP_Text currentTurnPlayerMoves;
 
     private void Awake()
     {

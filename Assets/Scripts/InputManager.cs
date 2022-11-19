@@ -65,23 +65,14 @@ public class InputManager : NetworkBehaviour
             {
                 Selectable selectable = objectHit.GetComponent<Selectable>();
 
-                /*
-                // if we dont own the player, we cant select it
-                if (!selectable.IsOwner && objectHit.CompareTag("Player"))
-                    return;
-                */
+                selectable.Select();
 
-                if (!selectable.Selected)
+                if (_selectedObject != null && _selectedObject != selectable)
                 {
-                    selectable.Select();
+                    _selectedObject.Unselect();
+                }
 
-                    if (_selectedObject != null)
-                    {
-                        _selectedObject.Unselect();
-                    }
-
-                    _selectedObject = selectable;
-                }               
+                _selectedObject = selectable;
             }
         }
     }

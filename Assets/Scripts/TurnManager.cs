@@ -11,6 +11,7 @@ public class TurnManager : NetworkBehaviour
     private List<ulong> _connectedPlayersId = new List<ulong>();
     private Queue<ulong> _playerTurnQueueId = new Queue<ulong>();
     private ulong _currentTurnPlayerId;
+    private Player currentTurnPlayer;
     private static TurnManager s_instance;
     private List<NetworkClient> _connectedClients = new List<NetworkClient>();
 
@@ -36,9 +37,9 @@ public class TurnManager : NetworkBehaviour
     private IEnumerator Start()
     {
         _currentTurnPlayerId = 99;
-        // wait until we have every player connected
         NetworkManager.OnClientConnectedCallback += AddClient;
 
+        // wait until we have every player connected
         yield return new WaitUntil(() => _connectedPlayersId.Count == 2);
 
         StartGame();
@@ -53,8 +54,9 @@ public class TurnManager : NetworkBehaviour
     private void AddClient(ulong clientId)
     {
         _connectedClients.Add(NetworkManager.ConnectedClients[clientId]);
-        Player player = NetworkManager.ConnectedClients[clientId].PlayerObject.GetComponent<Player>();
-        player.clientId = clientId;
+        currentTurnPlayer = NetworkManager.ConnectedClients[clientId].PlayerObject.GetComponent<Player>();
+        currentTurnPlayer.clientId = clientId;
+        currentTurnPlayer.moveCount = 5;
         _connectedPlayersId.Add(clientId);
     }
 
@@ -82,8 +84,10 @@ public class TurnManager : NetworkBehaviour
     // simple wrapper function to enable a ServerRpc through a button
     public void EndTurn()
     {
-        if(_currentTurnPlayerId == NetworkManager.LocalClientId)
+        if (_currentTurnPlayerId == NetworkManager.LocalClientId && currentTurnPlayer.moveCount == 0)
+        {
             EndTurnServerRpc(NetworkManager.LocalClientId);
+        }
     }
 
     // only a client can end a turn, so we need to share this information with the server, and the server needs to inform all the other clients about this aswell

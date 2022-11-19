@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class Selectable : NetworkBehaviour, INetworkSerializable
 {
-    protected bool selected;
+    [Header("Debugging")]
+    [SerializeField] protected bool selected;
 
     [SerializeField] protected SpriteRenderer _spriteRenderer;
     [SerializeField] protected Collider2D _collider;
