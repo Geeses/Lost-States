@@ -97,7 +97,7 @@ public class InputManager : NetworkBehaviour
                             // get cellposition from tilemap, convert it to GridCoordinates and move client to the grid position
                             Vector3Int cellPosition = GridManager.Instance.Tilemap.LocalToCell(objectHit.transform.position);
                             GridCoordinates coordinates = new GridCoordinates(cellPosition.x, cellPosition.y);
-                            _selectedObject.GetComponent<Player>().MoveServerRpc(coordinates);
+                            _selectedObject.GetComponent<Player>().TryMoveServerRpc(coordinates);
                         }
                     }
                 }

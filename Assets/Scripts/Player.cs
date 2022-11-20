@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using Unity.Netcode;
+using System;
 
 public class Player : Selectable
 {
@@ -20,6 +21,8 @@ public class Player : Selectable
             _collider.enabled = false;
         }
 
+        clientId = NetworkManager.LocalClientId;
+        moveCount = 5;
         _currentTile = GridManager.Instance.TileGrid[new GridCoordinates(0,0)];
     }
 
@@ -44,9 +47,23 @@ public class Player : Selectable
     }
 
     [ServerRpc]
+    public void TryMoveServerRpc(GridCoordinates coordinates)
+    {
+        Tile tile = GridManager.Instance.TileGrid[coordinates];
+
+        // if tile is adjacent
+        if(Array.Find(GridManager.Instance.GetAdjacentTiles(tile), x => x.TileGridCoordinates.x == _currentTile.TileGridCoordinates.x && x.TileGridCoordinates.y == _currentTile.TileGridCoordinates.y)
+            && moveCount > 0)
+        {
+            MoveServerRpc(coordinates);
+        }
+    }
+
+    [ServerRpc]
     public void MoveServerRpc(GridCoordinates coordinates)
     {
         _currentTile = GridManager.Instance.TileGrid[coordinates];
+        moveCount -= 1;
 
         Vector3 cellWorldPosition = GridManager.Instance.Tilemap.CellToWorld(new Vector3Int(coordinates.x, coordinates.y, 0));
         cellWorldPosition += GridManager.Instance.Tilemap.cellSize / 2;

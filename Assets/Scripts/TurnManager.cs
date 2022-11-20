@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
@@ -11,15 +12,15 @@ public class TurnManager : NetworkBehaviour
     private List<ulong> _connectedPlayersId = new List<ulong>();
     private Queue<ulong> _playerTurnQueueId = new Queue<ulong>();
     private ulong _currentTurnPlayerId;
-    private Player currentTurnPlayer;
+    private Player _currentTurnPlayer;
+    private Player _localPlayer;
     private static TurnManager s_instance;
-    private List<NetworkClient> _connectedClients = new List<NetworkClient>();
 
     public static TurnManager Instance { get { return s_instance; } }
 
-    public List<ulong> ConnectedPlayersId { get => _connectedPlayersId; }
-    public Queue<ulong> PlayerTurnQueueId { get => _playerTurnQueueId; }
-    public ulong CurrentTurnPlayerId { get => _currentTurnPlayerId;}
+    public List<ulong> ConnectedPlayersId { get => _connectedPlayersId; private set => _connectedPlayersId = value; }
+    public Queue<ulong> PlayerTurnQueueId { get => _playerTurnQueueId; private set => _playerTurnQueueId = value; }
+    public ulong CurrentTurnPlayerId { get => _currentTurnPlayerId; private set => _currentTurnPlayerId = value; }
 
     private void Awake()
     {
@@ -34,30 +35,59 @@ public class TurnManager : NetworkBehaviour
         }
     }
 
-    private IEnumerator Start()
+    private void Start()
     {
-        _currentTurnPlayerId = 99;
-        NetworkManager.OnClientConnectedCallback += AddClient;
+        NetworkManager.OnServerStarted += () => StartCoroutine(WaitForLobbyJoined());
+    }
+
+    private IEnumerator WaitForLobbyJoined()
+    {
+        // Server updates list of all incoming players
+        if (IsServer)
+        {
+            AddClient(NetworkManager.LocalClientId);
+            NetworkManager.OnClientConnectedCallback += AddClient;
+        }
 
         // wait until we have every player connected
-        yield return new WaitUntil(() => _connectedPlayersId.Count == 2);
+        yield return new WaitUntil(() => ConnectedPlayersId.Count == 2);
 
+        StartGameClientRpc();
+    }
+
+    [ClientRpc]
+    private void StartGameClientRpc()
+    {
+        // After everyone connected, we share the list of players with everyone else
+        if (IsServer)
+        {
+            List<ulong> tmp = new List<ulong>(ConnectedPlayersId);
+            foreach (var player in tmp)
+            {
+                SynchronizeLobbyDataClientRpc(player);
+            }
+        }
+
+        Debug.Log(NetworkManager.LocalClient);
+        _localPlayer = NetworkManager.LocalClient.PlayerObject.GetComponent<Player>();
+        _currentTurnPlayer = NetworkManager.ConnectedClients[0].PlayerObject.GetComponent<Player>();
         StartGame();
+    }
+
+    [ClientRpc]
+    private void SynchronizeLobbyDataClientRpc(ulong playerId)
+    {
+        ConnectedPlayersId.Add(playerId);
     }
 
     public override void OnDestroy()
     {
         base.OnDestroy();
-        NetworkManager.OnClientConnectedCallback -= AddClient;
     }
 
     private void AddClient(ulong clientId)
     {
-        _connectedClients.Add(NetworkManager.ConnectedClients[clientId]);
-        currentTurnPlayer = NetworkManager.ConnectedClients[clientId].PlayerObject.GetComponent<Player>();
-        currentTurnPlayer.clientId = clientId;
-        currentTurnPlayer.moveCount = 5;
-        _connectedPlayersId.Add(clientId);
+        ConnectedPlayersId.Add(clientId);
     }
 
     private void StartGame()
@@ -65,9 +95,9 @@ public class TurnManager : NetworkBehaviour
         if (IsServer)
         {
             // put every player into the queue
-            _connectedPlayersId.ForEach(o => _playerTurnQueueId.Enqueue(o));
+            ConnectedPlayersId.ForEach(o => PlayerTurnQueueId.Enqueue(o));
             // first player in queue is current player
-            StartTurnClientRpc(_playerTurnQueueId.Peek());
+            StartTurnClientRpc(PlayerTurnQueueId.Peek());
         }
     }
 
@@ -76,7 +106,7 @@ public class TurnManager : NetworkBehaviour
     [ClientRpc]
     public void StartTurnClientRpc(ulong playerId)
     {
-        _currentTurnPlayerId = playerId;
+        CurrentTurnPlayerId = playerId;
         currentTurnPlayerIdText.text = "Player " + playerId + "´s turn.";
         playerIdText.text = "PlayerId: " + NetworkManager.LocalClientId;
     }
@@ -84,7 +114,7 @@ public class TurnManager : NetworkBehaviour
     // simple wrapper function to enable a ServerRpc through a button
     public void EndTurn()
     {
-        if (_currentTurnPlayerId == NetworkManager.LocalClientId && currentTurnPlayer.moveCount == 0)
+        if (CurrentTurnPlayerId == NetworkManager.LocalClientId && _localPlayer.moveCount == 0)
         {
             EndTurnServerRpc(NetworkManager.LocalClientId);
         }
@@ -94,9 +124,10 @@ public class TurnManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void EndTurnServerRpc(ulong playerId)
     {
-        _playerTurnQueueId.Enqueue(playerId);
-        _playerTurnQueueId.Dequeue();
-        _currentTurnPlayerId = _playerTurnQueueId.Peek();
-        StartTurnClientRpc(_currentTurnPlayerId);
+        PlayerTurnQueueId.Enqueue(playerId);
+        PlayerTurnQueueId.Dequeue();
+        CurrentTurnPlayerId = PlayerTurnQueueId.Peek();
+        _currentTurnPlayer = NetworkManager.ConnectedClients[playerId].PlayerObject.GetComponent<Player>();
+        StartTurnClientRpc(CurrentTurnPlayerId);
     }
 }

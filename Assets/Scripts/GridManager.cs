@@ -81,7 +81,7 @@ public class GridManager : MonoBehaviour
             else
             {
                 Debug.LogError("Non Tile-Object in Tilemap.", tileTransform);
-            }            
+            }         
         }
     }
 

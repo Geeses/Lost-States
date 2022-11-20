@@ -8,8 +8,10 @@ public class Tile : Selectable
     public bool passable;
 
     private GridCoordinates _tileGridCoordinates;
+    private bool _movementAllowed;
 
     public GridCoordinates TileGridCoordinates { get => _tileGridCoordinates; set => _tileGridCoordinates = value; }
+    public bool MovementAllowed { get => _movementAllowed; set => _movementAllowed = value; }
 
     public override void Highlight()
     {
