@@ -637,11 +637,11 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 2
-  cloudProjectId: 
+  cloudProjectId: b38727e8-9e26-4ea9-9101-1c1fbd00a0cb
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: Lost States (2)
+  organizationId: geesus
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 

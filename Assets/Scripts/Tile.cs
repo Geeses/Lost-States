@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,8 +11,15 @@ public class Tile : Selectable
     private GridCoordinates _tileGridCoordinates;
     private bool _movementAllowed;
 
+    public event Action<Player> OnStepOnTile;
+
     public GridCoordinates TileGridCoordinates { get => _tileGridCoordinates; set => _tileGridCoordinates = value; }
     public bool MovementAllowed { get => _movementAllowed; set => _movementAllowed = value; }
+
+    public void PlayerStepOnTile(Player player)
+    {
+        OnStepOnTile?.Invoke(player);
+    }
 
     public override void Highlight()
     {
