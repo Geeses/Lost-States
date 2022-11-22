@@ -8,10 +8,22 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 87261802558805893, guid: 575a289dcf2ac2c489a01b54b55926b1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 87261802558805893, guid: 575a289dcf2ac2c489a01b54b55926b1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 87261802558805893, guid: 575a289dcf2ac2c489a01b54b55926b1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1151956697635024506, guid: 575a289dcf2ac2c489a01b54b55926b1, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 3b6f8c4294f7ebf4bb9dc72c2b24c73e, type: 3}
+      objectReference: {fileID: 21300000, guid: b11492704b358e4448d6db40411a85fb, type: 3}
     - target: {fileID: 1464272121174549260, guid: 575a289dcf2ac2c489a01b54b55926b1, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
