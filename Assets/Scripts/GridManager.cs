@@ -26,13 +26,20 @@ public struct GridCoordinates : INetworkSerializable
 
 public class GridManager : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private Tilemap _tilemap;
+
+    [Header("Options")]
+    public Vector3 gridCenterWorldPosition;
+
+    private Dictionary<GridCoordinates, Tile> _tileGrid = new Dictionary<GridCoordinates, Tile>();
 
     private static GridManager s_instance;
 
     public static GridManager Instance { get { return s_instance; } }
 
-    public Tilemap Tilemap { get => _tilemap; set => _tilemap = value; }
+    public Tilemap Tilemap { get => _tilemap;}
+    public Dictionary<GridCoordinates, Tile> TileGrid { get => _tileGrid;}
 
     private void Awake()
     {
@@ -51,5 +58,42 @@ public class GridManager : MonoBehaviour
             _tilemap = GetComponentInChildren<Tilemap>();
         }
 
+    }
+
+    private void Start()
+    {
+        InitializeGrid();
+    }
+
+    private void InitializeGrid()
+    {
+        foreach (Transform tileTransform in Tilemap.transform)
+        {
+            Vector3Int tileGridPos = Tilemap.WorldToCell(tileTransform.position);
+            GridCoordinates coords = new GridCoordinates(tileGridPos.x, tileGridPos.y);
+            Tile tile = tileTransform.GetComponent<Tile>();
+
+            if(tile != null)
+            {
+                tile.TileGridCoordinates = coords;
+                _tileGrid.Add(coords, tile);
+            }
+            else
+            {
+                Debug.LogError("Non Tile-Object in Tilemap.", tileTransform);
+            }         
+        }
+    }
+
+    public Tile[] GetAdjacentTiles(Tile tile)
+    {
+        Tile[] adjacentTiles = new Tile[4];
+
+        adjacentTiles[0] = TileGrid[new GridCoordinates(tile.TileGridCoordinates.x, tile.TileGridCoordinates.y + 1)];
+        adjacentTiles[1] = TileGrid[new GridCoordinates(tile.TileGridCoordinates.x + 1, tile.TileGridCoordinates.y)];
+        adjacentTiles[2] = TileGrid[new GridCoordinates(tile.TileGridCoordinates.x, tile.TileGridCoordinates.y - 1)];
+        adjacentTiles[3] = TileGrid[new GridCoordinates(tile.TileGridCoordinates.x - 1, tile.TileGridCoordinates.y)];
+
+        return adjacentTiles;
     }
 }
