@@ -77,3 +77,45 @@
     width: 86%;
     right: 0;
 }
+
+.cards {
+    height: 100px;
+    width: 50px;
+}
+
+.cards:active {
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: rgba(17, 0, 255, 255);
+    border-right-color: rgba(17, 0, 255, 255);
+    border-top-color: rgba(17, 0, 255, 255);
+    border-bottom-color: rgba(17, 0, 255, 255);
+}
+
+.cards:hover {
+    translate: 0 -20px;
+    transition-property: translate;
+    transition-duration: 0.2s;
+}
+
+.box-move-card {
+    width: 58px;
+}
+
+.box-move-card:hover {
+    width: 400px;
+    transition-property: width;
+    transition-duration: 0.5s;
+}
+
+.box-chest-card {
+    width: 45px;
+}
+
+.box-chest-card:hover {
+    width: 175px;
+    transition-property: width;
+    transition-duration: 0.5s;
+}
