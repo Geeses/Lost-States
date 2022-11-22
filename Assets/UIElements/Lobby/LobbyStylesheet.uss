@@ -12,7 +12,7 @@
     position: relative;
     right: auto;
     left: -326px;
-    width: 10%;
+    width: 25%;
     height: 5%;
     flex-direction: column;
 }
@@ -21,5 +21,5 @@
 }
 
 .exitButton:hover {
-    background-color: rgba(255, 255, 255, 255);
+    background-color: rgb(255, 255, 255);
 }

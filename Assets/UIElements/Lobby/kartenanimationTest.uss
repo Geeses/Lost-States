@@ -1,0 +1,83 @@
+.karte:hover {
+    translate: 0 -10px;
+    transition-duration: 0.5s;
+    transition-property: translate;
+    border-left-color: rgb(15, 0, 255);
+    border-right-color: rgb(15, 0, 255);
+    border-top-color: rgb(15, 0, 255);
+    border-bottom-color: rgb(15, 0, 255);
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+}
+
+.karte {
+    left: 0;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+}
+
+.BoxAnimation:hover {
+    width: 400px;
+    transition-property: width;
+    transition-duration: 0.5s;
+}
+
+.BoxAnimation {
+    width: 27px;
+}
+
+.groupTest {
+    width: 47px;
+}
+
+.groupTest:hover {
+    transition-property: width;
+    transition-duration: 0.5s;
+    width: 506px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+}
+
+.cardsTest:active {
+    border-left-color: rgb(255, 0, 0);
+    border-right-color: rgb(255, 0, 0);
+    border-top-color: rgb(255, 0, 0);
+    border-bottom-color: rgb(255, 0, 0);
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
+}
+
+.cardsTest {
+    left: 0;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: rgb(56, 56, 56);
+    border-right-color: rgb(56, 56, 56);
+    border-top-color: rgb(56, 56, 56);
+    border-bottom-color: rgb(56, 56, 56);
+    width: 54px;
+}
+
+.cardsTest:hover {
+    translate: 0 -20px;
+    transition-property: translate;
+    transition-duration: 0.25s;
+}

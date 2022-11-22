@@ -1,4 +1,5 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 <<<<<<<< HEAD:Assets/Scenes/TestScenes/TestLobby.unity.meta
 guid: 5ffa3ff21d467a142a65323291e3db15
 ========
@@ -6,7 +7,12 @@ guid: fa53498a2548290409c06a619d0fde6f
 folderAsset: yes
 >>>>>>>> UI-fixes:Assets/UIElements/LobbyView.meta
 DefaultImporter:
+=======
+guid: 6fabae207db9a964ca845e96f3a94665
+NativeFormatImporter:
+>>>>>>> 7dd7f7d924ea861e7f0aad47145833c4707bbe6f
   externalObjects: {}
+  mainObjectFileID: 11400000
   userData: 
   assetBundleName: 
   assetBundleVariant: 

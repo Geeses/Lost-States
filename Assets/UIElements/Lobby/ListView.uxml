@@ -1,8 +1,12 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UIElements/Lobby/ListStyleSheet.uss?fileID=7433441132597879392&amp;guid=33272d6324a749746bc06dfa363d1cfc&amp;type=3#ListStyleSheet" />
-    <ui:GroupBox style="width: 50%; height: 50%; left: 22%; top: 12%;">
-        <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="label" />
-        <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="label" />
-        <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="label" />
+    <ui:GroupBox style="width: 100%; height: 100%; align-items: stretch; justify-content: flex-start;">
+        <ui:GroupBox />
+        <ui:GroupBox />
+        <ui:GroupBox />
+        <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="label" style="flex-shrink: 1; flex-direction: row; justify-content: space-between; -unity-text-align: middle-left; width: 98%;">
+            <ui:GroupBox />
+            <ui:IntegerField value="4" />
+        </ui:Label>
     </ui:GroupBox>
 </ui:UXML>

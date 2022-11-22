@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class Selectable : MonoBehaviour
+public class Selectable : NetworkBehaviour, INetworkSerializable
 {
     protected bool selected;
 
@@ -32,5 +33,10 @@ public class Selectable : MonoBehaviour
     public virtual void Unhighlight()
     {
         _spriteRenderer.material.color = Color.white;
+    }
+
+    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+    {
+        
     }
 }

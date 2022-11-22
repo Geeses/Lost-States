@@ -1,7 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+
+// Coordinates in a grid
+// used as a small datapackage for networking
+public struct GridCoordinates : INetworkSerializable
+{
+    public int x;
+    public int y;
+
+    public GridCoordinates(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
+    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+    {
+        serializer.SerializeValue(ref x);
+        serializer.SerializeValue(ref y);
+    }
+}
 
 public class GridManager : MonoBehaviour
 {
