@@ -18,16 +18,19 @@ public class Player : Selectable
 {
     public ulong clientId;
 
-    [SerializeField] private int _inventoryRessourceCount;
-    [SerializeField] private int _savedRessourceCount;
-    [SerializeField] private List<Ressource> _inventoryRessources;
-    [SerializeField] private List<Ressource> _savedRessources;
+    private List<Ressource> _inventoryRessources = new List<Ressource>();
+    private List<Ressource> _savedRessources = new List<Ressource>();
+    private List<int> _inventoryChestCards = new List<int>(); // TODO: need to maybe only save ID´s of chestcardvariants because of networking ..
+    private int coinCount;
+
     private Tile _currentTile;
     private int _moveCount;
 
     public int MoveCount { get => _moveCount; set => _moveCount = value; }
     public List<Ressource> InventoryRessources { get => _inventoryRessources; set => _inventoryRessources = value; }
     public List<Ressource> SavedRessources { get => _savedRessources; set => _savedRessources = value; }
+    public List<int> InventoryChestCards { get => _inventoryChestCards; set => _inventoryChestCards = value; }
+    public int CoinCount { get => coinCount; set => coinCount = value; }
 
     public override void Start()
     {
