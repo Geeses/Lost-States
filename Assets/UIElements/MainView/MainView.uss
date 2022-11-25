@@ -79,8 +79,8 @@
 }
 
 .cards {
-    height: 100px;
-    width: 50px;
+    height: 125px;
+    width: 52px;
 }
 
 .cards:active {
@@ -88,10 +88,10 @@
     border-right-width: 2px;
     border-top-width: 2px;
     border-bottom-width: 2px;
-    border-left-color: rgba(17, 0, 255, 255);
-    border-right-color: rgba(17, 0, 255, 255);
-    border-top-color: rgba(17, 0, 255, 255);
-    border-bottom-color: rgba(17, 0, 255, 255);
+    border-left-color: rgb(17, 0, 255);
+    border-right-color: rgb(17, 0, 255);
+    border-top-color: rgb(17, 0, 255);
+    border-bottom-color: rgb(17, 0, 255);
 }
 
 .cards:hover {
@@ -118,4 +118,18 @@
     width: 175px;
     transition-property: width;
     transition-duration: 0.5s;
+}
+
+.buttonChar {
+}
+
+.buttonChar:active {
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: rgba(53, 255, 0, 255);
+    border-right-color: rgba(53, 255, 0, 255);
+    border-top-color: rgba(53, 255, 0, 255);
+    border-bottom-color: rgba(53, 255, 0, 255);
 }

@@ -91,3 +91,20 @@
     transition-duration: 0.5s;
     width: 400px;
 }
+
+.buttonCara {
+}
+
+.buttonCara:active {
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: rgba(63, 255, 0, 255);
+    border-right-color: rgba(63, 255, 0, 255);
+    border-top-color: rgba(63, 255, 0, 255);
+    border-bottom-color: rgba(63, 255, 0, 255);
+    transition-property: display;
+    visibility: visible;
+    overflow: hidden;
+}
