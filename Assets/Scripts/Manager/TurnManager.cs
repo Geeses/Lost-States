@@ -10,11 +10,15 @@ public class TurnManager : NetworkBehaviour
     public TMPro.TMP_Text currentTurnPlayerIdText;
     public TMPro.TMP_Text currentTurnPlayerMovesText;
 
+    public event Action<ulong> OnTurnStart;
+    public event Action<ulong> OnTurnEnd;
+
     private List<ulong> _connectedPlayersId = new List<ulong>();
     private Queue<ulong> _playerTurnQueueId = new Queue<ulong>();
     private ulong _currentTurnPlayerId;
     private Player _currentTurnPlayer;
     private Player _localPlayer;
+    private int _currentTurnNumber;
     private static TurnManager s_instance;
 
     public static TurnManager Instance { get { return s_instance; } }
@@ -22,6 +26,8 @@ public class TurnManager : NetworkBehaviour
     public List<ulong> ConnectedPlayersId { get => _connectedPlayersId; private set => _connectedPlayersId = value; }
     public Queue<ulong> PlayerTurnQueueId { get => _playerTurnQueueId; private set => _playerTurnQueueId = value; }
     public ulong CurrentTurnPlayerId { get => _currentTurnPlayerId; private set => _currentTurnPlayerId = value; }
+    public Player CurrentTurnPlayer { get => _currentTurnPlayer; set => _currentTurnPlayer = value; }
+    public int CurrentTurnNumber { get => _currentTurnNumber; set => _currentTurnNumber = value; }
 
     private void Awake()
     {
@@ -57,6 +63,7 @@ public class TurnManager : NetworkBehaviour
             SynchronizeLobbyDataClientRpc(player);
         }
 
+        CurrentTurnNumber = 1;
         StartGameClientRpc();
     }
 
@@ -86,9 +93,15 @@ public class TurnManager : NetworkBehaviour
     public void StartTurnServerRpc(ulong playerId)
     {
         // TODO: server needs to set the movecount of the player whose turn it is to its amount, and inform other players that this happened
-        _currentTurnPlayer = NetworkManager.ConnectedClients[playerId].PlayerObject.GetComponent<Player>();
-        _currentTurnPlayer.MoveCount = 5;
-        Debug.Log("setting movecount to " + _localPlayer.MoveCount);
+        CurrentTurnPlayer = NetworkManager.ConnectedClients[playerId].PlayerObject.GetComponent<Player>();
+        CurrentTurnPlayer.MoveCount = 5;
+
+        CurrentTurnNumber += 1;
+        if(CurrentTurnNumber > 10)
+        {
+            CurrentTurnNumber = 1;
+        }
+
         StartTurnClientRpc(playerId);
     }
 
@@ -101,6 +114,8 @@ public class TurnManager : NetworkBehaviour
         CurrentTurnPlayerId = playerId;
         currentTurnPlayerIdText.text = "Player " + playerId + "´s turn.";
         playerIdText.text = "PlayerId: " + NetworkManager.LocalClientId;
+
+        OnTurnStart?.Invoke(playerId);
     }
 
     // simple wrapper function to enable a ServerRpc through a button
@@ -125,6 +140,9 @@ public class TurnManager : NetworkBehaviour
         PlayerTurnQueueId.Enqueue(playerId);
         PlayerTurnQueueId.Dequeue();
         CurrentTurnPlayerId = PlayerTurnQueueId.Peek();
+
+        OnTurnEnd?.Invoke(playerId);
+
         StartTurnServerRpc(CurrentTurnPlayerId);
     }
 }

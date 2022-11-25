@@ -18,10 +18,12 @@ public class Player : Selectable
 {
     public ulong clientId;
 
+    private List<int> _movementCards = new List<int>();
     private List<Ressource> _inventoryRessources = new List<Ressource>();
     private List<Ressource> _savedRessources = new List<Ressource>();
-    private List<int> _inventoryChestCards = new List<int>(); // TODO: need to maybe only save ID´s of chestcardvariants because of networking ..
-    private int coinCount;
+    private List<int> _inventoryChestCards = new List<int>();
+    private int _coinCount;
+    private int _movementCardAmountPerCycle = 5;
 
     private Tile _currentTile;
     private int _moveCount;
@@ -30,7 +32,9 @@ public class Player : Selectable
     public List<Ressource> InventoryRessources { get => _inventoryRessources; set => _inventoryRessources = value; }
     public List<Ressource> SavedRessources { get => _savedRessources; set => _savedRessources = value; }
     public List<int> InventoryChestCards { get => _inventoryChestCards; set => _inventoryChestCards = value; }
-    public int CoinCount { get => coinCount; set => coinCount = value; }
+    public int CoinCount { get => _coinCount; set => _coinCount = value; }
+    public int MovementCardAmountPerCycle { get => _movementCardAmountPerCycle; set => _movementCardAmountPerCycle = value; }
+    public List<int> MovementCards { get => _movementCards; set => _movementCards = value; }
 
     public override void Start()
     {
