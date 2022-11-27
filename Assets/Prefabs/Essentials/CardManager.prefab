@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6183616679594583376}
   - component: {fileID: 1401356937006920635}
+  - component: {fileID: 6183616679756211629}
   m_Layer: 0
   m_Name: CardManager
   m_TagString: Untagged
@@ -44,3 +45,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3d303548b56419478f4548a390234e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementCards:
+  - {fileID: 572580034858790453, guid: ce35006283d4ec34285d1da4043c1bca, type: 3}
+--- !u!114 &6183616679756211629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6183616679594583377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1

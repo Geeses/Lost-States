@@ -117,4 +117,11 @@ public class Player : Selectable
         if(IsLocalPlayer)
             HighlightAdjacentTiles();
     }
+
+
+    [ClientRpc]
+    public void AddMovementCardsClientRpc(int cardId)
+    {
+        MovementCards.Add(cardId);
+    }
 }

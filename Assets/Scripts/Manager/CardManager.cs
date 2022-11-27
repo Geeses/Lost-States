@@ -4,14 +4,16 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CardManager : NetworkBehaviour
 {
     [Header("Movement Card References")]
     public List<MovementCardBase> movementCards = new List<MovementCardBase>();
+    public HorizontalLayoutGroup cardParent;
 
     [Header("Options")]
-    public const int MoveCardListInStack = 3;
+    public int MoveCardListInStack = 3;
 
     private List<int> _movementCardStack = new List<int>();
     private int _movementCardStackPosition;
@@ -45,6 +47,9 @@ public class CardManager : NetworkBehaviour
 
     private void CreateMovementCardStack()
     {
+        MovementCardStack.Clear();
+        MovementCardStackPosition = 0;
+
         for (int i = 0; i < MoveCardListInStack; i++)
         {
             foreach (MovementCardBase card in movementCards)
@@ -58,13 +63,24 @@ public class CardManager : NetworkBehaviour
 
     private void AddMovementCardsToPlayer(ulong playerId)
     {
-        int addCardAmount = NetworkManager.ConnectedClients[playerId].PlayerObject.GetComponent<Player>().MovementCardAmountPerCycle;
+        if (!IsServer)
+            return;
+
+        Player player = NetworkManager.ConnectedClients[playerId].PlayerObject.GetComponent<Player>();
+        int addCardAmount = player.MovementCardAmountPerCycle;
 
         for (int i = 0; i < addCardAmount; i++)
         {
+            // if we have no more cards left in our stack
+            if(MovementCardStack.Count == MovementCardStackPosition)
+            {
+                CreateMovementCardStack();
+            }
 
+            player.AddMovementCardsClientRpc(MovementCardStack[MovementCardStackPosition]);
 
             MovementCardStackPosition += 1;
         }
     }
+
 }
