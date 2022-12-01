@@ -65,9 +65,11 @@ public class NetworkManagerUI : NetworkBehaviour
         {
             foreach (var item in e.NewItems)
             {
+                /*
                 CardBase card = CardManager.Instance.GetCardById((int)item);
                 _cards.Add(card);
                 Instantiate(card, CardLayoutGroup.transform);
+                */
             }
         }
     }

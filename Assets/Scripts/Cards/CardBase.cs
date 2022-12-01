@@ -6,9 +6,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardBase : NetworkBehaviour, IPointerDownHandler
+public class CardBase
 {
     [Header("Card Base References")]
+    public int id;
     public Image backgroundImage;
     public TMPro.TextMeshProUGUI cardText;
 
@@ -19,7 +20,6 @@ public class CardBase : NetworkBehaviour, IPointerDownHandler
     public virtual void PlayCard()
     {
         OnCardPlayed?.Invoke();
-        Destroy(gameObject);
     }
 
     public virtual void OnPointerDown(PointerEventData eventData)

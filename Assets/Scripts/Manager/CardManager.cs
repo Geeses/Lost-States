@@ -10,7 +10,7 @@ public class CardManager : NetworkBehaviour
 {
     #region Attributes
     [Header("Movement Card References")]
-    public List<MovementCardBase> movementCards = new List<MovementCardBase>();
+    public List<Card> movementCards = new List<Card>();
     public HorizontalLayoutGroup cardParent;
 
     [Header("Options")]
@@ -50,7 +50,7 @@ public class CardManager : NetworkBehaviour
     }
     #endregion
 
-    public MovementCardBase GetCardById(int id)
+    public Card GetCardById(int id)
     {
         foreach (var card in movementCards)
         {
@@ -70,7 +70,7 @@ public class CardManager : NetworkBehaviour
 
         for (int i = 0; i < MoveCardListInStack; i++)
         {
-            foreach (MovementCardBase card in movementCards)
+            foreach (Card card in movementCards)
             {
                 MovementCardStack.Add(card.id);
             }

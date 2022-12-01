@@ -28,6 +28,10 @@ PrefabInstance:
       propertyPath: baseMoveCount
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 5157082764823254035, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
+      objectReference: {fileID: 0}
     - target: {fileID: 8916346068369775523, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -115,23 +119,3 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
---- !u!1 &653638606172642678 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 361950451134950754, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
-  m_PrefabInstance: {fileID: 871403500483260436}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5435871810903505259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 653638606172642678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78064fb2ce3653a4d8a1ba690c02465b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: 2
-  itemCount: 3
-  moveCount: 5
