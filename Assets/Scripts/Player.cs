@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using Unity.Netcode;
 using System;
+using System.Collections.ObjectModel;
 
 public enum Ressource
 {
@@ -16,26 +17,35 @@ public enum Ressource
 
 public class Player : Selectable
 {
+    #region Attributes
     public ulong clientId;
 
-    private List<int> _movementCards = new List<int>();
-    private List<Ressource> _inventoryRessources = new List<Ressource>();
-    private List<Ressource> _savedRessources = new List<Ressource>();
-    private List<int> _inventoryChestCards = new List<int>();
+    private ObservableCollection<int> _movementCards = new ObservableCollection<int>();
+    private ObservableCollection<int> _inventoryChestCards = new ObservableCollection<int>();
+    private ObservableCollection<Ressource> _inventoryRessources = new ObservableCollection<Ressource>();
+    private ObservableCollection<Ressource> _savedRessources = new ObservableCollection<Ressource>();
     private int _coinCount;
     private int _movementCardAmountPerCycle = 5;
 
     private Tile _currentTile;
     private int _moveCount;
+    private int _maximumPlayableMovementCards;
+    private int _playedMovementCards;
+    #endregion
 
+    #region Properties
     public int MoveCount { get => _moveCount; set => _moveCount = value; }
-    public List<Ressource> InventoryRessources { get => _inventoryRessources; set => _inventoryRessources = value; }
-    public List<Ressource> SavedRessources { get => _savedRessources; set => _savedRessources = value; }
-    public List<int> InventoryChestCards { get => _inventoryChestCards; set => _inventoryChestCards = value; }
+    public ObservableCollection<Ressource> InventoryRessources { get => _inventoryRessources; set => _inventoryRessources = value; }
+    public ObservableCollection<Ressource> SavedRessources { get => _savedRessources; set => _savedRessources = value; }
+    public ObservableCollection<int> InventoryChestCards { get => _inventoryChestCards; set => _inventoryChestCards = value; }
     public int CoinCount { get => _coinCount; set => _coinCount = value; }
     public int MovementCardAmountPerCycle { get => _movementCardAmountPerCycle; set => _movementCardAmountPerCycle = value; }
-    public List<int> MovementCards { get => _movementCards; set => _movementCards = value; }
+    public ObservableCollection<int> MovementCards { get => _movementCards; set => _movementCards = value; }
+    public int MaximumPlayableMovementCards { get => _maximumPlayableMovementCards; set => _maximumPlayableMovementCards = value; }
+    public int PlayedMovementCards { get => _playedMovementCards; set => _playedMovementCards = value; }
+    #endregion
 
+    #region Monobehavior Functions
     public override void Start()
     {
         base.Start();
@@ -48,7 +58,9 @@ public class Player : Selectable
         clientId = NetworkManager.LocalClientId;
         _currentTile = GridManager.Instance.TileGrid[new GridCoordinates(0,0)];
     }
+    #endregion
 
+    #region Select and Highlight
     public override void Select()
     {
         base.Select();
@@ -76,7 +88,9 @@ public class Player : Selectable
             tile.Unhighlight();
         }
     }
+    #endregion
 
+    #region Movement
     [ServerRpc]
     public void TryMoveServerRpc(GridCoordinates coordinates)
     {
@@ -120,8 +134,9 @@ public class Player : Selectable
 
 
     [ClientRpc]
-    public void AddMovementCardsClientRpc(int cardId)
+    public void AddMovementCardClientRpc(int cardId)
     {
         MovementCards.Add(cardId);
     }
+    #endregion
 }

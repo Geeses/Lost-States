@@ -8,7 +8,7 @@ public enum PickupType
     Chest
 }
 
-public class AddMovesOnPickup : MonoBehaviour
+public class AddMovesOnPickup
 {
     [Header("Options")]
     public PickupType pickupType;

@@ -12,4 +12,10 @@ public class MovementCardBase : CardBase
     public int baseMoveCount;
     public int id;
 
+    public override void PlayCard()
+    {
+        // tell server we want to play this card
+        CardManager.Instance.TryPlayMovementCardServerRpc(id, gameObject.GetInstanceID(), OwnerClientId);
+        base.PlayCard();
+    }
 }

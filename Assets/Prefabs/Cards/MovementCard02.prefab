@@ -12,6 +12,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: MovementCard02
       objectReference: {fileID: 0}
+    - target: {fileID: 469728987098826006, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
+      propertyPath: m_text
+      value: get 4 coins after moving 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 469728987098826006, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
+      propertyPath: m_fontSize
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2340251802394025260, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: id
       value: 1
@@ -50,7 +58,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8916346068369775523, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 8916346068369775523, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_SizeDelta.y
@@ -125,5 +133,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: 2
-  count: 3
-  moveCount: 4
+  itemCount: 3
+  moveCount: 5

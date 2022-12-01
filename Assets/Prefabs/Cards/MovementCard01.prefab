@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MovementCard01
       objectReference: {fileID: 0}
+    - target: {fileID: 457946213851397914, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ba11c7d33bc04db45a2554525d6edb18, type: 3}
     - target: {fileID: 469728987098826006, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_text
       value: get 3 moves per ressource pickup
@@ -36,9 +40,17 @@ PrefabInstance:
       propertyPath: baseMoveCount
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2340251802394025260, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
+      propertyPath: backgroundImage
+      value: 
+      objectReference: {fileID: 2437287119329954819}
     - target: {fileID: 4923847892337928676, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_text
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5157082764823254035, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
       objectReference: {fileID: 0}
     - target: {fileID: 8916346068369775523, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_Pivot.x
@@ -70,7 +82,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8916346068369775523, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 8916346068369775523, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_SizeDelta.y
@@ -127,6 +139,17 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
+--- !u!114 &2437287119329954819 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 457946213851397914, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
+  m_PrefabInstance: {fileID: 2848535695588651801}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2489892579796328059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2489892579796328059 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 361950451134950754, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}

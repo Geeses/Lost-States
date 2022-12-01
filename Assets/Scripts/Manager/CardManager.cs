@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class CardManager : NetworkBehaviour
 {
+    #region Attributes
     [Header("Movement Card References")]
     public List<MovementCardBase> movementCards = new List<MovementCardBase>();
     public HorizontalLayoutGroup cardParent;
@@ -19,12 +20,15 @@ public class CardManager : NetworkBehaviour
     private int _movementCardStackPosition;
 
     private static CardManager s_instance;
+    #endregion
 
+    #region Properties
     public static CardManager Instance { get { return s_instance; } }
-
     public List<int> MovementCardStack { get => _movementCardStack; set => _movementCardStack = value; }
     public int MovementCardStackPosition { get => _movementCardStackPosition; set => _movementCardStackPosition = value; }
+    #endregion
 
+    #region Monobehavior Functions
     private void Awake()
     {
         // Singleton Pattern
@@ -43,6 +47,20 @@ public class CardManager : NetworkBehaviour
     private void Start()
     {
         TurnManager.Instance.OnTurnStart += AddMovementCardsToPlayer;
+    }
+    #endregion
+
+    public MovementCardBase GetCardById(int id)
+    {
+        foreach (var card in movementCards)
+        {
+            if (card.id.Equals(id))
+            {
+                return card;
+            }
+        }
+
+        return null;
     }
 
     private void CreateMovementCardStack()
@@ -77,10 +95,22 @@ public class CardManager : NetworkBehaviour
                 CreateMovementCardStack();
             }
 
-            player.AddMovementCardsClientRpc(MovementCardStack[MovementCardStackPosition]);
+            player.AddMovementCardClientRpc(MovementCardStack[MovementCardStackPosition]);
 
             MovementCardStackPosition += 1;
         }
     }
 
+    [ServerRpc]
+    public void TryPlayMovementCardServerRpc(int cardId, int instanceId, ulong playerId)
+    {
+        Player player = NetworkManager.ConnectedClients[playerId].PlayerObject.GetComponent<Player>();
+
+        // if they are still allowed to play movementcards and its their turn
+        if(player.PlayedMovementCards <= player.MaximumPlayableMovementCards &&
+            playerId == TurnManager.Instance.CurrentTurnPlayerId)
+        {
+            //GetCardById(cardId).PlayCard();
+        }
+    }
 }

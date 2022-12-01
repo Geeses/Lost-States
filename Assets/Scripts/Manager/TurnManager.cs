@@ -6,10 +6,14 @@ using UnityEngine;
 
 public class TurnManager : NetworkBehaviour
 {
+    #region Attributes
     public TMPro.TMP_Text playerIdText;
     public TMPro.TMP_Text currentTurnPlayerIdText;
     public TMPro.TMP_Text currentTurnPlayerMovesText;
 
+    //TODO: implement game end/start methods in GameManager
+    public event Action OnGameStart;
+    public event Action OnGameEnd;
     public event Action<ulong> OnTurnStart;
     public event Action<ulong> OnTurnEnd;
 
@@ -19,8 +23,12 @@ public class TurnManager : NetworkBehaviour
     private Player _currentTurnPlayer;
     private Player _localPlayer;
     private int _currentTurnNumber;
-    private static TurnManager s_instance;
+    private int _totalTurnCount;
 
+    private static TurnManager s_instance;
+    #endregion
+
+    #region Properties
     public static TurnManager Instance { get { return s_instance; } }
 
     public List<ulong> ConnectedPlayersId { get => _connectedPlayersId; private set => _connectedPlayersId = value; }
@@ -28,7 +36,10 @@ public class TurnManager : NetworkBehaviour
     public ulong CurrentTurnPlayerId { get => _currentTurnPlayerId; private set => _currentTurnPlayerId = value; }
     public Player CurrentTurnPlayer { get => _currentTurnPlayer; set => _currentTurnPlayer = value; }
     public int CurrentTurnNumber { get => _currentTurnNumber; set => _currentTurnNumber = value; }
+    public int TotalTurnCount { get => _totalTurnCount; set => _totalTurnCount = value; }
+    #endregion
 
+    #region Monobehavior Functions
     private void Awake()
     {
         // Singleton Pattern
@@ -46,6 +57,7 @@ public class TurnManager : NetworkBehaviour
     {
         NetworkManager.OnServerStarted += () => StartCoroutine(WaitForLobbyJoined());
     }
+    #endregion
 
     private IEnumerator WaitForLobbyJoined()
     {
@@ -85,6 +97,8 @@ public class TurnManager : NetworkBehaviour
         
         // put every player into the queue
         ConnectedPlayersId.ForEach(o => PlayerTurnQueueId.Enqueue(o));
+
+        OnGameStart?.Invoke();
         // first player in queue is current player
         StartTurnServerRpc(PlayerTurnQueueId.Peek());
     }
@@ -94,9 +108,12 @@ public class TurnManager : NetworkBehaviour
     {
         // TODO: server needs to set the movecount of the player whose turn it is to its amount, and inform other players that this happened
         CurrentTurnPlayer = NetworkManager.ConnectedClients[playerId].PlayerObject.GetComponent<Player>();
-        CurrentTurnPlayer.MoveCount = 5;
+        //CurrentTurnPlayer.MoveCount = 5;
+        CurrentTurnPlayer.MaximumPlayableMovementCards = 1;
+        CurrentTurnPlayer.PlayedMovementCards = 0;
 
         CurrentTurnNumber += 1;
+        TotalTurnCount += 1;
         if(CurrentTurnNumber > 10)
         {
             CurrentTurnNumber = 1;
@@ -108,8 +125,7 @@ public class TurnManager : NetworkBehaviour
     [ClientRpc]
     public void StartTurnClientRpc(ulong playerId)
     {
-        _localPlayer.MoveCount = 5;
-        currentTurnPlayerMovesText.text = "5";
+        //_localPlayer.MoveCount = 5;
 
         CurrentTurnPlayerId = playerId;
         currentTurnPlayerIdText.text = "Player " + playerId + "´s turn.";
@@ -121,7 +137,8 @@ public class TurnManager : NetworkBehaviour
     // simple wrapper function to enable a ServerRpc through a button
     public void EndTurn()
     {
-        if (CurrentTurnPlayerId == NetworkManager.LocalClientId && _localPlayer.MoveCount == 0)
+        if (CurrentTurnPlayerId == NetworkManager.LocalClientId && _localPlayer.MoveCount == 0 && 
+            CurrentTurnPlayer.PlayedMovementCards == CurrentTurnPlayer.MaximumPlayableMovementCards)
         {
             EndTurnServerRpc(NetworkManager.LocalClientId);
         }
