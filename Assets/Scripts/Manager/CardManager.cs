@@ -46,7 +46,7 @@ public class CardManager : NetworkBehaviour
 
     private void Start()
     {
-        TurnManager.Instance.OnTurnStart += AddMovementCardsToPlayer;
+        TurnManager.Instance.OnTurnStart += TryAddMovementCardsToPlayer;
     }
     #endregion
 
@@ -79,11 +79,20 @@ public class CardManager : NetworkBehaviour
         MovementCardStack.Shuffle();
     }
 
-    private void AddMovementCardsToPlayer(ulong playerId)
+    private void TryAddMovementCardsToPlayer(ulong playerId)
     {
+        // only execute function if its the server
         if (!IsServer)
             return;
 
+        if (TurnManager.Instance.CurrentTurnNumber == 1 || TurnManager.Instance.CurrentTurnNumber == 6)
+        {
+            AddMovementCardsToPlayer(playerId);
+        }
+    }
+
+    private void AddMovementCardsToPlayer(ulong playerId)
+    {
         Player player = NetworkManager.ConnectedClients[playerId].PlayerObject.GetComponent<Player>();
         int addCardAmount = player.MovementCardAmountPerCycle;
 
@@ -94,14 +103,14 @@ public class CardManager : NetworkBehaviour
             {
                 CreateMovementCardStack();
             }
-
+            Debug.Log("add card to player");
             player.AddMovementCardClientRpc(MovementCardStack[MovementCardStackPosition]);
 
             MovementCardStackPosition += 1;
         }
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void TryPlayMovementCardServerRpc(int cardId, int instanceId, ulong playerId)
     {
         Player player = NetworkManager.ConnectedClients[playerId].PlayerObject.GetComponent<Player>();
@@ -110,7 +119,28 @@ public class CardManager : NetworkBehaviour
         if(player.PlayedMovementCards <= player.MaximumPlayableMovementCards &&
             playerId == TurnManager.Instance.CurrentTurnPlayerId)
         {
-            //GetCardById(cardId).PlayCard();
+            // remove UI object from player that sent the request
+            NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(playerId, instanceId);
+
+            // increment move card played counter
+            player.ChangePlayedMoveCardsClientRpc(1);
+
+            Card card = GetCardById(cardId);
+            List<CardEffect> effects = card.cardEffects;
+            player.ChangeMoveCountClientRpc(card.baseMoveCount);
+
+            foreach (CardEffect effect in effects)
+            {
+                effect.Initialize(player);
+                effect.ExecuteEffect();
+            }
         }
+    }
+
+    // execute card effects
+    [ClientRpc]
+    private void ExecuteCardEffectClientRpc(int cardId, ulong playerId)
+    {
+
     }
 }

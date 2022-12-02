@@ -1,13 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Effect", menuName = "Scriptable Cards/Effect", order = 1)]
 public class CardEffect : ScriptableObject
 {
-    private Player player;
+    private Player _player;
 
-    protected Player Player { get => player; set => player = value; }
+    protected Player Player { get => _player; set => _player = value; }
+
+    internal virtual void Initialize(Player player)
+    {
+        _player = player;
+    }
 
     public virtual void ExecuteEffect()
     {

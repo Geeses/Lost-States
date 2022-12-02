@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2181118646059948a6d77c41a735863, type: 3}
-  m_Name: MoveCard01
+  m_Script: {fileID: 11500000, guid: 79a2b4821549ab344a1177938c122c13, type: 3}
+  m_Name: AddMovesOnRessource
   m_EditorClassIdentifier: 
-  cardType: 0
-  id: 0
-  baseMoveCount: 3
-  CardUi: {fileID: 2489892579796328059, guid: ce35006283d4ec34285d1da4043c1bca, type: 3}
-  cardEffects: []
+  pickupType: 0
+  moveCount: 5

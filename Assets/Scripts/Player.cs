@@ -103,7 +103,7 @@ public class Player : Selectable
             MoveCount > 0 &&
             tile.passable)
         {
-            ChangeMoveCountClientRpc(MoveCount - 1);
+            ChangeMoveCountClientRpc(-1);
             MoveClientRpc(coordinates);
         }
     }
@@ -111,8 +111,22 @@ public class Player : Selectable
     [ClientRpc]
     public void ChangeMoveCountClientRpc(int count)
     {
-        MoveCount = count;
+        MoveCount += count;
+        Debug.Log("Movecount is now " + MoveCount + " on Player " + clientId);
         TurnManager.Instance.currentTurnPlayerMovesText.text = MoveCount.ToString();
+    }
+
+    [ClientRpc]
+    public void PlayCardClientRpc(int cardId)
+    {
+        //MoveCount = count;
+        TurnManager.Instance.currentTurnPlayerMovesText.text = MoveCount.ToString();
+    }
+
+    [ClientRpc]
+    public void ChangePlayedMoveCardsClientRpc(int count)
+    {
+        PlayedMovementCards += count;
     }
 
     [ClientRpc]
@@ -136,6 +150,7 @@ public class Player : Selectable
     [ClientRpc]
     public void AddMovementCardClientRpc(int cardId)
     {
+        Debug.Log("add card Id " + cardId);
         MovementCards.Add(cardId);
     }
     #endregion

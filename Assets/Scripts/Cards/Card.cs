@@ -17,6 +17,6 @@ public class Card : ScriptableObject
     public int id;
     public int baseMoveCount;
     public GameObject CardUi;
-    public CardEffect cardEffect;
+    public List<CardEffect> cardEffects;
 }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class MovementCardBase: ScriptableObject, ICardEffect
+public class MovementCardBase: ScriptableObject
 {
     [Header("Movement Card References")]
     public TMPro.TextMeshProUGUI moveCountText;

@@ -19,7 +19,8 @@ public class NetworkManagerUI : NetworkBehaviour
 
     private static NetworkManagerUI s_instance;
     private Player _player;
-    private List<CardBase> _cards = new List<CardBase>();
+    private List<Card> _cards = new List<Card>();
+    private List<CardUi> _cardUis = new List<CardUi>();
 
     public static NetworkManagerUI Instance { get { return s_instance; } }
 
@@ -46,31 +47,73 @@ public class NetworkManagerUI : NetworkBehaviour
         {
             NetworkManager.Singleton.StartClient();
         });
-    }
 
+    }
     private void Start()
     {
-        TurnManager.Instance.OnGameStart += GetLocalPlayer;
+        Debug.Log(GameManager.Instance.gameHasStarted);
+        if (GameManager.Instance.gameHasStarted)
+        {
+            InitCards();
+        }
+        else
+        {
+            GameManager.Instance.OnGameStart += InitCards;
+        }
     }
 
-    private void GetLocalPlayer()
+    private void InitCards()
     {
         _player = NetworkManager.LocalClient.PlayerObject.GetComponent<Player>();
+
+        Debug.Log(_player.MovementCards.Count);
+        foreach (int id in _player.MovementCards)
+        {
+            InstantiateCard(id);
+        }
+
         _player.MovementCards.CollectionChanged += ChangeMovementCards;
     }
 
     private void ChangeMovementCards(object sender, NotifyCollectionChangedEventArgs e)
     {
+        Debug.Log("card list changed");
         if (e.NewItems != null)
         {
             foreach (var item in e.NewItems)
             {
-                /*
-                CardBase card = CardManager.Instance.GetCardById((int)item);
-                _cards.Add(card);
-                Instantiate(card, CardLayoutGroup.transform);
-                */
+                InstantiateCard((int)item);
             }
+        }
+    }
+
+    private void InstantiateCard(int id)
+    {
+        Card card = CardManager.Instance.GetCardById(id);
+        _cards.Add(card);
+        CardUi cardUi = Instantiate(card.CardUi, CardLayoutGroup.transform).GetComponent<CardUi>();
+        cardUi.Initialize(card);
+        _cardUis.Add(cardUi);
+    }
+
+    [ClientRpc]
+    public void RemoveCardFromPlayerUiClientRpc(ulong playerId, int instanceId)
+    {
+        CardUi objectToRemove = null;
+
+        foreach (CardUi card in _cardUis)
+        {
+            if(card.gameObject.GetInstanceID().Equals(instanceId))
+            {
+                objectToRemove = card;
+                Debug.Log("found card to remove " + objectToRemove.name);
+            }
+        }
+
+        if(objectToRemove != null)
+        {
+            _cardUis.Remove(objectToRemove);
+            Destroy(objectToRemove.gameObject);
         }
     }
 }

@@ -1,31 +1,44 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardUI : MonoBehaviour, IPointerDownHandler
+public class CardUi : NetworkBehaviour, IPointerDownHandler
 {
     #region Attributes
     [Header("Card Base References")]
     public Image backgroundImage;
     public TMPro.TextMeshProUGUI cardText;
+    public TMPro.TextMeshProUGUI moveCountText;
+
+    private int _cardId;
 
     public event Action OnCardPlayed;
     #endregion
 
+    #region Properties
+    public int CardId { get => _cardId; set => _cardId = value; }
+    #endregion
+
     #region Monobehavior Functions
-    public virtual void OnPointerDown(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
-        PlayCard();
+        TryPlayCard();
     }
     #endregion
 
-    public virtual void PlayCard()
+    public void Initialize(Card card)
     {
-        OnCardPlayed?.Invoke();
-        Destroy(gameObject);
+        _cardId = card.id;
+        moveCountText.text = card.baseMoveCount.ToString();
+    }
+
+    public void TryPlayCard()
+    {
+        CardManager.Instance.TryPlayMovementCardServerRpc(CardId, gameObject.GetInstanceID(), NetworkManager.LocalClientId);
     }
 }
 
