@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="align-items: center;">
+        <ui:Label tabindex="-1" text="EnterName" display-tooltip-when-elided="true" />
+        <ui:TextField picking-mode="Ignore" value="filler text" style="width: 100%;" />
+        <ui:VisualElement style="flex-direction: row; justify-content: center; align-items: flex-start;">
+            <ui:Button tabindex="-1" text="Host" display-tooltip-when-elided="true" />
+            <ui:Button tabindex="-1" text="Client" display-tooltip-when-elided="true" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -25,9 +25,4 @@ public class MainView : MonoBehaviour
         charFigures = root.Q<VisualElement>("char-fig");
         charBarGroup = root.Q<GroupBox>("char-bar");
     }
-
-    private void Update()
-    {
-
-    }
 }

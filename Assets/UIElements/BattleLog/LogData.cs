@@ -22,7 +22,6 @@ public sealed class LogData {
                     lock (instanceLock) {
                         if (instance == null) {
                             instance = new LogData();
-                            Debug.Log("Instance of LogData created");
                         }
                     }
                 }
@@ -32,7 +31,6 @@ public sealed class LogData {
 
     public void SetBattleLogListDependency(BattleLogListController battlelogList) {
         _battlelogList = battlelogList;
-        Debug.Log("Dependency of BattleLogList created");
     }
 
     public void AddLog(string log) {

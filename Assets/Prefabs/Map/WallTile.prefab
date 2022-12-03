@@ -8,13 +8,33 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6343492646696606832, guid: c48c019a15efa2a46a4689e1e0ac56ea, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
+      objectReference: {fileID: 0}
     - target: {fileID: 986787786717145221, guid: c48c019a15efa2a46a4689e1e0ac56ea, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: de07cbcb2fc8322449d4bc4f91f03280, type: 3}
+    - target: {fileID: 986787786717145221, guid: c48c019a15efa2a46a4689e1e0ac56ea, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 986787786717145221, guid: c48c019a15efa2a46a4689e1e0ac56ea, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 986787786717145221, guid: c48c019a15efa2a46a4689e1e0ac56ea, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3295662950981164236, guid: c48c019a15efa2a46a4689e1e0ac56ea, type: 3}
       propertyPath: m_Name
       value: WallTile
+      objectReference: {fileID: 0}
+    - target: {fileID: 6308440097326338229, guid: c48c019a15efa2a46a4689e1e0ac56ea, type: 3}
+      propertyPath: passable
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9014830070591342149, guid: c48c019a15efa2a46a4689e1e0ac56ea, type: 3}
       propertyPath: m_RootOrder

@@ -24,14 +24,12 @@ public class MainMenu : NetworkBehaviour
 
     void StartAsHost()
     {
-        Debug.Log("Button Pressed");
         NetworkManager.Singleton.StartHost();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     void StartAsClient()
     {
-        Debug.Log("Button Pressed");
         NetworkManager.Singleton.StartHost();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }

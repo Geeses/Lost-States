@@ -8,10 +8,26 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6343492646696606832, guid: c48c019a15efa2a46a4689e1e0ac56ea, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
+      objectReference: {fileID: 0}
     - target: {fileID: 986787786717145221, guid: c48c019a15efa2a46a4689e1e0ac56ea, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: be073abe68d12014b94ab80e6b8bab38, type: 3}
+    - target: {fileID: 986787786717145221, guid: c48c019a15efa2a46a4689e1e0ac56ea, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 986787786717145221, guid: c48c019a15efa2a46a4689e1e0ac56ea, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 986787786717145221, guid: c48c019a15efa2a46a4689e1e0ac56ea, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3295662950981164236, guid: c48c019a15efa2a46a4689e1e0ac56ea, type: 3}
       propertyPath: m_Name
       value: DangerTile

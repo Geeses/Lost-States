@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UIElements/LobbyView/LobbyCell.uss?fileID=7433441132597879392&amp;guid=63e3b2811d6bc3d45a17c4ba3cdda9c5&amp;type=3#LobbyCell" />
+    <ui:VisualElement style="flex-direction: row; justify-content: space-between;">
+        <ui:VisualElement style="justify-content: space-around; flex-grow: 1;">
+            <ui:Label tabindex="-1" text="LobbyName" display-tooltip-when-elided="true" name="lobby-name" />
+            <ui:Label tabindex="-1" text="1/4" display-tooltip-when-elided="true" name="joined-count" />
+        </ui:VisualElement>
+        <ui:Button tabindex="-1" text="Join Lobby" display-tooltip-when-elided="true" name="join-lobby" />
+    </ui:VisualElement>
+</ui:UXML>
