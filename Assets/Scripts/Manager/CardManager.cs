@@ -18,6 +18,7 @@ public class CardManager : NetworkBehaviour
 
     private List<int> _movementCardStack = new List<int>();
     private int _movementCardStackPosition;
+    private List<CardEffect> _activeCardEffects = new List<CardEffect>();
 
     private static CardManager s_instance;
     #endregion
@@ -26,6 +27,7 @@ public class CardManager : NetworkBehaviour
     public static CardManager Instance { get { return s_instance; } }
     public List<int> MovementCardStack { get => _movementCardStack; set => _movementCardStack = value; }
     public int MovementCardStackPosition { get => _movementCardStackPosition; set => _movementCardStackPosition = value; }
+    public List<CardEffect> ActiveCardEffects { get => _activeCardEffects; private set => _activeCardEffects = value; }
     #endregion
 
     #region Monobehavior Functions
@@ -47,6 +49,7 @@ public class CardManager : NetworkBehaviour
     private void Start()
     {
         TurnManager.Instance.OnTurnStart += TryAddMovementCardsToPlayer;
+        TurnManager.Instance.OnTurnEnd += RevertCardEffectClientRpc;
     }
     #endregion
 
@@ -103,7 +106,7 @@ public class CardManager : NetworkBehaviour
             {
                 CreateMovementCardStack();
             }
-            Debug.Log("add card to player");
+
             player.AddMovementCardClientRpc(MovementCardStack[MovementCardStackPosition]);
 
             MovementCardStackPosition += 1;
@@ -141,8 +144,24 @@ public class CardManager : NetworkBehaviour
 
         foreach (CardEffect effect in effects)
         {
+            _activeCardEffects.Add(effect);
             effect.Initialize(player);
             effect.ExecuteEffect();
+        }
+    }
+
+    // end of turn revert of card effects
+    [ClientRpc]
+    private void RevertCardEffectClientRpc(ulong playerId)
+    {
+        Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
+
+        Debug.Log("call revert effect");
+        foreach (CardEffect effect in ActiveCardEffects)
+        {
+            effect.Initialize(player);
+            Debug.Log("revert effect in loop: " + effect.name);
+            effect.RevertEffect();
         }
     }
 }

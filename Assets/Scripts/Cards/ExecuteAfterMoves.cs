@@ -4,14 +4,8 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using UnityEngine;
 
-public enum PickupType
-{
-    Ressource,
-    //Chest
-}
-
 [CreateAssetMenu(fileName = "Effect", menuName = "Scriptable Cards/AddOnPickupEffect", order = 1)]
-public class AddOnPickup : CardEffect
+public class ExecuteAfterMoves : CardEffect
 {
     [Header("Options")]
     public PickupType pickupType;

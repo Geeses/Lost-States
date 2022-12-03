@@ -16,12 +16,12 @@ public class CardEffect : ScriptableObject
 
     public virtual void ExecuteEffect()
     {
-        
+        Debug.Log("execute effect " + this);
     }
 
     public virtual void RevertEffect()
     {
-
+        Debug.Log("revert effect " + this);
     }
 }
 

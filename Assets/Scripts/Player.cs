@@ -18,7 +18,10 @@ public enum Ressource
 public class Player : Selectable
 {
     #region Attributes
+
+    [Header("Debug")]
     public NetworkVariable<ulong> clientId;
+    public NetworkVariable<int> movedInCurrentTurn;
 
     private ObservableCollection<int> _movementCards = new ObservableCollection<int>();
     private ObservableCollection<int> _inventoryChestCards = new ObservableCollection<int>();
@@ -108,6 +111,7 @@ public class Player : Selectable
             MoveCount > 0 &&
             tile.passable)
         {
+            movedInCurrentTurn.Value += 1;
             ChangeMoveCountClientRpc(-1);
             MoveClientRpc(coordinates);
         }
@@ -117,7 +121,6 @@ public class Player : Selectable
     public void ChangeMoveCountClientRpc(int count)
     {
         MoveCount += count;
-        Debug.Log("Movecount is now " + MoveCount + " on Player " + clientId);
         TurnManager.Instance.currentTurnPlayerMovesText.text = MoveCount.ToString();
     }
 
