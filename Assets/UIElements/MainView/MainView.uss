@@ -101,7 +101,7 @@
 }
 
 .box-move-card {
-    width: 58px;
+    width: 185px;
 }
 
 .box-move-card:hover {
@@ -121,6 +121,7 @@
 }
 
 .buttonChar {
+    height: auto;
 }
 
 .buttonChar:active {
@@ -128,8 +129,8 @@
     border-right-width: 2px;
     border-top-width: 2px;
     border-bottom-width: 2px;
-    border-left-color: rgba(53, 255, 0, 255);
-    border-right-color: rgba(53, 255, 0, 255);
-    border-top-color: rgba(53, 255, 0, 255);
-    border-bottom-color: rgba(53, 255, 0, 255);
+    border-left-color: rgb(53, 255, 0);
+    border-right-color: rgb(53, 255, 0);
+    border-top-color: rgb(53, 255, 0);
+    border-bottom-color: rgb(53, 255, 0);
 }
