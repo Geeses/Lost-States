@@ -18,7 +18,7 @@ public enum Ressource
 public class Player : Selectable
 {
     #region Attributes
-    public ulong clientId;
+    public NetworkVariable<ulong> clientId;
 
     private ObservableCollection<int> _movementCards = new ObservableCollection<int>();
     private ObservableCollection<int> _inventoryChestCards = new ObservableCollection<int>();
@@ -50,12 +50,17 @@ public class Player : Selectable
     {
         base.Start();
 
-        if(!IsOwner)
+        if (IsServer)
+        {
+            clientId.Value = OwnerClientId;
+            Debug.Log(OwnerClientId);
+        }
+
+        if (!IsOwner)
         {
             _collider.enabled = false;
         }
 
-        clientId = NetworkManager.LocalClientId;
         _currentTile = GridManager.Instance.TileGrid[new GridCoordinates(0,0)];
     }
     #endregion

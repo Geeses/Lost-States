@@ -113,7 +113,7 @@ public class CardManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void TryPlayMovementCardServerRpc(int cardId, int instanceId, ulong playerId)
     {
-        Player player = NetworkManager.ConnectedClients[playerId].PlayerObject.GetComponent<Player>();
+        Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
 
         // if they are still allowed to play movementcards and its their turn
         if(player.PlayedMovementCards <= player.MaximumPlayableMovementCards &&
@@ -122,18 +122,7 @@ public class CardManager : NetworkBehaviour
             // remove UI object from player that sent the request
             NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(playerId, instanceId);
 
-            // increment move card played counter
-            player.ChangePlayedMoveCardsClientRpc(1);
-
-            Card card = GetCardById(cardId);
-            List<CardEffect> effects = card.cardEffects;
-            player.ChangeMoveCountClientRpc(card.baseMoveCount);
-
-            foreach (CardEffect effect in effects)
-            {
-                effect.Initialize(player);
-                effect.ExecuteEffect();
-            }
+            ExecuteCardEffectClientRpc(cardId, playerId);
         }
     }
 
@@ -141,6 +130,19 @@ public class CardManager : NetworkBehaviour
     [ClientRpc]
     private void ExecuteCardEffectClientRpc(int cardId, ulong playerId)
     {
+        Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
 
+        // increment move card played counter
+        player.ChangePlayedMoveCardsClientRpc(1);
+
+        Card card = GetCardById(cardId);
+        List<CardEffect> effects = card.cardEffects;
+        player.ChangeMoveCountClientRpc(card.baseMoveCount);
+
+        foreach (CardEffect effect in effects)
+        {
+            effect.Initialize(player);
+            effect.ExecuteEffect();
+        }
     }
 }
