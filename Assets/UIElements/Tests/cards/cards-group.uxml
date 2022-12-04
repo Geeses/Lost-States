@@ -1,4 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/Tests/testcards.uss?fileID=7433441132597879392&amp;guid=419fe2b27137bf34787f323f3457f187&amp;type=3#testcards" />
-    <ui:VisualElement name="card-element" class="cards" />
-</ui:UXML>
