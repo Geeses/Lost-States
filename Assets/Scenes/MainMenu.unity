@@ -207,7 +207,11 @@ PrefabInstance:
     - target: {fileID: 4164431759345259666, guid: 77fe97ec48f792d4593993903ab8c018, type: 3}
       propertyPath: NetworkConfig.NetworkTransport
       value: 
-      objectReference: {fileID: 353238061}
+      objectReference: {fileID: 0}
+    - target: {fileID: 5688024290183139806, guid: 77fe97ec48f792d4593993903ab8c018, type: 3}
+      propertyPath: m_ProtocolType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5935124967399663275, guid: 77fe97ec48f792d4593993903ab8c018, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -260,17 +264,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3151726856503015706, guid: 77fe97ec48f792d4593993903ab8c018, type: 3}
   m_PrefabInstance: {fileID: 353238059}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &353238061 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -2579925146496522305, guid: 77fe97ec48f792d4593993903ab8c018, type: 3}
-  m_PrefabInstance: {fileID: 353238059}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 353238060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6960e84d07fb87f47956e7a81d71c4e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &353238062
 MonoBehaviour:
   m_ObjectHideFlags: 0

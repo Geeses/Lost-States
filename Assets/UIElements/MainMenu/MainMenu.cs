@@ -44,8 +44,9 @@ public class MainMenu : NetworkBehaviour
     public async void StartHost() {
         if (RelayManager.Instance.IsRelayEnabled) 
             result = await RelayManager.Instance.SetupRelay(usernameField.text);
-            joinCodeField.SetEnabled(true);
-            joinCodeField.value = result.JoinCode;
+
+        joinCodeField.SetEnabled(true);
+        joinCodeField.value = result.JoinCode;
 
         if (NetworkManager.Singleton.StartHost())
             Debug.Log("Host started");
