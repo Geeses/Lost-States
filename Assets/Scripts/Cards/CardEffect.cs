@@ -7,6 +7,7 @@ public class CardEffect : ScriptableObject
 {
     // player who played card
     private Player _player;
+    private List<Player> _enemyPlayer;
 
     protected Player Player { get => _player; set => _player = value; }
 

@@ -6279,6 +6279,7 @@ GameObject:
   m_Component:
   - component: {fileID: 148673141}
   - component: {fileID: 148673142}
+  - component: {fileID: 148673143}
   m_Layer: 5
   m_Name: NetworkManagerUI
   m_TagString: Untagged
@@ -6323,13 +6324,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd6ef95ecd1d8b34e88d3a633d8d5de5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hostButton: {fileID: 498245096}
-  clientButton: {fileID: 419069975}
-  endTurnButton: {fileID: 2063382711}
-  moveCountText: {fileID: 1461085591}
-  playerId: {fileID: 92585602}
-  currentTurnPlayerId: {fileID: 1608115847}
-  currentTurnPlayerMoves: {fileID: 1461085591}
+  _hostButton: {fileID: 0}
+  _clientButton: {fileID: 0}
+  _endTurnButton: {fileID: 0}
+  _moveCountText: {fileID: 0}
+  _playerId: {fileID: 0}
+  _currentTurnPlayerId: {fileID: 0}
+  _currentTurnPlayerMoves: {fileID: 0}
+  _cardLayoutGroup: {fileID: 0}
+--- !u!114 &148673143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148673140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 4179291843
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1001 &148884111
 PrefabInstance:
   m_ObjectHideFlags: 0

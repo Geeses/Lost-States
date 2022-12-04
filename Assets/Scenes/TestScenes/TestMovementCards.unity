@@ -82239,7 +82239,7 @@ PrefabInstance:
       objectReference: {fileID: 147943708}
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: movementCards.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: movementCards.Array.data[0]
@@ -82249,6 +82249,10 @@ PrefabInstance:
       propertyPath: movementCards.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: 20d691301be461b4ea3ef8c02ce47ed3, type: 2}
+    - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
+      propertyPath: movementCards.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 5a21367fed9013342b520adf7f1f478e, type: 2}
     - target: {fileID: 6183616679594583376, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: m_RootOrder
       value: 6
