@@ -1,48 +1,38 @@
 using UnityEditor;
 using UnityEngine.UIElements;
-using UnityEngine.SceneManagement;
+using Unity.Services.Lobbies.Models;
 
 public class LobbyCell : EditorWindow
 {
     private Label _nameLabel;
     private Label _usersJoined;
     public Button _joinButton;
-    private LobbyData _lobbyData;
-    public Lobby _lobbyDelegate;
-    public Label _playerInfo;
-    public Button _createButton;
-    public void SetVisualElement(VisualElement visualElement)
+
+    private LobbyManager _manager;
+    private Lobby _lobby;
+
+    public LobbyCell(LobbyManager manager)
     {
-        _nameLabel = visualElement.Q<Label>("lobby-name");
-        _usersJoined = visualElement.Q<Label>("joined-count");
-        _joinButton = visualElement.Q<Button>("join-lobby");
+        _manager = manager;
+    }
+    public void SetVisualElements(VisualElement cell)
+    {
+        _nameLabel = cell.Q<Label>("lobby-name");
+        _usersJoined = cell.Q<Label>("joined-count");
+        _joinButton = cell.Q<Button>("join-lobby");
 
         _joinButton.clicked += JoinLobby;
     }
 
-    void JoinLobby()
+    public void SetData(Lobby lobby)
     {
-        if (_lobbyData._usersJoined >= 4)
-        {
-            _playerInfo.text = "Sorry, room is already full";
-            _createButton.text = "Start";
-            _createButton.clicked += StartGame;
-        }
-        else
-        {
-            _lobbyData._usersJoined += 1;
-            _usersJoined.text = _lobbyData.usersInLobby;
-        }
+        _lobby = lobby;
+        _nameLabel.text = lobby.Name;
+        _usersJoined.text = lobby.Players.Count.ToString();
     }
 
-    void StartGame()
+    public void  JoinLobby()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
-    public void SetData(LobbyData lobbyData)
-    {
-        _lobbyData = lobbyData;
-        _nameLabel.text = _lobbyData._name;
-        _usersJoined.text = _lobbyData.usersInLobby;
+        _manager.JoinLobby(_lobby.Id);
     }
 }

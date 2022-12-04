@@ -2,8 +2,8 @@
 <xs:schema xmlns:editor="UnityEditor.UIElements" xmlns:engine="UnityEngine.UIElements" xmlns="UnityEditor.Overlays" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="UnityEngine.UIElements.xsd" namespace="UnityEngine.UIElements" />
   <xs:import schemaLocation="UnityEditor.UIElements.xsd" namespace="UnityEditor.UIElements" />
-  <xs:import schemaLocation="Unity.Multiplayer.Tools.NetworkProfiler.Editor.xsd" namespace="Unity.Multiplayer.Tools.NetworkProfiler.Editor" />
   <xs:import schemaLocation="UnityEditor.Rendering.LookDev.xsd" namespace="UnityEditor.Rendering.LookDev" />
+  <xs:import schemaLocation="Unity.Multiplayer.Tools.NetworkProfiler.Editor.xsd" namespace="Unity.Multiplayer.Tools.NetworkProfiler.Editor" />
   <xs:import schemaLocation="UnityEditor.U2D.Layout.xsd" namespace="UnityEditor.U2D.Layout" />
   <xs:import schemaLocation="UnityEditor.U2D.Animation.xsd" namespace="UnityEditor.U2D.Animation" />
   <xs:import schemaLocation="UnityEditor.U2D.Animation.Upgrading.xsd" namespace="UnityEditor.U2D.Animation.Upgrading" />

@@ -8,9 +8,6 @@ public class MainMenu : NetworkBehaviour
     Button hostButton;
     Button clientButton;
 
-    [SerializeField]
-    VisualTreeAsset listEntryTemplate;
-
     public void Start()
     {
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
