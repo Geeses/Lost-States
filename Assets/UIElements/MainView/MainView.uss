@@ -19,7 +19,7 @@
     flex-shrink: 1;
     width: 100%;
     padding-right: 0;
-    left: 345px;
+    left: 317px;
 }
 
 #char-bar:hover {
@@ -101,7 +101,7 @@
 }
 
 .box-move-card {
-    width: 185px;
+    width: 181px;
 }
 
 .box-move-card:hover {
@@ -111,7 +111,7 @@
 }
 
 .box-chest-card {
-    width: 45px;
+    width: 66px;
 }
 
 .box-chest-card:hover {
