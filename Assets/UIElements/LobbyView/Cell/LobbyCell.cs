@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine.UIElements;
 using Unity.Services.Lobbies.Models;
 
-public class LobbyCell : EditorWindow
+public class LobbyCell
 {
     private Label _nameLabel;
     private Label _usersJoined;
