@@ -32,7 +32,7 @@ public class Player : Selectable
     public override void Start()
     {
         base.Start();
-
+         /*
         if(!IsOwner)
         {
             _collider.enabled = false;
@@ -40,6 +40,7 @@ public class Player : Selectable
 
         clientId = NetworkManager.LocalClientId;
         _currentTile = GridManager.Instance.TileGrid[new GridCoordinates(0,0)];
+         */
     }
 
     public override void Select()
