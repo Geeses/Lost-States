@@ -23,6 +23,8 @@ public class Player : Selectable
     public NetworkVariable<ulong> clientId;
     public NetworkVariable<int> movedInCurrentTurn;
 
+    public event Action<GridCoordinates> OnPlayerMoved;
+
     private ObservableCollection<int> _movementCards = new ObservableCollection<int>();
     private ObservableCollection<int> _inventoryChestCards = new ObservableCollection<int>();
     private ObservableCollection<Ressource> _inventoryRessources = new ObservableCollection<Ressource>();
@@ -152,6 +154,8 @@ public class Player : Selectable
 
         if(IsLocalPlayer)
             HighlightAdjacentTiles();
+
+        OnPlayerMoved?.Invoke(coordinates);
     }
 
 

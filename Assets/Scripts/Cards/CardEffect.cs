@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CardEffect : ScriptableObject
 {
+    // player who played card
     private Player _player;
 
     protected Player Player { get => _player; set => _player = value; }
