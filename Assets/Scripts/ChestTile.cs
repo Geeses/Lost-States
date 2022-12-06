@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class ChestTile : MonoBehaviour
+public class ChestTile : NetworkBehaviour
 {
     [Header("Options")]
     public int count;
@@ -25,7 +26,8 @@ public class ChestTile : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            _cachedPlayer.InventoryChestCards.Add(0);
+            if(player.IsLocalPlayer)
+                CardManager.Instance.AddChestCardToPlayerServerRpc(_cachedPlayer.clientId.Value);
         }
 
         count = 0;

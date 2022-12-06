@@ -162,8 +162,15 @@ public class Player : Selectable
     [ClientRpc]
     public void AddMovementCardClientRpc(int cardId)
     {
-        Debug.Log("add card Id " + cardId);
+        Debug.Log("add movecard Id " + cardId);
         MovementCards.Add(cardId);
+    }
+
+    [ClientRpc]
+    public void AddChestCardClientRpc(int cardId)
+    {
+        Debug.Log("add chestcard Id " + cardId, this);
+        InventoryChestCards.Add(cardId);
     }
     #endregion
 }

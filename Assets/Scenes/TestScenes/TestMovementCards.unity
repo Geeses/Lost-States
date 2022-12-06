@@ -82238,6 +82238,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 147943708}
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
+      propertyPath: chestCards.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
+      propertyPath: chestCards.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 9f47a8ea2c71af44abc955e783c6d328, type: 2}
+    - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: movementCards.Array.size
       value: 3
       objectReference: {fileID: 0}

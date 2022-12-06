@@ -15,6 +15,7 @@ public class CardUi : NetworkBehaviour, IPointerDownHandler
     public TMPro.TextMeshProUGUI moveCountText;
 
     private int _cardId;
+    private Card _card;
 
     public event Action OnCardPlayed;
     #endregion
@@ -33,12 +34,18 @@ public class CardUi : NetworkBehaviour, IPointerDownHandler
     public void Initialize(Card card)
     {
         _cardId = card.id;
-        moveCountText.text = card.baseMoveCount.ToString();
+        _card = card;
+
+        if(moveCountText)
+            moveCountText.text = card.baseMoveCount.ToString();
     }
 
     public void TryPlayCard()
     {
-        CardManager.Instance.TryPlayMovementCardServerRpc(CardId, gameObject.GetInstanceID(), NetworkManager.LocalClientId);
+        if(_card.cardType is CardType.Movement)
+            CardManager.Instance.TryPlayMovementCardServerRpc(CardId, gameObject.GetInstanceID(), NetworkManager.LocalClientId);
+        else if(_card.cardType is CardType.Chest)
+            CardManager.Instance.TryPlayChestCardServerRpc(CardId, gameObject.GetInstanceID(), NetworkManager.LocalClientId);
     }
 }
 

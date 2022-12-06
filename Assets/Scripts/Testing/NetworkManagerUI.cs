@@ -51,7 +51,6 @@ public class NetworkManagerUI : NetworkBehaviour
     }
     private void Start()
     {
-        Debug.Log(GameManager.Instance.gameHasStarted);
         if (GameManager.Instance.gameHasStarted)
         {
             InitCards();
@@ -66,30 +65,51 @@ public class NetworkManagerUI : NetworkBehaviour
     {
         _player = NetworkManager.LocalClient.PlayerObject.GetComponent<Player>();
 
-        Debug.Log(_player.MovementCards.Count);
         foreach (int id in _player.MovementCards)
         {
-            InstantiateCard(id);
+            InstantiateMovementCard(id);
         }
 
         _player.MovementCards.CollectionChanged += ChangeMovementCards;
+        _player.InventoryChestCards.CollectionChanged += ChangeChestCards;
     }
 
-    private void ChangeMovementCards(object sender, NotifyCollectionChangedEventArgs e)
+    private void ChangeChestCards(object sender, NotifyCollectionChangedEventArgs e)
     {
-        Debug.Log("card list changed");
+        Debug.Log("chestcard list changed");
         if (e.NewItems != null)
         {
             foreach (var item in e.NewItems)
             {
-                InstantiateCard((int)item);
+                InstantiateChestCard((int)item);
             }
         }
     }
 
-    private void InstantiateCard(int id)
+    private void ChangeMovementCards(object sender, NotifyCollectionChangedEventArgs e)
     {
-        Card card = CardManager.Instance.GetCardById(id);
+        Debug.Log("movementcard list changed");
+        if (e.NewItems != null)
+        {
+            foreach (var item in e.NewItems)
+            {
+                InstantiateMovementCard((int)item);
+            }
+        }
+    }
+
+    private void InstantiateMovementCard(int id)
+    {
+        Card card = CardManager.Instance.GetMovementCardById(id);
+        _cards.Add(card);
+        CardUi cardUi = Instantiate(card.CardUi, CardLayoutGroup.transform).GetComponent<CardUi>();
+        cardUi.Initialize(card);
+        _cardUis.Add(cardUi);
+    }
+
+    private void InstantiateChestCard(int id)
+    {
+        Card card = CardManager.Instance.GetChestCardById(id);
         _cards.Add(card);
         CardUi cardUi = Instantiate(card.CardUi, CardLayoutGroup.transform).GetComponent<CardUi>();
         cardUi.Initialize(card);
