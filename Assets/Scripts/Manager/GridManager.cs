@@ -96,4 +96,19 @@ public class GridManager : MonoBehaviour
 
         return adjacentTiles;
     }
+
+    public List<Tile> GetTilesInProximity(Tile tile, int radius)
+    {
+        List<Tile> adjacentTiles = new List<Tile>();
+
+        for (int x = -radius; x <= radius; x++)
+        {
+            for (int y = -radius; y <= radius; y++)
+            {
+                adjacentTiles.Add(TileGrid[new GridCoordinates(tile.TileGridCoordinates.x + x, tile.TileGridCoordinates.y + y)]);
+            }
+        }
+
+        return adjacentTiles;
+    }
 }

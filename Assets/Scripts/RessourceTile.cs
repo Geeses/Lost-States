@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class RessourceTile : MonoBehaviour
+public class RessourceTile : NetworkBehaviour
 {
     [Header("Options")]
     public Ressource ressourceType;

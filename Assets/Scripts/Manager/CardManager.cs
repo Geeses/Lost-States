@@ -136,7 +136,7 @@ public class CardManager : NetworkBehaviour
             // remove UI object from player that sent the request
             NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(playerId, instanceId);
 
-            ExecuteCardEffectClientRpc(cardId, playerId);
+            ExecuteCardEffectClientRpc(cardId, playerId, CardType.Movement);
         }
     }
 
@@ -201,7 +201,7 @@ public class CardManager : NetworkBehaviour
             // remove UI object from player that sent the request
             NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(playerId, instanceId);
 
-            ExecuteCardEffectClientRpc(cardId, playerId);
+            ExecuteCardEffectClientRpc(cardId, playerId, CardType.Chest);
         }
     }
     #endregion
@@ -210,17 +210,26 @@ public class CardManager : NetworkBehaviour
 
     // execute card effects
     [ClientRpc]
-    private void ExecuteCardEffectClientRpc(int cardId, ulong playerId)
+    private void ExecuteCardEffectClientRpc(int cardId, ulong playerId, CardType cardType)
     {
         Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
+        Card card = null;
 
-        // increment move card played counter
-        player.ChangePlayedMoveCardsClientRpc(1);
+        if(cardType == CardType.Movement)
+        {
+            card = GetMovementCardById(cardId);
+            // increment move card played counter
+            player.ChangePlayedMoveCardsClientRpc(1);
+            player.ChangeMoveCountClientRpc(card.baseMoveCount);
+        }
+        else if(cardType == CardType.Chest)
+        {
+            card = GetChestCardById(cardId);
+        }
 
-        Card card = GetMovementCardById(cardId);
         List<CardEffect> effects = card.cardEffects;
-        player.ChangeMoveCountClientRpc(card.baseMoveCount);
 
+        Debug.Log("executing card effect " + effects.Count + " " + card.cardEffects.Count);
         foreach (CardEffect effect in effects)
         {
             _activeCardEffects.Add(effect);

@@ -7,7 +7,7 @@ using UnityEngine;
 public enum PickupType
 {
     Ressource,
-    //Chest
+    Chest
 }
 
 [CreateAssetMenu(fileName = "Effect", menuName = "Scriptable Cards/AddOnPickupEffect", order = 1)]
