@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardUi : NetworkBehaviour, IPointerDownHandler
+public class CardUiFactory : NetworkBehaviour, IPointerDownHandler
 {
     #region Attributes
     [Header("Card Base References")]
