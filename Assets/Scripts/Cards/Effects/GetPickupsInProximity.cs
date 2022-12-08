@@ -14,16 +14,36 @@ public class GetPickupsInProximity : CardEffect
 
         // for every enemy player
         // get their adjacent tiles through gridmanager
-        foreach (var item in GridManager.Instance.GetTilesInProximity(GridManager.Instance.TileGrid[new GridCoordinates(0, 0)], tileRadius))
-        {
-            Debug.Log(item, item);
-            item.Highlight();
-        }
+        PickupItemsInRange();
     }
 
     public override void RevertEffect()
     {
         base.RevertEffect();
+    }
+
+    public void PickupItemsInRange()
+    {
+        foreach (Tile tile in GridManager.Instance.GetTilesInProximity(GridManager.Instance.TileGrid[new GridCoordinates(0, 0)], tileRadius))
+        {
+            if(pickupType == PickupType.Chest)
+            {
+                foreach (ITileExtension extension in tile.TileExtensions)
+                {
+                    if(extension is ChestTile)
+                    {
+                        ChestTile chest = tile.GetComponent<ChestTile>();
+                        chest.GivePlayerChestCard(Player);
+                    }
+
+                    if(extension is RessourceTile)
+                    {
+                        RessourceTile ressource = tile.GetComponent<RessourceTile>();
+                        ressource.GivePlayerRessource(Player);
+                    }
+                }
+            }
+        }
     }
 }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class RessourceTile : NetworkBehaviour
+public class RessourceTile : NetworkBehaviour, ITileExtension
 {
     [Header("Options")]
     public Ressource ressourceType;
@@ -22,7 +22,7 @@ public class RessourceTile : NetworkBehaviour
         _tile.OnStepOnTile += GivePlayerRessource;
     }
 
-    private void GivePlayerRessource(Player player)
+    public void GivePlayerRessource(Player player)
     {
         _cachedPlayer = player;
 
