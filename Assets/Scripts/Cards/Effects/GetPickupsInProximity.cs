@@ -24,22 +24,30 @@ public class GetPickupsInProximity : CardEffect
 
     public void PickupItemsInRange()
     {
-        foreach (Tile tile in GridManager.Instance.GetTilesInProximity(GridManager.Instance.TileGrid[new GridCoordinates(0, 0)], tileRadius))
+        foreach (Player enemyPlayer in EnemyPlayers)
         {
-            if(pickupType == PickupType.Chest)
+            foreach (Tile tile in GridManager.Instance.GetTilesInProximity(GridManager.Instance.TileGrid[enemyPlayer.CurrentTile.TileGridCoordinates], tileRadius))
             {
-                foreach (ITileExtension extension in tile.TileExtensions)
+                if (pickupType == PickupType.Chest)
                 {
-                    if(extension is ChestTile)
+                    foreach (ITileExtension extension in tile.TileExtensions)
                     {
-                        ChestTile chest = tile.GetComponent<ChestTile>();
-                        chest.GivePlayerChestCard(Player);
+                        if (extension is ChestTile)
+                        {
+                            ChestTile chest = tile.GetComponent<ChestTile>();
+                            chest.GivePlayerChestCard(Player);
+                        }
                     }
-
-                    if(extension is RessourceTile)
+                }
+                else if (pickupType == PickupType.Ressource)
+                {
+                    foreach (ITileExtension extension in tile.TileExtensions)
                     {
-                        RessourceTile ressource = tile.GetComponent<RessourceTile>();
-                        ressource.GivePlayerRessource(Player);
+                        if (extension is RessourceTile)
+                        {
+                            RessourceTile ressource = tile.GetComponent<RessourceTile>();
+                            ressource.GivePlayerRessource(Player);
+                        }
                     }
                 }
             }
