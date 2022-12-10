@@ -57,7 +57,7 @@
     -unity-text-align: lower-left;
 }
 
-.button {
+.button-round {
     -unity-background-scale-mode: stretch-to-fill;
     min-width: 20px;
     min-height: 20px;
@@ -133,4 +133,8 @@
     border-right-color: rgb(53, 255, 0);
     border-top-color: rgb(53, 255, 0);
     border-bottom-color: rgb(53, 255, 0);
+}
+
+.label-Inventar {
+    font-size: 12px;
 }
