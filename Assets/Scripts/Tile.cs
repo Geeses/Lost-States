@@ -3,10 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum TileZone
+{
+    none,
+    safe,
+    neutral,
+    danger
+}
+
 public class Tile : Selectable
 {
     [Header("Options")]
     public bool passable;
+    public TileZone zoneType;
 
     private GridCoordinates _tileGridCoordinates;
     private bool _movementAllowed;
