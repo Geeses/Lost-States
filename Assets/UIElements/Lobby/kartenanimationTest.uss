@@ -63,19 +63,6 @@
     border-bottom-width: 5px;
 }
 
-.cardsTest {
-    left: 0;
-    border-left-width: 2px;
-    border-right-width: 2px;
-    border-top-width: 2px;
-    border-bottom-width: 2px;
-    border-left-color: rgb(56, 56, 56);
-    border-right-color: rgb(56, 56, 56);
-    border-top-color: rgb(56, 56, 56);
-    border-bottom-color: rgb(56, 56, 56);
-    width: 54px;
-}
-
 .cardsTest:hover {
     translate: 0 -20px;
     transition-property: translate;
@@ -97,4 +84,17 @@
     transition-property: display;
     visibility: visible;
     overflow: hidden;
+}
+
+.cardsTest {
+    left: 0;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: rgb(56, 56, 56);
+    border-right-color: rgb(56, 56, 56);
+    border-top-color: rgb(56, 56, 56);
+    border-bottom-color: rgb(56, 56, 56);
+    width: 54px;
 }

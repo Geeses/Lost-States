@@ -71020,7 +71020,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PanelSettings: {fileID: 11400000, guid: 5289afe880571a540913a1b1f8b31860, type: 2}
   m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: 11ed312d1ea90ca489c61fa55a9c28c6, type: 3}
+  sourceAsset: {fileID: 9197481963319205126, guid: 7d78fa8211c02cd4c97d00d965f15045, type: 3}
   m_SortingOrder: 0
 --- !u!4 &1877042111
 Transform:
@@ -80339,13 +80339,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd6ef95ecd1d8b34e88d3a633d8d5de5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hostButton: {fileID: 1023668801}
-  clientButton: {fileID: 110778336}
-  endTurnButton: {fileID: 239477659}
-  moveCountText: {fileID: 1622124494}
-  playerId: {fileID: 535499481}
-  currentTurnPlayerId: {fileID: 793464056}
-  currentTurnPlayerMoves: {fileID: 1622124494}
+  _hostButton: {fileID: 0}
+  _clientButton: {fileID: 0}
+  _endTurnButton: {fileID: 0}
+  _moveCountText: {fileID: 0}
+  _playerId: {fileID: 0}
+  _currentTurnPlayerId: {fileID: 0}
+  _currentTurnPlayerMoves: {fileID: 0}
+  _cardLayoutGroup: {fileID: 0}
 --- !u!1001 &2100673771
 PrefabInstance:
   m_ObjectHideFlags: 0
