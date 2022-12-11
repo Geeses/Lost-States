@@ -1,8 +1,0 @@
- <ui:VisualElement name="FlexBox" style="flex-direction: row; position: absolute; left: 0; top: 0; right: 0; bottom: 0;">
-	<ui:VisualElement name="Side-L" style="background-color: rgb(0, 166, 255); flex-grow: 1; margin-left: 20px; margin-right: 10px; margin-top: 20px; margin-bottom: 20px; width: 50%;">
-		<GallantGames.UI.AspectRatioPanel aspect-ratio-x="16" aspect-ratio-y="9" style="background-color: yellow;" />
-	</ui:VisualElement>
-	<ui:VisualElement name="Side-R" style="background-color: rgb(255, 64, 0); flex-grow: 1; margin-left: 10px; margin-right: 20px; margin-top: 20px; margin-bottom: 20px; width: 50%;">
-		<GallantGames.UI.AspectRatioPanel aspect-ratio-x="9" aspect-ratio-y="16" style="background-color: yellow;" />
-	</ui:VisualElement>
-</ui:VisualElement>

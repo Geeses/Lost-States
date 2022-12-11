@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2181118646059948a6d77c41a735863, type: 3}
+  m_Name: ChestCard02
+  m_EditorClassIdentifier: 
+  cardType: 1
+  id: 1
+  baseMoveCount: 0
+  CardUi: {fileID: 7694070035094654154, guid: 573ea2fd1be96d7468880d59132d03f6, type: 3}
+  cardEffects:
+  - {fileID: 11400000, guid: 25af2834a984528459f9f16645abf8f1, type: 2}
+  - {fileID: 11400000, guid: 8d465a588ba510b4f9533e5a874486ba, type: 2}

@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79a2b4821549ab344a1177938c122c13, type: 3}
-  m_Name: AddMovesOnRessourcePickup
+  m_Script: {fileID: 11500000, guid: c2181118646059948a6d77c41a735863, type: 3}
+  m_Name: 8_Gold
   m_EditorClassIdentifier: 
-  pickupType: 0
-  moveCount: 3
+  cardType: 0
+  id: 8
+  baseMoveCount: 8
+  CardUi: {fileID: 0}
+  cardEffects: []

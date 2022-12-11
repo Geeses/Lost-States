@@ -1,12 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardUiScript : NetworkBehaviour, IPointerDownHandler
+public class CardUIScript : NetworkBehaviour, IPointerDownHandler
 {
     #region Attributes
     [Header("Card Base References")]
@@ -16,12 +14,14 @@ public class CardUiScript : NetworkBehaviour, IPointerDownHandler
 
     private int _cardId;
     private Card _card;
+    private CardType _cardType;
 
     public event Action OnCardPlayed;
     #endregion
 
     #region Properties
     public int CardId { get => _cardId; set => _cardId = value; }
+    public CardType CardType { get => _cardType; set => _cardType = value; }
     #endregion
 
     #region Monobehavior Functions
@@ -33,8 +33,9 @@ public class CardUiScript : NetworkBehaviour, IPointerDownHandler
 
     public void Initialize(Card card)
     {
-        _cardId = card.id;
+        CardId = card.id;
         _card = card;
+        CardType = card.cardType;
 
         if(moveCountText)
             moveCountText.text = card.baseMoveCount.ToString();
