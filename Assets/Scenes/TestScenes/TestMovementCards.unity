@@ -82247,7 +82247,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 9f47a8ea2c71af44abc955e783c6d328, type: 2}
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: movementCards.Array.size
-      value: 3
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: movementCards.Array.data[0]
@@ -82261,6 +82261,30 @@ PrefabInstance:
       propertyPath: movementCards.Array.data[2]
       value: 
       objectReference: {fileID: 11400000, guid: 5a21367fed9013342b520adf7f1f478e, type: 2}
+    - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
+      propertyPath: movementCards.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 3c8a72fa0a764c640892ec733c486046, type: 2}
+    - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
+      propertyPath: movementCards.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6cacaab7ce8ce2f4da72d4129859dd8c, type: 2}
+    - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
+      propertyPath: movementCards.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: 08e4e9e92c59c3f449727cec30d6f63f, type: 2}
+    - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
+      propertyPath: movementCards.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 862948d410e67ae41ab3c84316ba536c, type: 2}
+    - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
+      propertyPath: movementCards.Array.data[7]
+      value: 
+      objectReference: {fileID: 11400000, guid: c8e4627632b395d48afb313f87e05f78, type: 2}
+    - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
+      propertyPath: movementCards.Array.data[8]
+      value: 
+      objectReference: {fileID: 11400000, guid: 3c9d5b2ed5fa74e49acd43f5c7db30f4, type: 2}
     - target: {fileID: 6183616679594583376, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: m_RootOrder
       value: 6

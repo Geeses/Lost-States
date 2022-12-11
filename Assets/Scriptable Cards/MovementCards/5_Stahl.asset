@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 805df228499398844893401d22a78e85, type: 3}
-  m_Name: AddCoinsAfterMove
+  m_Script: {fileID: 11500000, guid: c2181118646059948a6d77c41a735863, type: 3}
+  m_Name: 5_Stahl
   m_EditorClassIdentifier: 
-  reward: 0
-  rewardAmount: 3
-  moveCount: 5
+  cardType: 0
+  id: 5
+  baseMoveCount: 5
+  CardUi: {fileID: 5814282731637473512, guid: 476a91568e6902e4d956914c3d072e8c, type: 3}
+  cardEffects: []

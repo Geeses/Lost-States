@@ -10,11 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2181118646059948a6d77c41a735863, type: 3}
-  m_Name: MoveCard03
+  m_Name: 8_Gold
   m_EditorClassIdentifier: 
   cardType: 0
-  id: 2
-  baseMoveCount: 7
-  CardUi: {fileID: 3197426246208601130, guid: ebb6ca9d9bd4ca44f96436fedf62976d, type: 3}
-  cardEffects:
-  - {fileID: 11400000, guid: 0220ca0d3e28d2847b9a149e71917f2b, type: 2}
+  id: 8
+  baseMoveCount: 8
+  CardUi: {fileID: 0}
+  cardEffects: []

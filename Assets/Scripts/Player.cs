@@ -49,6 +49,7 @@ public class Player : Selectable
     public int MaximumPlayableMovementCards { get => _maximumPlayableMovementCards; set => _maximumPlayableMovementCards = value; }
     public int PlayedMovementCards { get => _playedMovementCards; set => _playedMovementCards = value; }
     #endregion
+    public Tile CurrentTile { get => _currentTile; set => _currentTile = value; }
 
     #region Monobehavior Functions
     public override void Start()
