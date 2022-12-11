@@ -10,11 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 361950451134950754, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_Name
-      value: MovementCard03
+      value: FunfKupfer
       objectReference: {fileID: 0}
     - target: {fileID: 469728987098826006, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_text
-      value: Caros karte
+      value: DU KANNST ALLE ANDEREN MITSPIELER UM " FELDER BEWEGEN
       objectReference: {fileID: 0}
     - target: {fileID: 2306062493240514938, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_Sprite

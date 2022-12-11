@@ -1,6 +1,4 @@
-using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UIElements;
 
 public sealed class LogData {
     public List<string> logList = new List<string>();

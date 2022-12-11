@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 361950451134950754, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_Name
-      value: MovementCard01
+      value: DreiKupfer
       objectReference: {fileID: 0}
     - target: {fileID: 457946213851397914, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_RaycastTarget
@@ -18,11 +18,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 469728987098826006, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_text
-      value: get 3 moves per ressource pickup
+      value: "DIE RICHTUNG IN DIE DER ERSTE SCHRITT GELAUFEN WIRD, WIRD SO LANGE
+        BELAUFEN BIS DER SPIELER AUF EIN WIEDERSTAND ST\xD6\xDFT. DANN LAUFE DIE
+        RESTLICHE ZWEI SCHRITTE NACH WAHL."
       objectReference: {fileID: 0}
     - target: {fileID: 469728987098826006, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_fontSize
-      value: 8
+      value: 6.8
       objectReference: {fileID: 0}
     - target: {fileID: 469728987098826006, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_fontSizeMax

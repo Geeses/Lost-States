@@ -10,11 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 361950451134950754, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_Name
-      value: MovementCard02
+      value: VierKupfer
       objectReference: {fileID: 0}
     - target: {fileID: 469728987098826006, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_text
-      value: get 4 coins after moving 5
+      value: "ERHALTE 3 M\xDCNZEN."
       objectReference: {fileID: 0}
     - target: {fileID: 469728987098826006, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_fontSize

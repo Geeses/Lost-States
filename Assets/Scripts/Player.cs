@@ -54,7 +54,6 @@ public class Player : Selectable
     public int PlayedMovementCards { get => _playedMovementCards; set => _playedMovementCards = value; }
     public Tile CurrentTile { get => _currentTile; private set => _currentTile = value; }
     #endregion
-    public Tile CurrentTile { get => _currentTile; set => _currentTile = value; }
 
     #region Monobehavior Functions
     public override void Start()

@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: a7a0d64a7e56f1a4098606c94cccd987, type: 3}
+    - target: {fileID: 469728987098826006, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
+      propertyPath: m_text
+      value: Kein Effekt
+      objectReference: {fileID: 0}
     - target: {fileID: 5157082764823254035, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
@@ -30,7 +34,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8916346068369775523, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 8916346068369775523, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_AnchorMax.x
