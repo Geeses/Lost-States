@@ -11,6 +11,7 @@ public class NetworkManagerUI : NetworkBehaviour
     [SerializeField] private Button _hostButton;
     [SerializeField] private Button _clientButton;
     [SerializeField] private Button _endTurnButton;
+    [SerializeField] private Button _skipTurnButton;
     [SerializeField] private TMPro.TMP_Text _moveCountText;
     [SerializeField] private TMPro.TMP_Text _playerId;
     [SerializeField] private TMPro.TMP_Text _currentTurnPlayerId;
@@ -79,9 +80,20 @@ public class NetworkManagerUI : NetworkBehaviour
         Debug.Log("chestcard list changed");
         if (e.NewItems != null)
         {
-            foreach (var item in e.NewItems)
+            foreach (int id in e.NewItems)
             {
-                InstantiateChestCard((int)item);
+                InstantiateChestCard(id);
+            }
+        }
+
+        if (e.OldItems != null)
+        {
+            Debug.Log(e.OldItems.Count);
+            foreach (int id in e.OldItems)
+            {
+                GameObject go = _cardUis.Find(x => x.CardId == id && x.CardType == CardType.Chest).gameObject;
+                Debug.Log(go.name, go);
+                Destroy(go);
             }
         }
     }

@@ -10,11 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2181118646059948a6d77c41a735863, type: 3}
-  m_Name: ChestCard01
+  m_Name: ChestCard06
   m_EditorClassIdentifier: 
-  cardType: 1
+  cardType: 0
   id: 0
   baseMoveCount: 0
-  CardUi: {fileID: 1290136888109522565, guid: afe850f1ede7f5945947c37a3bd8911d, type: 3}
-  cardEffects:
-  - {fileID: 11400000, guid: be9ff91619f11464b924358a6e254f18, type: 2}
+  CardUi: {fileID: 0}
+  cardEffects: []

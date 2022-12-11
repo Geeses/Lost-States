@@ -5,6 +5,8 @@ using DG.Tweening;
 using Unity.Netcode;
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using Random = UnityEngine.Random;
 
 public enum Ressource
 {
@@ -22,6 +24,8 @@ public class Player : Selectable
     [Header("Debug")]
     public NetworkVariable<ulong> clientId;
     public NetworkVariable<int> movedInCurrentTurn;
+    public int inventoryRessourceCount;
+    public int savedRessourceCount;
 
     public event Action<GridCoordinates> OnPlayerMoved;
 
@@ -48,6 +52,7 @@ public class Player : Selectable
     public ObservableCollection<int> MovementCards { get => _movementCards; set => _movementCards = value; }
     public int MaximumPlayableMovementCards { get => _maximumPlayableMovementCards; set => _maximumPlayableMovementCards = value; }
     public int PlayedMovementCards { get => _playedMovementCards; set => _playedMovementCards = value; }
+    public Tile CurrentTile { get => _currentTile; private set => _currentTile = value; }
     #endregion
     public Tile CurrentTile { get => _currentTile; set => _currentTile = value; }
 
@@ -59,7 +64,6 @@ public class Player : Selectable
         if (IsServer)
         {
             clientId.Value = OwnerClientId;
-            Debug.Log(OwnerClientId);
         }
 
         if (!IsOwner)
@@ -67,7 +71,9 @@ public class Player : Selectable
             _collider.enabled = false;
         }
 
-        _currentTile = GridManager.Instance.TileGrid[new GridCoordinates(0,0)];
+        CurrentTile = GridManager.Instance.TileGrid[new GridCoordinates(0,0)];
+        InventoryRessources.CollectionChanged += ChangeCountInventory;
+        SavedRessources.CollectionChanged += ChangeCountSaved;
     }
     #endregion
 
@@ -86,7 +92,7 @@ public class Player : Selectable
 
     private void HighlightAdjacentTiles()
     {
-        foreach (Tile tile in GridManager.Instance.GetAdjacentTiles(_currentTile))
+        foreach (Tile tile in GridManager.Instance.GetAdjacentTiles(CurrentTile))
         {
             tile.Highlight();
         }
@@ -94,7 +100,7 @@ public class Player : Selectable
 
     private void UnhighlightAdjacentTiles()
     {
-        foreach (Tile tile in GridManager.Instance.GetAdjacentTiles(_currentTile))
+        foreach (Tile tile in GridManager.Instance.GetAdjacentTiles(CurrentTile))
         {
             tile.Unhighlight();
         }
@@ -109,8 +115,8 @@ public class Player : Selectable
 
         // if tile is adjacent
         if (Array.Find(GridManager.Instance.GetAdjacentTiles(tile), x => 
-            x.TileGridCoordinates.x == _currentTile.TileGridCoordinates.x && 
-            x.TileGridCoordinates.y == _currentTile.TileGridCoordinates.y) && 
+            x.TileGridCoordinates.x == CurrentTile.TileGridCoordinates.x && 
+            x.TileGridCoordinates.y == CurrentTile.TileGridCoordinates.y) && 
             MoveCount > 0 &&
             tile.passable)
         {
@@ -145,9 +151,9 @@ public class Player : Selectable
     {
         if(IsLocalPlayer)
             UnhighlightAdjacentTiles();
-
-        _currentTile = GridManager.Instance.TileGrid[coordinates];
-        _currentTile.PlayerStepOnTile(this);
+        CurrentTile = GridManager.Instance.TileGrid[coordinates];
+        CurrentTile.PlayerStepOnTile(this);
+        Debug.Log(CurrentTile);
 
         Vector3 cellWorldPosition = GridManager.Instance.Tilemap.CellToWorld(new Vector3Int(coordinates.x, coordinates.y, 0));
         cellWorldPosition += GridManager.Instance.Tilemap.cellSize / 2;
@@ -172,6 +178,42 @@ public class Player : Selectable
     {
         Debug.Log("add chestcard Id " + cardId, this);
         InventoryChestCards.Add(cardId);
+    }
+    #endregion
+
+    #region Ressources
+    public void ChangeCountInventory(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        inventoryRessourceCount = InventoryRessources.Count;
+    }
+
+    public void ChangeCountSaved(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        savedRessourceCount = SavedRessources.Count;
+    }
+
+    public void RemoveNewestRessource(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            Debug.Log(InventoryRessources.Count);
+            if(InventoryRessources.Count > 0)
+            {
+                InventoryRessources.RemoveAt(InventoryRessources.Count - 1);
+            }
+        }
+    }
+
+    public void RemoveNewestChestcard(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            Debug.Log(InventoryChestCards.Count);
+            if (InventoryChestCards.Count > 0)
+            {
+                InventoryChestCards.RemoveAt(InventoryChestCards.Count - 1);
+            }
+        }
     }
     #endregion
 }

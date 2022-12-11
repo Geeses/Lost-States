@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class CardManager : NetworkBehaviour
 {
