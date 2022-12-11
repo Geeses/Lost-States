@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class ChestTile : NetworkBehaviour
+public class ChestTile : NetworkBehaviour, ITileExtension
 {
     [Header("Options")]
     public int count;
@@ -20,7 +20,7 @@ public class ChestTile : NetworkBehaviour
         _tile.OnStepOnTile += GivePlayerChestCard;
     }
 
-    private void GivePlayerChestCard(Player player)
+    public void GivePlayerChestCard(Player player)
     {
         _cachedPlayer = player;
 
