@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:Template name="BattleLogList" src="project://database/Assets/UIElements/BattleLog/BattleLogList.uxml?fileID=9197481963319205126&amp;guid=16023dc38393c4442925d5b823f5da2d&amp;type=3#BattleLogList" />
+    <ui:GroupBox name="Battellog" style="background-image: url(&apos;project://database/Assets/Art/UI/BattleLog/UIBattlelogBG.png?fileID=2800000&amp;guid=88c74ab0477b0554aa476050f51f2523&amp;type=3#UIBattlelogBG&apos;); -unity-background-scale-mode: stretch-to-fill; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 5%; padding-bottom: 1%; align-items: center; justify-content: space-between; flex-shrink: 1; width: 100%; height: 100%;">
+        <ui:Instance template="BattleLogList" name="BattleLogList" style="width: 100%; height: 78%;" />
+        <ui:Button tabindex="-1" text="End Turn" display-tooltip-when-elided="true" name="EndTurn" style="color: rgb(255, 255, 255); background-image: url(&apos;project://database/Assets/Art/UI/BattleLog/UIButtonEndTurn.png?fileID=2800000&amp;guid=ab41dd4436861834f899b1c3236cd8a4&amp;type=3#UIButtonEndTurn&apos;); width: 69%; background-color: rgba(0, 0, 0, 0); padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; height: 20%;" />
+    </ui:GroupBox>
+</ui:UXML>

@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:Template name="move-counter" src="project://database/Assets/UIElements/MainView/Templates/move-counter.uxml?fileID=9197481963319205126&amp;guid=fbfb32fcb47ea4043b28f4655fe1261b&amp;type=3#move-counter" />
+    <GallantGames.UI.AspectRatioPanel aspect-ratio-x="334" aspect-ratio-y="288" name="AspectRatioPanel" style="background-image: url(&apos;project://database/Assets/Art/UI/UIPlayerInterfaceBG.png?fileID=2800000&amp;guid=d2cb23fead292864aae3c5726441b916&amp;type=3#UIPlayerInterfaceBG&apos;); flex-direction: row; align-items: flex-start;">
+        <ui:GroupBox name="image" style="background-image: url(&apos;project://database/Assets/Art/UI/UIIconPlayer01.png?fileID=2800000&amp;guid=57487ecffe27b2649851d988d96f8223&amp;type=3#UIIconPlayer01&apos;); height: 72%; width: 59%; left: 13%; top: 15%; -unity-background-scale-mode: stretch-to-fill; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
+            <ui:Instance template="move-counter" name="move-counter" style="width: 99%; height: 139%;">
+                <AttributeOverrides element-name="enemy-move-count" text="5" />
+            </ui:Instance>
+        </ui:GroupBox>
+    </GallantGames.UI.AspectRatioPanel>
+</ui:UXML>
