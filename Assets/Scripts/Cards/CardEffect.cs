@@ -29,11 +29,13 @@ public class CardEffect : ScriptableObject
 
     public virtual void ExecuteEffect()
     {
+        LogData.shared.AddLog("Effect: " + this);
         Debug.Log("execute effect " + this);
     }
 
     public virtual void RevertEffect()
     {
+        LogData.shared.AddLog("Effect: " + this);
         Debug.Log("revert effect " + this);
     }
 }

@@ -20,7 +20,7 @@ public class NetworkManagerUI : NetworkBehaviour
     private static NetworkManagerUI s_instance;
     private Player _player;
     private List<Card> _cards = new List<Card>();
-    private List<CardUIScript> _cardUis = new List<CardUIScript>();
+    private List<CardUiScript> _cardUis = new List<CardUiScript>();
 
     public static NetworkManagerUI Instance { get { return s_instance; } }
 
@@ -113,7 +113,7 @@ public class NetworkManagerUI : NetworkBehaviour
     {
         Card card = CardManager.Instance.GetMovementCardById(id);
         _cards.Add(card);
-        CardUIScript cardUi = Instantiate(card.CardUi, CardLayoutGroup.transform).GetComponent<CardUIScript>();
+        CardUiScript cardUi = Instantiate(card.CardUi, CardLayoutGroup.transform).GetComponent<CardUiScript>();
         cardUi.Initialize(card);
         _cardUis.Add(cardUi);
     }
@@ -122,7 +122,7 @@ public class NetworkManagerUI : NetworkBehaviour
     {
         Card card = CardManager.Instance.GetChestCardById(id);
         _cards.Add(card);
-        CardUIScript cardUi = Instantiate(card.CardUi, CardLayoutGroup.transform).GetComponent<CardUIScript>();
+        CardUiScript cardUi = Instantiate(card.CardUi, CardLayoutGroup.transform).GetComponent<CardUiScript>();
         cardUi.Initialize(card);
         _cardUis.Add(cardUi);
     }
@@ -130,9 +130,9 @@ public class NetworkManagerUI : NetworkBehaviour
     [ClientRpc]
     public void RemoveCardFromPlayerUiClientRpc(ulong playerId, int instanceId)
     {
-        CardUIScript objectToRemove = null;
+        CardUiScript objectToRemove = null;
 
-        foreach (CardUIScript card in _cardUis)
+        foreach (CardUiScript card in _cardUis)
         {
             if(card.gameObject.GetInstanceID().Equals(instanceId))
             {

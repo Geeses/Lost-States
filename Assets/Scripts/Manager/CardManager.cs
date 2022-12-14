@@ -107,18 +107,18 @@ public class CardManager : NetworkBehaviour
         Player player = NetworkManager.ConnectedClients[playerId].PlayerObject.GetComponent<Player>();
         int addCardAmount = player.MovementCardAmountPerCycle;
 
-        for (int i = 0; i < addCardAmount; i++)
-        {
+        //for (int i = 0; i < addCardAmount; i++)
+        //{
             // if we have no more cards left in our stack
-            if (MovementCardStack.Count == MovementCardStackPosition)
-            {
-                CreateMovementCardStack();
-            }
+            //if (MovementCardStack.Count == MovementCardStackPosition)
+            //{
+            //    CreateMovementCardStack();
+            //}
 
             player.AddMovementCardClientRpc(MovementCardStack[MovementCardStackPosition]);
 
-            MovementCardStackPosition += 1;
-        }
+            //MovementCardStackPosition += 1;
+        //}
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -217,7 +217,7 @@ public class CardManager : NetworkBehaviour
             card = GetMovementCardById(cardId);
             // increment move card played counter
             player.ChangePlayedMoveCardsClientRpc(1);
-            player.ChangeMoveCountClientRpc(card.baseMoveCount);
+            player.AddMoveCountClientRpc(card.baseMoveCount);
         }
         else if(cardType == CardType.Chest)
         {

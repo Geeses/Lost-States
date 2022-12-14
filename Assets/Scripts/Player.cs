@@ -28,6 +28,7 @@ public class Player : Selectable
     public int savedRessourceCount;
 
     public event Action<GridCoordinates> OnPlayerMoved;
+    public event Action OnCardPlayed;
 
     private ObservableCollection<int> _movementCards = new ObservableCollection<int>();
     private ObservableCollection<int> _inventoryChestCards = new ObservableCollection<int>();
@@ -37,6 +38,7 @@ public class Player : Selectable
     private int _movementCardAmountPerCycle = 5;
 
     private Tile _currentTile;
+    private Tile _oldTile;
     private int _moveCount;
     private int _maximumPlayableMovementCards;
     private int _playedMovementCards;
@@ -53,6 +55,8 @@ public class Player : Selectable
     public int MaximumPlayableMovementCards { get => _maximumPlayableMovementCards; set => _maximumPlayableMovementCards = value; }
     public int PlayedMovementCards { get => _playedMovementCards; set => _playedMovementCards = value; }
     public Tile CurrentTile { get => _currentTile; private set => _currentTile = value; }
+
+    public Tile OldTile { get => _oldTile; private set => _oldTile = value; }
     #endregion
 
     #region Monobehavior Functions
@@ -120,13 +124,20 @@ public class Player : Selectable
             tile.passable)
         {
             movedInCurrentTurn.Value += 1;
-            ChangeMoveCountClientRpc(-1);
+            AddMoveCountClientRpc(-1);
             MoveClientRpc(coordinates);
         }
     }
 
     [ClientRpc]
     public void ChangeMoveCountClientRpc(int count)
+    {
+        MoveCount = count;
+        TurnManager.Instance.currentTurnPlayerMovesText.text = MoveCount.ToString();
+    }
+
+    [ClientRpc]
+    public void AddMoveCountClientRpc(int count)
     {
         MoveCount += count;
         TurnManager.Instance.currentTurnPlayerMovesText.text = MoveCount.ToString();
@@ -135,8 +146,8 @@ public class Player : Selectable
     [ClientRpc]
     public void PlayCardClientRpc(int cardId)
     {
-        //MoveCount = count;
         TurnManager.Instance.currentTurnPlayerMovesText.text = MoveCount.ToString();
+        OnCardPlayed.Invoke();
     }
 
     [ClientRpc]
@@ -148,6 +159,7 @@ public class Player : Selectable
     [ClientRpc]
     private void MoveClientRpc(GridCoordinates coordinates)
     {
+        OldTile = CurrentTile;
         if(IsLocalPlayer)
             UnhighlightAdjacentTiles();
         CurrentTile = GridManager.Instance.TileGrid[coordinates];
@@ -168,8 +180,13 @@ public class Player : Selectable
     [ClientRpc]
     public void AddMovementCardClientRpc(int cardId)
     {
-        Debug.Log("add movecard Id " + cardId);
-        MovementCards.Add(cardId);
+        //Debug.Log("add movecard Id " + cardId);
+        MovementCards.Add(0);
+        MovementCards.Add(1);
+        MovementCards.Add(2);
+        MovementCards.Add(3);
+        MovementCards.Add(4);
+        //MovementCards.Add(cardId);
     }
 
     [ClientRpc]
