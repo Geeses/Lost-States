@@ -10,6 +10,7 @@
     transition-duration: 1s;
     transition-timing-function: ease;
     left: 0;
+    position: relative;
 }
 
 #char-fig {
@@ -60,32 +61,6 @@
     flex-grow: 1;
 }
 
-.nono-bar {
-    background-color: rgba(56, 56, 56, 0);
-    border-bottom-left-radius: 10px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    background-image: url('project://database/Assets/Art/UI/UIEnemyInterfaceBG.png?fileID=2800000&guid=96bb217f78aa8eb458e0417f3d6b6ecd&type=3#UIEnemyInterfaceBG');
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-grow: 1;
-    flex-shrink: 1;
-    right: -169px;
-    -unity-background-scale-mode: scale-to-fit;
-    width: 288px;
-    height: 1095px;
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
 .char-card-box {
     flex-direction: row;
     justify-content: space-between;
@@ -113,6 +88,31 @@
     border-right-color: rgb(53, 255, 0);
     border-top-color: rgb(53, 255, 0);
     border-bottom-color: rgb(53, 255, 0);
+}
+
+.nono-bar {
+    background-color: rgba(56, 56, 56, 0);
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-grow: 1;
+    flex-shrink: 1;
+    right: -169px;
+    -unity-background-scale-mode: scale-to-fit;
+    width: 288px;
+    height: 1095px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 .label-Inventar {
