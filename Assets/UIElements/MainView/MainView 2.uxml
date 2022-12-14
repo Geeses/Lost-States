@@ -23,7 +23,7 @@
                     <ui:Button tabindex="-1" display-tooltip-when-elided="true" name="shop-button" class="button-round" style="background-color: rgb(181, 173, 154); background-image: url(&apos;project://database/Assets/Art/UI/UIButtonShop.png?fileID=2800000&amp;guid=e728f1ee6a05fa5448e3208b44e6e7b6&amp;type=3#UIButtonShop&apos;); visibility: hidden;" />
                     <ui:Button tabindex="-1" display-tooltip-when-elided="true" name="settings-button" focusable="false" class="button-round" style="background-image: url(&apos;project://database/Assets/Art/UI/UIButtonOptions.png?fileID=2800000&amp;guid=23fd8bde407bb884b89a12e64e23a0d1&amp;type=3#UIButtonOptions&apos;); visibility: hidden;" />
                 </ui:GroupBox>
-                <ui:GroupBox name="char-bar-group" style="flex-wrap: nowrap; flex-direction: column; align-items: flex-start; justify-content: space-between; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; height: 51%; flex-grow: 0; width: 70%; min-width: 448px; min-height: 216px;">
+                <ui:GroupBox name="char-bar-group" style="flex-wrap: nowrap; flex-direction: column; align-items: flex-start; justify-content: space-between; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; flex-grow: 0; width: 70%; min-width: 448px; min-height: 216px; flex-shrink: 1;">
                     <ui:GroupBox name="char-bar" style="flex-direction: row-reverse; padding-left: 4%;">
                         <ui:VisualElement class="char-card-box" style="flex-direction: row-reverse; width: 76%; padding-left: 6px;">
                             <ui:Instance template="char-cards" name="char-cards" />
@@ -67,7 +67,7 @@
                 <ui:GroupBox />
             </ui:VisualElement>
         </ui:GroupBox>
-        <ui:VisualElement name="Bottom" style="flex-direction: row; justify-content: space-between; height: 20%; align-items: flex-start;">
+        <ui:VisualElement name="Bottom" style="flex-direction: row; justify-content: space-between; align-items: flex-end;">
             <ui:GroupBox name="character" style="width: 10%; height: auto; align-items: stretch; justify-content: flex-end; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; flex-shrink: 1;">
                 <ui:Button tabindex="-1" display-tooltip-when-elided="true" class="buttonChar" style="align-items: flex-start; justify-content: center; width: 100px; background-image: url(&apos;project://database/Assets/Art/UI/UIPlayerInterfaceBG.png?fileID=2800000&amp;guid=d2cb23fead292864aae3c5726441b916&amp;type=3#UIPlayerInterfaceBG&apos;); height: 100px; padding-right: 28px; padding-left: 11px; padding-top: 5px; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
                     <ui:GroupBox name="image" style="background-image: url(&apos;project://database/Assets/Art/UI/UIIconPlayer01.png?fileID=2800000&amp;guid=57487ecffe27b2649851d988d96f8223&amp;type=3#UIIconPlayer01&apos;); height: 76px; width: 59px; margin-left: 29px;" />
@@ -77,7 +77,7 @@
                 </ui:Button>
             </ui:GroupBox>
             <ui:GroupBox style="height: 36px; width: 19%;" />
-            <ui:GroupBox name="box-move-Cards" class="boxcards box-move-card" style="flex-direction: row; justify-content: space-around; height: auto; bottom: 60%;">
+            <ui:GroupBox name="box-move-Cards" class="boxcards box-move-card" style="flex-direction: row; justify-content: space-around; height: auto; bottom: -42%;">
                 <ui:Button tabindex="-1" display-tooltip-when-elided="true" name="moveCard" class="move-cards cards" style="background-image: url(&apos;project://database/Assets/Art/Cards/Movement/CardMovementFront.png?fileID=2800000&amp;guid=a21f97586d3ae9d439405f9def5754f4&amp;type=3#CardMovementFront&apos;); height: 208px; align-items: flex-start; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; width: 90px;">
                     <ui:Label tabindex="-1" text="8" display-tooltip-when-elided="true" style="width: 23%; height: 18%; font-size: 24px; padding-left: 4px;" />
                     <ui:GroupBox style="width: 25px; background-image: url(&apos;project://database/Assets/Art/Cards/Movement/CardMovementGem01.png?fileID=2800000&amp;guid=4ec40226d958be24ea0cfb772f4d0408&amp;type=3#CardMovementGem01&apos;); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; height: 24px;" />
@@ -89,7 +89,7 @@
                 <ui:Button tabindex="-1" display-tooltip-when-elided="true" class="move-cards cards" style="background-image: url(&apos;project://database/Assets/Art/Cards/Movement/Archive/CardMovementFrontGold.png?fileID=2800000&amp;guid=a7a0d64a7e56f1a4098606c94cccd987&amp;type=3#CardMovementFrontGold&apos;); height: 208px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; width: 90px;" />
                 <ui:Button tabindex="-1" display-tooltip-when-elided="true" class="move-cards cards" style="background-image: url(&apos;project://database/Assets/Art/Cards/Movement/Archive/CardMovementFrontCopper.png?fileID=2800000&amp;guid=b4e3328e02f325640b0e9e07c1a03f21&amp;type=3#CardMovementFrontCopper&apos;); height: 208px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; width: 90px;" />
             </ui:GroupBox>
-            <ui:GroupBox name="box-chest-Cards" class="box-chest-card" style="flex-direction: row; justify-content: space-around; bottom: 60%;">
+            <ui:GroupBox name="box-chest-Cards" class="box-chest-card" style="flex-direction: row; justify-content: space-around; bottom: -43%;">
                 <ui:Button tabindex="-1" display-tooltip-when-elided="true" class="move-cards cards" style="height: 208px; width: 100px; background-color: rgba(0, 0, 0, 0); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
                     <ui:GroupBox name="picture" style="height: 105px; background-image: url(&apos;project://database/Assets/Art/Cards/Chest/CardChestUnfairGame%201.png?fileID=2800000&amp;guid=11fe69b15eb0cf44db125be889b41377&amp;type=3#CardChestUnfairGame 1&apos;); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
                     <ui:GroupBox name="card" style="height: 219px; margin-left: 0; margin-right: 0; margin-top: -106px; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; background-image: url(&apos;project://database/Assets/Art/Cards/Chest/CardChestFront.png?fileID=2800000&amp;guid=dd17da47f56b01d4cbe1dc490ffd4ada&amp;type=3#CardChestFront&apos;);" />
@@ -104,7 +104,7 @@
                 </ui:Button>
             </ui:GroupBox>
             <ui:GroupBox style="height: 36px; width: 25%; flex-shrink: 1;" />
-            <ui:GroupBox name="ressource" style="width: 19%; height: 100%; justify-content: space-between; align-items: stretch; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
+            <ui:GroupBox name="ressource" style="width: 19%; justify-content: space-between; align-items: stretch; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; flex-shrink: 1;">
                 <ui:GroupBox name="InventorySafed" style="height: 50%; background-image: url(&apos;project://database/Assets/Art/UI/Inventory/UIInventorySafed.png?fileID=2800000&amp;guid=a0b4582dad0419e4d9aae8632cbc72c6&amp;type=3#UIInventorySafed&apos;); flex-direction: row; align-items: center; justify-content: space-around; -unity-background-scale-mode: stretch-to-fill; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; flex-shrink: 1;">
                     <ui:GroupBox style="width: 20%; align-items: center; justify-content: flex-start; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 12px; padding-right: 0; padding-top: 12px; padding-bottom: 5px;">
                         <ui:GroupBox style="width: 26px; height: 23px; background-image: url(&apos;project://database/Assets/Art/Map/Ressources/MapTileRessource04.png?fileID=2800000&amp;guid=363e72a827ad24649bd7ecb71b51b156&amp;type=3#MapTileRessource04&apos;); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
