@@ -80342,6 +80342,7 @@ MonoBehaviour:
   _hostButton: {fileID: 0}
   _clientButton: {fileID: 0}
   _endTurnButton: {fileID: 0}
+  _skipTurnButton: {fileID: 0}
   _moveCountText: {fileID: 0}
   _playerId: {fileID: 0}
   _currentTurnPlayerId: {fileID: 0}
