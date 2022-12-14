@@ -85,22 +85,12 @@ public class InputManager : NetworkBehaviour
         {
             Selectable objectHit = hit.transform.GetComponent<Selectable>();
 
-            if (objectHit.CompareTag("Selectable"))
+            if (objectHit.CompareTag("Selectable") && _selectedObject != null && _selectedObject.CompareTag("Player") && (TurnManager.Instance.CurrentTurnPlayerId == NetworkManager.LocalClientId))
             {
-                if (_selectedObject != null)
-                {
-                    if (_selectedObject.CompareTag("Player"))
-                    {
-                        // if it is our turn
-                        if (TurnManager.Instance.CurrentTurnPlayerId == NetworkManager.LocalClientId)
-                        {
-                            // get cellposition from tilemap, convert it to GridCoordinates and move client to the grid position
-                            Vector3Int cellPosition = GridManager.Instance.Tilemap.LocalToCell(objectHit.transform.position);
-                            GridCoordinates coordinates = new GridCoordinates(cellPosition.x, cellPosition.y);
-                            _selectedObject.GetComponent<Player>().TryMoveServerRpc(coordinates);
-                        }
-                    }
-                }
+                // get cellposition from tilemap, convert it to GridCoordinates and move client to the grid position
+                Vector3Int cellPosition = GridManager.Instance.Tilemap.LocalToCell(objectHit.transform.position);
+                GridCoordinates coordinates = new GridCoordinates(cellPosition.x, cellPosition.y);
+                _selectedObject.GetComponent<Player>().TryMoveServerRpc(coordinates);
             }
         }
     }

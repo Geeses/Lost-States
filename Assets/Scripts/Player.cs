@@ -191,28 +191,37 @@ public class Player : Selectable
         savedRessourceCount = SavedRessources.Count;
     }
 
-    public void RemoveNewestRessource(int count)
+    public Ressource RemoveNewestRessource(int count)
     {
+        Ressource res = 0;
+
         for (int i = 0; i < count; i++)
         {
             Debug.Log(InventoryRessources.Count);
             if(InventoryRessources.Count > 0)
             {
+                res = InventoryRessources[InventoryRessources.Count - 1];
                 InventoryRessources.RemoveAt(InventoryRessources.Count - 1);
             }
         }
+
+        return res;
     }
 
-    public void RemoveNewestChestcard(int count)
+    public int RemoveNewestChestcard(int count)
     {
+        int chestcardId = -1;
         for (int i = 0; i < count; i++)
         {
             Debug.Log(InventoryChestCards.Count);
             if (InventoryChestCards.Count > 0)
             {
+                chestcardId = InventoryChestCards[InventoryChestCards.Count - 1];
                 InventoryChestCards.RemoveAt(InventoryChestCards.Count - 1);
             }
         }
+
+        return chestcardId;
     }
     #endregion
 }
