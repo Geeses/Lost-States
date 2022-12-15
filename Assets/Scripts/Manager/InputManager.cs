@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 
 public class InputManager : NetworkBehaviour
 {
+    public event Action<Selectable> OnSelect;
+
     private PlayerInput _playerInput;
     private PlayerInputActions _playerInputActions;
     private static InputManager s_instance;
@@ -66,6 +68,7 @@ public class InputManager : NetworkBehaviour
                 Selectable selectable = objectHit.GetComponent<Selectable>();
 
                 selectable.Select();
+                OnSelect?.Invoke(selectable);
 
                 if (_selectedObject != null && _selectedObject != selectable)
                 {

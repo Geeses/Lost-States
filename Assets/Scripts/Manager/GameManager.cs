@@ -64,6 +64,12 @@ public class GameManager : NetworkBehaviour
         }
 
         StartGameClientRpc();
+
+        if (IsServer)
+        {
+            PlayerNetworkManager.Instance.PlayerDictionary[0].MoveClientRpc(new GridCoordinates(0, 0));
+            PlayerNetworkManager.Instance.PlayerDictionary[1].MoveClientRpc(new GridCoordinates(-1, 0));
+        }
     }
 
     [ClientRpc]

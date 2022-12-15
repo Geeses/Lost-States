@@ -26,6 +26,8 @@ public class Player : Selectable
     public NetworkVariable<int> movedInCurrentTurn;
     public int inventoryRessourceCount;
     public int savedRessourceCount;
+    public NetworkVariable<ulong> currentSelectedPlayerId = new NetworkVariable<ulong>(default,
+        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     public event Action<GridCoordinates> OnPlayerMoved;
 
@@ -40,6 +42,7 @@ public class Player : Selectable
     private int _moveCount;
     private int _maximumPlayableMovementCards;
     private int _playedMovementCards;
+    private Selectable _currentSelectedTarget;
     #endregion
 
     #region Properties
@@ -53,6 +56,7 @@ public class Player : Selectable
     public int MaximumPlayableMovementCards { get => _maximumPlayableMovementCards; set => _maximumPlayableMovementCards = value; }
     public int PlayedMovementCards { get => _playedMovementCards; set => _playedMovementCards = value; }
     public Tile CurrentTile { get => _currentTile; private set => _currentTile = value; }
+    public Selectable CurrentSelectedTarget { get => _currentSelectedTarget; set => _currentSelectedTarget = value; }
     #endregion
 
     #region Monobehavior Functions
@@ -65,14 +69,18 @@ public class Player : Selectable
             clientId.Value = OwnerClientId;
         }
 
-        if (!IsOwner)
-        {
-            _collider.enabled = false;
-        }
-
         CurrentTile = GridManager.Instance.TileGrid[new GridCoordinates(0,0)];
         InventoryRessources.CollectionChanged += ChangeCountInventory;
         SavedRessources.CollectionChanged += ChangeCountSaved;
+        InputManager.Instance.OnSelect += ChangeCurrentSelectedTarget;
+    }
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+        InventoryRessources.CollectionChanged -= ChangeCountInventory;
+        SavedRessources.CollectionChanged -= ChangeCountSaved;
+        InputManager.Instance.OnSelect -= ChangeCurrentSelectedTarget;
     }
     #endregion
 
@@ -80,7 +88,9 @@ public class Player : Selectable
     public override void Select()
     {
         base.Select();
-        HighlightAdjacentTiles();
+
+        if(IsOwner)
+            HighlightAdjacentTiles();
     }
 
     public override void Unselect()
@@ -102,6 +112,18 @@ public class Player : Selectable
         foreach (Tile tile in GridManager.Instance.GetAdjacentTiles(CurrentTile))
         {
             tile.Unhighlight();
+        }
+    }
+
+    private void ChangeCurrentSelectedTarget(Selectable selectable)
+    {
+        CurrentSelectedTarget = selectable;
+
+        Player player = selectable.GetComponent<Player>();
+        if(player != null)
+        {
+            if(IsOwner)
+                currentSelectedPlayerId.Value = player.clientId.Value;
         }
     }
     #endregion
@@ -146,7 +168,7 @@ public class Player : Selectable
     }
 
     [ClientRpc]
-    private void MoveClientRpc(GridCoordinates coordinates)
+    public void MoveClientRpc(GridCoordinates coordinates, bool invokeEvent = true)
     {
         if(IsLocalPlayer)
             UnhighlightAdjacentTiles();
@@ -161,9 +183,9 @@ public class Player : Selectable
         if(IsLocalPlayer)
             HighlightAdjacentTiles();
 
-        OnPlayerMoved?.Invoke(coordinates);
+        if(invokeEvent)
+            OnPlayerMoved?.Invoke(coordinates);
     }
-
 
     [ClientRpc]
     public void AddMovementCardClientRpc(int cardId)

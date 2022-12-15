@@ -8,18 +8,21 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1480469486721429585, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 757d87dc7e8fee540994ad64d86395f8, type: 3}
     - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_text
-      value: Play the last 2 movement card you played before, and activate their
-        effects one after another.
+      value: Swap the position of 2 players.
       objectReference: {fileID: 0}
     - target: {fileID: 1690342784632638810, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_Name
-      value: ChestCard04
+      value: ChestCard05
       objectReference: {fileID: 0}
     - target: {fileID: 3509083390678273663, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_text
-      value: Recycling
+      value: Position Swapper
       objectReference: {fileID: 0}
     - target: {fileID: 6188234756938331179, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: GlobalObjectIdHash

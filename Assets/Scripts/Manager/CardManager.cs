@@ -24,6 +24,7 @@ public class CardManager : NetworkBehaviour
     private int _movementCardStackPosition;
     private int _chestCardStackPosition;
     private List<CardEffect> _activeCardEffects = new List<CardEffect>();
+    private List<CardEffect> _initializedCardEffects = new List<CardEffect>();
 
     private static CardManager s_instance;
     #endregion
@@ -37,6 +38,7 @@ public class CardManager : NetworkBehaviour
     public int ChestCardStackPosition { get => _chestCardStackPosition; private set => _chestCardStackPosition = value; }
     public int MoveCardListInStack { get => moveCardListInStack; private set => moveCardListInStack = value; }
     public int ChestCardListInStack { get => chestCardListInStack; private set => chestCardListInStack = value; }
+    public List<CardEffect> InitializedCardEffects { get => _initializedCardEffects; set => _initializedCardEffects = value; }
     #endregion
 
     #region Monobehavior Functions
@@ -233,9 +235,14 @@ public class CardManager : NetworkBehaviour
         Debug.Log("executing card effect " + effects.Count + " " + card.cardEffects.Count);
         foreach (CardEffect effect in effects)
         {
-            _activeCardEffects.Add(effect);
+            InitializedCardEffects.Add(effect);
             effect.Initialize(player);
-            effect.ExecuteEffect();
+
+            if(effect.executeInstantly)
+            {
+                ActiveCardEffects.Add(effect);
+                effect.ExecuteEffect();
+            }
         }
     }
 
@@ -247,11 +254,13 @@ public class CardManager : NetworkBehaviour
 
         Debug.Log("call revert effect");
         foreach (CardEffect effect in ActiveCardEffects)
-        {
-            effect.Initialize(player);
+        {            
             Debug.Log("revert effect in loop: " + effect.name);
             effect.RevertEffect();
         }
+
+        ActiveCardEffects.Clear();
+        InitializedCardEffects.Clear();
     }
     #endregion
 }

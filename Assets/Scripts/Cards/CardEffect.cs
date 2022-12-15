@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class CardEffect : ScriptableObject
 {
+    [Header("Card Effect Options")]
+    public bool executeInstantly = true;
+
     // player who played card
     private Player _player;
     private List<Player> _enemyPlayers;
