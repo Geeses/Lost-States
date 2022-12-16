@@ -17,14 +17,14 @@
                 <ui:Button tabindex="-1" display-tooltip-when-elided="true" name="settings-button" focusable="false" class="button-round" style="background-image: url(&apos;project://database/Assets/Art/UI/UIButtonOptions.png?fileID=2800000&amp;guid=23fd8bde407bb884b89a12e64e23a0d1&amp;type=3#UIButtonOptions&apos;); visibility: hidden; -unity-background-scale-mode: scale-to-fit; background-color: rgba(255, 255, 255, 0); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; flex-shrink: 1;" />
                 <ui:Button tabindex="-1" display-tooltip-when-elided="true" name="shop-button" class="button-round" style="background-image: url(&apos;project://database/Assets/Art/UI/UIButtonShop.png?fileID=2800000&amp;guid=e728f1ee6a05fa5448e3208b44e6e7b6&amp;type=3#UIButtonShop&apos;); visibility: hidden; -unity-background-scale-mode: scale-to-fit;" />
             </ui:GroupBox>
-            <ui:GroupBox name="char-bar-group" style="flex-wrap: nowrap; flex-direction: column; align-items: center; justify-content: center; margin-left: 0; margin-right: 0; margin-top: 20px; margin-bottom: 20px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; flex-grow: 0; flex-shrink: 1; width: auto; height: auto;">
-                <ui:Instance template="characters-gegner" name="characters-gegner" class="nono-bar" style="width: 242px; height: 67px; right: -170px; flex-grow: 0;">
+            <ui:GroupBox name="char-bar-group" style="flex-wrap: nowrap; flex-direction: column; align-items: center; justify-content: center; margin-left: 0; margin-right: 0; margin-top: 20px; margin-bottom: 20px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; flex-grow: 0; flex-shrink: 1; width: 220px; height: 200px;">
+                <ui:Instance template="characters-gegner" name="characters-gegner" class="nono-bar" style="width: 242px; height: 67px; right: -162px; flex-grow: 0;">
                     <AttributeOverrides element-name="aspectRatio" balance-x="38" />
                 </ui:Instance>
-                <ui:Instance template="characters-gegner" name="characters-gegner" class="nono-bar" style="width: 242px; height: 67px; flex-shrink: 1; right: -170px; flex-grow: 0;">
+                <ui:Instance template="characters-gegner" name="characters-gegner" class="nono-bar" style="width: 242px; height: 67px; flex-shrink: 1; right: -162px; flex-grow: 0;">
                     <AttributeOverrides element-name="aspectRatio" balance-x="38" balance-y="0" />
                 </ui:Instance>
-                <ui:Instance template="characters-gegner" name="characters-gegner" class="nono-bar" style="width: 242px; height: 67px; flex-shrink: 1; right: -170px; flex-grow: 0;">
+                <ui:Instance template="characters-gegner" name="characters-gegner" class="nono-bar" style="width: 242px; height: 67px; flex-shrink: 1; right: -162px; flex-grow: 0;">
                     <AttributeOverrides element-name="aspectRatio" balance-x="38" balance-y="0" />
                 </ui:Instance>
             </ui:GroupBox>

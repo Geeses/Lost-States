@@ -9,7 +9,7 @@
     transition-property: position;
     transition-duration: 1s;
     transition-timing-function: ease;
-    left: 0;
+    left: 9px;
     position: relative;
 }
 
