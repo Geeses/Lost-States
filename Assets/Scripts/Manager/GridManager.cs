@@ -110,4 +110,50 @@ public class GridManager : MonoBehaviour
 
         return adjacentTiles;
     }
+
+    public List<Tile> GetTilesInDirection(Tile origin, Direction direction)
+    {
+        List<Tile> tiles = new List<Tile>();
+
+        Vector3Int vectorOrigin = new Vector3Int(origin.TileGridCoordinates.x, origin.TileGridCoordinates.y, 0);
+
+        BoundsInt totalArea = Tilemap.cellBounds;
+
+        if (direction == Direction.right) {
+            var end = totalArea.xMax - vectorOrigin.x;
+            for (int i = 0; i <= end; i++)
+            {
+                tiles.Add(TileGrid[new GridCoordinates(origin.TileGridCoordinates.x + i, origin.TileGridCoordinates.y)]);
+            }
+        }
+
+        else if (direction == Direction.left)
+        {
+            var end = vectorOrigin.x - totalArea.xMin;
+            for (int i = 0; i <= end; i++)
+            {
+                tiles.Add(TileGrid[new GridCoordinates(origin.TileGridCoordinates.x - i, origin.TileGridCoordinates.y)]);
+            }
+        }
+
+        else if (direction == Direction.up)
+        {
+            var end = totalArea.yMax - vectorOrigin.y;
+            for (int i = 0; i <= end; i++)
+            {
+                tiles.Add(TileGrid[new GridCoordinates(origin.TileGridCoordinates.x, origin.TileGridCoordinates.y + i)]);
+            }
+        }
+
+        else
+        {
+            var end = vectorOrigin.y - totalArea.xMin;
+            for (int i = 0; i <= end; i++)
+            {
+                tiles.Add(TileGrid[new GridCoordinates(origin.TileGridCoordinates.x, origin.TileGridCoordinates.y - i)]);
+            }
+        }
+
+        return tiles;
+    }
 }

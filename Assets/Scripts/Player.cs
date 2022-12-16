@@ -17,6 +17,11 @@ public enum Ressource
     fruit
 }
 
+public enum Direction
+{
+    left, right, up, down
+}
+
 public class Player : Selectable
 {
     #region Attributes
@@ -26,6 +31,7 @@ public class Player : Selectable
     public NetworkVariable<int> movedInCurrentTurn;
     public int inventoryRessourceCount;
     public int savedRessourceCount;
+    public bool moveOverUnpassable;
 
     public event Action<GridCoordinates> OnPlayerMoved;
     public event Action OnCardPlayed;
@@ -42,6 +48,7 @@ public class Player : Selectable
     private int _moveCount;
     private int _maximumPlayableMovementCards;
     private int _playedMovementCards;
+    private Direction _lastMoveDirection;
     #endregion
 
     #region Properties
@@ -57,6 +64,8 @@ public class Player : Selectable
     public Tile CurrentTile { get => _currentTile; private set => _currentTile = value; }
 
     public Tile OldTile { get => _oldTile; private set => _oldTile = value; }
+
+    public Direction LastMoveDirection { get => _lastMoveDirection; private set => _lastMoveDirection = value; }
     #endregion
 
     #region Monobehavior Functions
@@ -74,7 +83,7 @@ public class Player : Selectable
             _collider.enabled = false;
         }
 
-        CurrentTile = GridManager.Instance.TileGrid[new GridCoordinates(0,0)];
+        CurrentTile = GridManager.Instance.TileGrid[new GridCoordinates(0, 0)];
         InventoryRessources.CollectionChanged += ChangeCountInventory;
         SavedRessources.CollectionChanged += ChangeCountSaved;
     }
@@ -112,19 +121,22 @@ public class Player : Selectable
 
     #region Movement
     [ServerRpc]
-    public void TryMoveServerRpc(GridCoordinates coordinates)
+    public void TryMoveServerRpc(GridCoordinates coordinates, bool subtractMoves = true)
     {
         Tile tile = GridManager.Instance.TileGrid[coordinates];
 
         // if tile is adjacent
-        if (Array.Find(GridManager.Instance.GetAdjacentTiles(tile), x => 
-            x.TileGridCoordinates.x == CurrentTile.TileGridCoordinates.x && 
-            x.TileGridCoordinates.y == CurrentTile.TileGridCoordinates.y) && 
+        if (Array.Find(GridManager.Instance.GetAdjacentTiles(tile), x =>
+            x.TileGridCoordinates.x == CurrentTile.TileGridCoordinates.x &&
+            x.TileGridCoordinates.y == CurrentTile.TileGridCoordinates.y) &&
             MoveCount > 0 &&
-            tile.passable)
+            !(tile.passable && moveOverUnpassable))
         {
             movedInCurrentTurn.Value += 1;
-            AddMoveCountClientRpc(-1);
+
+            if (subtractMoves)
+                AddMoveCountClientRpc(-1);
+            
             MoveClientRpc(coordinates);
         }
     }
@@ -160,8 +172,10 @@ public class Player : Selectable
     private void MoveClientRpc(GridCoordinates coordinates)
     {
         OldTile = CurrentTile;
-        if(IsLocalPlayer)
+        LastMoveDirection = GetMoveDirection(OldTile.TileGridCoordinates, CurrentTile.TileGridCoordinates);
+        if (IsLocalPlayer)
             UnhighlightAdjacentTiles();
+
         CurrentTile = GridManager.Instance.TileGrid[coordinates];
         CurrentTile.PlayerStepOnTile(this);
         Debug.Log(CurrentTile);
@@ -170,12 +184,36 @@ public class Player : Selectable
         cellWorldPosition += GridManager.Instance.Tilemap.cellSize / 2;
         transform.DOMove(cellWorldPosition, 0.5f);
 
-        if(IsLocalPlayer)
+        if (IsLocalPlayer)
             HighlightAdjacentTiles();
 
         OnPlayerMoved?.Invoke(coordinates);
     }
 
+    private Direction GetMoveDirection(GridCoordinates positionBefore, GridCoordinates positionAfter)
+    {
+        int x_b = positionBefore.x, x_a = positionAfter.x, y_b = positionBefore.y, y_a = positionAfter.y;
+        // moving up
+        if (x_b == x_a && y_b < y_a)
+        {
+            return Direction.up;
+        }
+        // moving down
+        else if (x_b == x_a && y_b > y_a)
+        {
+            return Direction.down;
+        }
+        // moving right
+        else if (y_b == y_a && x_b < x_a)
+        {
+            return Direction.right;
+        }
+        // moving left
+        else
+        {
+            return Direction.left;
+        }
+    }
 
     [ClientRpc]
     public void AddMovementCardClientRpc(int cardId)
@@ -186,6 +224,8 @@ public class Player : Selectable
         MovementCards.Add(2);
         MovementCards.Add(3);
         MovementCards.Add(4);
+        MovementCards.Add(5);
+        MovementCards.Add(6);
         //MovementCards.Add(cardId);
     }
 
@@ -213,7 +253,7 @@ public class Player : Selectable
         for (int i = 0; i < count; i++)
         {
             Debug.Log(InventoryRessources.Count);
-            if(InventoryRessources.Count > 0)
+            if (InventoryRessources.Count > 0)
             {
                 InventoryRessources.RemoveAt(InventoryRessources.Count - 1);
             }
