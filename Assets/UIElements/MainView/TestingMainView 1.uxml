@@ -6,29 +6,29 @@
     <Style src="project://database/Assets/UIElements/MainView/MainView.uss?fileID=7433441132597879392&amp;guid=9267c834f4ad1f54e8dc9ed6291a80fb&amp;type=3#MainView" />
     <ui:VisualElement name="Screen" style="width: 100%; height: 100%; flex-direction: row; justify-content: flex-start;">
         <ui:VisualElement name="Left" style="align-items: flex-start; justify-content: space-between; flex-direction: column; width: 50%; height: 100%; flex-wrap: nowrap;">
-            <ui:GroupBox name="turncount" style="flex-direction: row; flex-shrink: 1; align-items: flex-start; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; -unity-background-scale-mode: scale-to-fit; flex-grow: 1; width: 46%; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; justify-content: flex-start; left: 0; top: 0; height: 0;">
+            <ui:GroupBox name="turncount" style="flex-direction: row; flex-shrink: 1; align-items: flex-start; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; -unity-background-scale-mode: scale-to-fit; flex-grow: 1; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; justify-content: flex-start; left: 0; top: 0; height: 15%; width: 64%;">
                 <GallantGames.UI.AspectRatioPanel aspect-ratio-x="846" aspect-ratio-y="254" balance-x="0" balance-y="0" style="background-image: url(&apos;project://database/Assets/Art/UI/TurnCounter/UITurnCounter.png?fileID=2800000&amp;guid=7d78389a8c4045840976e806d7c21202&amp;type=3#UITurnCounter&apos;); top: 0;" />
             </ui:GroupBox>
-            <ui:Instance template="battellog" name="battellog" style="width: 50%; flex-grow: 0; height: 60%;" />
-            <ui:Instance template="character-me" name="character-me" class="buttonChar" style="width: 23%; height: 17%;" />
+            <ui:Instance template="battellog" name="battellog" style="width: 50%; flex-grow: 1; height: 70%; margin-top: 5%; margin-bottom: 5%;" />
+            <ui:Instance template="character-me" name="character-me" class="buttonChar" style="width: 23%; height: 15%; flex-grow: 1;" />
         </ui:VisualElement>
-        <ui:VisualElement name="Right" style="justify-content: space-between; align-items: flex-end; flex-direction: column; width: 50%; height: 100%;">
-            <ui:GroupBox name="buttons-bar" style="flex-direction: row-reverse; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-top: 0; padding-bottom: 0; align-items: flex-start; justify-content: flex-start; width: 100%; flex-shrink: 1; height: 10%;">
+        <ui:VisualElement name="Right" style="justify-content: space-between; align-items: flex-end; flex-direction: column; width: 50%; height: 100%; flex-grow: 1;">
+            <ui:GroupBox name="buttons-bar" style="flex-direction: row-reverse; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-top: 0; padding-bottom: 0; align-items: flex-start; justify-content: flex-start; width: 100%; flex-shrink: 1; height: 10%; flex-grow: 1;">
                 <ui:Button tabindex="-1" display-tooltip-when-elided="true" name="settings-button" focusable="false" class="button-round" style="background-image: url(&apos;project://database/Assets/Art/UI/UIButtonOptions.png?fileID=2800000&amp;guid=23fd8bde407bb884b89a12e64e23a0d1&amp;type=3#UIButtonOptions&apos;); visibility: hidden; -unity-background-scale-mode: scale-to-fit; background-color: rgba(255, 255, 255, 0); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; flex-shrink: 1;" />
                 <ui:Button tabindex="-1" display-tooltip-when-elided="true" name="shop-button" class="button-round" style="background-image: url(&apos;project://database/Assets/Art/UI/UIButtonShop.png?fileID=2800000&amp;guid=e728f1ee6a05fa5448e3208b44e6e7b6&amp;type=3#UIButtonShop&apos;); visibility: hidden; -unity-background-scale-mode: scale-to-fit;" />
             </ui:GroupBox>
-            <ui:GroupBox name="char-bar-group" style="flex-wrap: nowrap; flex-direction: column; align-items: center; justify-content: center; margin-left: 0; margin-right: 0; margin-top: 20px; margin-bottom: 20px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; flex-grow: 0; flex-shrink: 1; width: auto; height: auto;">
-                <ui:Instance template="characters-gegner" name="characters-gegner" class="nono-bar" style="width: 242px; height: 67px; right: -170px; flex-grow: 0;">
+            <ui:GroupBox name="char-bar-group" style="flex-wrap: nowrap; flex-direction: column; align-items: center; justify-content: center; margin-left: 0; margin-right: 0; margin-top: 20px; margin-bottom: 20px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; flex-grow: 1; flex-shrink: 1; width: auto; height: 44%;">
+                <ui:Instance template="characters-gegner" name="characters-gegner" class="nono-bar" style="right: -68%;">
                     <AttributeOverrides element-name="aspectRatio" balance-x="38" />
                 </ui:Instance>
-                <ui:Instance template="characters-gegner" name="characters-gegner" class="nono-bar" style="width: 242px; height: 67px; flex-shrink: 1; right: -170px; flex-grow: 0;">
+                <ui:Instance template="characters-gegner" name="characters-gegner" class="nono-bar" style="flex-shrink: 1; flex-grow: 0; right: -68%;">
                     <AttributeOverrides element-name="aspectRatio" balance-x="38" balance-y="0" />
                 </ui:Instance>
-                <ui:Instance template="characters-gegner" name="characters-gegner" class="nono-bar" style="width: 242px; height: 67px; flex-shrink: 1; right: -170px; flex-grow: 0;">
+                <ui:Instance template="characters-gegner" name="characters-gegner" class="nono-bar" style="flex-shrink: 1; flex-grow: 0; right: -68%;">
                     <AttributeOverrides element-name="aspectRatio" balance-x="38" balance-y="0" />
                 </ui:Instance>
             </ui:GroupBox>
-            <ui:Instance template="Inventory" name="inventory" style="flex-grow: 0; flex-direction: column; align-items: flex-end; justify-content: flex-start; flex-shrink: 1;" />
+            <ui:Instance template="Inventory" name="inventory" style="flex-grow: 1; flex-direction: column; align-items: flex-end; justify-content: flex-start; flex-shrink: 1; height: 20%;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
