@@ -70,9 +70,6 @@ public class CardEffectManager : NetworkBehaviour
         if (cardType == CardType.Movement)
         {
             card = CardManager.Instance.GetMovementCardById(cardId);
-            // increment move card played counter
-            player.ChangePlayedMoveCardsClientRpc(1);
-            player.ChangeMoveCountClientRpc(card.baseMoveCount);
         }
         else if (cardType == CardType.Chest)
         {

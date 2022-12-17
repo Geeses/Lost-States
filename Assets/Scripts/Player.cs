@@ -24,6 +24,7 @@ public class Player : Selectable
     [Header("Debug")]
     public NetworkVariable<ulong> clientId;
     public NetworkVariable<int> movedInCurrentTurn;
+    public List<int> discardedMovementCards = new List<int>();
     public int inventoryRessourceCount;
     public int savedRessourceCount;
     public ulong currentSelectedPlayerId;

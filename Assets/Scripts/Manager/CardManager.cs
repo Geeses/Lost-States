@@ -136,7 +136,19 @@ public class CardManager : NetworkBehaviour
             NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(playerId, instanceId);
 
             CardEffectManager.Instance.InitializeCardEffectClientRpc(cardId, playerId, CardType.Movement);
+            PlayMovementCardClientRpc(cardId, playerId);
         }
+    }
+
+    [ClientRpc]
+    private void PlayMovementCardClientRpc(int cardId, ulong playerId)
+    {
+        Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
+        Card card = GetMovementCardById(cardId);
+        // increment move card played counter
+        player.ChangePlayedMoveCardsClientRpc(1);
+        player.ChangeMoveCountClientRpc(card.baseMoveCount);
+        player.discardedMovementCards.Add(cardId);
     }
 
     #endregion
