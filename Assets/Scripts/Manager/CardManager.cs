@@ -23,8 +23,7 @@ public class CardManager : NetworkBehaviour
     private List<int> _chestCardStack = new List<int>();
     private int _movementCardStackPosition;
     private int _chestCardStackPosition;
-    private List<CardEffect> _activeCardEffects = new List<CardEffect>();
-    private List<CardEffect> _initializedCardEffects = new List<CardEffect>();
+
 
     private static CardManager s_instance;
     #endregion
@@ -33,12 +32,10 @@ public class CardManager : NetworkBehaviour
     public static CardManager Instance { get { return s_instance; } }
     public List<int> MovementCardStack { get => _movementCardStack; private set => _movementCardStack = value; }
     public int MovementCardStackPosition { get => _movementCardStackPosition; private set => _movementCardStackPosition = value; }
-    public List<CardEffect> ActiveCardEffects { get => _activeCardEffects; private set => _activeCardEffects = value; }
     public List<int> ChestCardStack { get => _chestCardStack; private set => _chestCardStack = value; }
     public int ChestCardStackPosition { get => _chestCardStackPosition; private set => _chestCardStackPosition = value; }
     public int MoveCardListInStack { get => moveCardListInStack; private set => moveCardListInStack = value; }
     public int ChestCardListInStack { get => chestCardListInStack; private set => chestCardListInStack = value; }
-    public List<CardEffect> InitializedCardEffects { get => _initializedCardEffects; set => _initializedCardEffects = value; }
     #endregion
 
     #region Monobehavior Functions
@@ -61,7 +58,6 @@ public class CardManager : NetworkBehaviour
     private void Start()
     {
         TurnManager.Instance.OnTurnStart += TryAddMovementCardsToPlayer;
-        TurnManager.Instance.OnTurnEnd += RevertCardEffectClientRpc;
     }
     #endregion
 
@@ -139,7 +135,7 @@ public class CardManager : NetworkBehaviour
             // remove UI object from player that sent the request
             NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(playerId, instanceId);
 
-            ExecuteCardEffectClientRpc(cardId, playerId, CardType.Movement);
+            CardEffectManager.Instance.InitializeCardEffectClientRpc(cardId, playerId, CardType.Movement);
         }
     }
 
@@ -204,63 +200,8 @@ public class CardManager : NetworkBehaviour
             // remove UI object from player that sent the request
             NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(playerId, instanceId);
 
-            ExecuteCardEffectClientRpc(cardId, playerId, CardType.Chest);
+            CardEffectManager.Instance.InitializeCardEffectClientRpc(cardId, playerId, CardType.Chest);
         }
-    }
-    #endregion
-
-    #region Card Execution
-
-    // execute card effects
-    [ClientRpc]
-    private void ExecuteCardEffectClientRpc(int cardId, ulong playerId, CardType cardType)
-    {
-        Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
-        Card card = null;
-
-        if(cardType == CardType.Movement)
-        {
-            card = GetMovementCardById(cardId);
-            // increment move card played counter
-            player.ChangePlayedMoveCardsClientRpc(1);
-            player.ChangeMoveCountClientRpc(card.baseMoveCount);
-        }
-        else if(cardType == CardType.Chest)
-        {
-            card = GetChestCardById(cardId);
-        }
-
-        List<CardEffect> effects = card.cardEffects;
-
-        Debug.Log("executing card effect " + effects.Count + " " + card.cardEffects.Count);
-        foreach (CardEffect effect in effects)
-        {
-            InitializedCardEffects.Add(effect);
-            effect.Initialize(player);
-
-            if(effect.executeInstantly)
-            {
-                ActiveCardEffects.Add(effect);
-                effect.ExecuteEffect();
-            }
-        }
-    }
-
-    // end of turn revert of card effects
-    [ClientRpc]
-    private void RevertCardEffectClientRpc(ulong playerId)
-    {
-        Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
-
-        Debug.Log("call revert effect");
-        foreach (CardEffect effect in ActiveCardEffects)
-        {            
-            Debug.Log("revert effect in loop: " + effect.name);
-            effect.RevertEffect();
-        }
-
-        ActiveCardEffects.Clear();
-        InitializedCardEffects.Clear();
     }
     #endregion
 }

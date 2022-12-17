@@ -26,9 +26,9 @@ public class Player : Selectable
     public NetworkVariable<int> movedInCurrentTurn;
     public int inventoryRessourceCount;
     public int savedRessourceCount;
-    public NetworkVariable<ulong> currentSelectedPlayerId = new NetworkVariable<ulong>(default,
-        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public ulong currentSelectedPlayerId;
 
+    public event Action<ulong> OnEnemyPlayerSelected;
     public event Action<GridCoordinates> OnPlayerMoved;
 
     private ObservableCollection<int> _movementCards = new ObservableCollection<int>();
@@ -88,7 +88,6 @@ public class Player : Selectable
     public override void Select()
     {
         base.Select();
-
         if(IsOwner)
             HighlightAdjacentTiles();
     }
@@ -123,8 +122,23 @@ public class Player : Selectable
         if(player != null)
         {
             if(IsOwner)
-                currentSelectedPlayerId.Value = player.clientId.Value;
+            {
+                SetSelectedEnemyPlayerServerRpc(player.clientId.Value);
+            }
         }
+    }
+
+    [ServerRpc]
+    private void SetSelectedEnemyPlayerServerRpc(ulong playerId)
+    {
+        SetSelectedEnemyPlayerClientRpc(playerId);
+    }
+
+    [ClientRpc]
+    private void SetSelectedEnemyPlayerClientRpc(ulong playerId)
+    {
+        currentSelectedPlayerId = playerId;
+        OnEnemyPlayerSelected?.Invoke(currentSelectedPlayerId);
     }
     #endregion
 
@@ -178,7 +192,7 @@ public class Player : Selectable
 
         Vector3 cellWorldPosition = GridManager.Instance.Tilemap.CellToWorld(new Vector3Int(coordinates.x, coordinates.y, 0));
         cellWorldPosition += GridManager.Instance.Tilemap.cellSize / 2;
-        transform.DOMove(cellWorldPosition, 0.5f);
+        transform.DOMove(cellWorldPosition + new Vector3(0, 0, -0.1f), 0.5f);
 
         if(IsLocalPlayer)
             HighlightAdjacentTiles();
