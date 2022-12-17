@@ -35,7 +35,7 @@ public class AddOnPickup : CardEffect
         {
             foreach (var item in e.NewItems)
             {
-                Player.ChangeMoveCountClientRpc(moveCount);
+                Player.ChangeMoveCountServerRpc(moveCount);
             }
         }
     }

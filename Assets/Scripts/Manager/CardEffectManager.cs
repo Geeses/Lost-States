@@ -62,7 +62,7 @@ public class CardEffectManager : NetworkBehaviour
 
     // execute card effects
     [ClientRpc]
-    public void InitializeCardEffectClientRpc(int cardId, ulong playerId, CardType cardType)
+    public void InitializeCardEffectClientRpc(int cardId, ulong playerId, CardType cardType, ClientRpcParams clientRpcParams = default)
     {
         Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
         Card card = null;

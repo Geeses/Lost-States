@@ -24,6 +24,7 @@ public class Player : Selectable
     [Header("Debug")]
     public NetworkVariable<ulong> clientId;
     public NetworkVariable<int> movedInCurrentTurn;
+    public NetworkVariable<int> moveCount;
     public List<int> discardedMovementCards = new List<int>();
     public int inventoryRessourceCount;
     public int savedRessourceCount;
@@ -40,14 +41,12 @@ public class Player : Selectable
     private int _movementCardAmountPerCycle = 5;
 
     private Tile _currentTile;
-    private int _moveCount;
     private int _maximumPlayableMovementCards;
     private int _playedMovementCards;
     private Selectable _currentSelectedTarget;
     #endregion
 
     #region Properties
-    public int MoveCount { get => _moveCount; set => _moveCount = value; }
     public ObservableCollection<Ressource> InventoryRessources { get => _inventoryRessources; set => _inventoryRessources = value; }
     public ObservableCollection<Ressource> SavedRessources { get => _savedRessources; set => _savedRessources = value; }
     public ObservableCollection<int> InventoryChestCards { get => _inventoryChestCards; set => _inventoryChestCards = value; }
@@ -74,6 +73,7 @@ public class Player : Selectable
         InventoryRessources.CollectionChanged += ChangeCountInventory;
         SavedRessources.CollectionChanged += ChangeCountSaved;
         InputManager.Instance.OnSelect += ChangeCurrentSelectedTarget;
+        moveCount.OnValueChanged += ChangeMoveCountUI;
     }
 
     public override void OnDestroy()
@@ -144,8 +144,9 @@ public class Player : Selectable
     #endregion
 
     #region Movement
-    [ServerRpc]
-    public void TryMoveServerRpc(GridCoordinates coordinates)
+    // forceMove is used for effects, that want to bypass the normal behavior of moving in the game
+    [ServerRpc(RequireOwnership = false)]
+    public void TryMoveServerRpc(GridCoordinates coordinates, bool forceMove = false)
     {
         Tile tile = GridManager.Instance.TileGrid[coordinates];
 
@@ -153,27 +154,27 @@ public class Player : Selectable
         if (Array.Find(GridManager.Instance.GetAdjacentTiles(tile), x => 
             x.TileGridCoordinates.x == CurrentTile.TileGridCoordinates.x && 
             x.TileGridCoordinates.y == CurrentTile.TileGridCoordinates.y) && 
-            MoveCount > 0 &&
-            tile.passable)
+            moveCount.Value > 0 &&
+            tile.passable ||
+            forceMove)
         {
-            movedInCurrentTurn.Value += 1;
-            ChangeMoveCountClientRpc(-1);
+            if (!forceMove)
+            {
+                movedInCurrentTurn.Value += 1;
+                moveCount.Value += -1;
+            }
             MoveClientRpc(coordinates);
         }
     }
 
-    [ClientRpc]
-    public void ChangeMoveCountClientRpc(int count)
+    [ServerRpc(RequireOwnership = false)]
+    public void ChangeMoveCountServerRpc(int count)
     {
-        MoveCount += count;
-        TurnManager.Instance.currentTurnPlayerMovesText.text = MoveCount.ToString();
+        moveCount.Value += count;
     }
-
-    [ClientRpc]
-    public void PlayCardClientRpc(int cardId)
+    private void ChangeMoveCountUI(int previousValue, int newValue)
     {
-        //MoveCount = count;
-        TurnManager.Instance.currentTurnPlayerMovesText.text = MoveCount.ToString();
+        TurnManager.Instance.currentTurnPlayerMovesText.text = newValue.ToString();
     }
 
     [ClientRpc]

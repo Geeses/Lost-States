@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2181118646059948a6d77c41a735863, type: 3}
-  m_Name: ChestCard06
+  m_Script: {fileID: 11500000, guid: 4c6bb2020ab7dfb4db2bac78c8ed5a17, type: 3}
+  m_Name: PlayLast3DiscardedCards
   m_EditorClassIdentifier: 
-  cardType: 1
-  id: 0
-  baseMoveCount: 0
-  CardUi: {fileID: 0}
-  cardEffects: []
+  executeInstantly: 1
+  amount: 1

@@ -36,8 +36,8 @@ public class SwapPositions : CardEffect
             GridCoordinates playerCoords = Player.CurrentTile.TileGridCoordinates;
             GridCoordinates enemyCoords = selectedPlayer.CurrentTile.TileGridCoordinates;
 
-            Player.MoveClientRpc(enemyCoords, false);
-            selectedPlayer.MoveClientRpc(playerCoords, false);
+            Player.TryMoveServerRpc(enemyCoords, true);
+            selectedPlayer.TryMoveServerRpc(playerCoords, true);
             Debug.Log("wooosh teleport!");
             Player.OnEnemyPlayerSelected += SwapPlayers;
         }

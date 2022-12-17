@@ -123,32 +123,51 @@ public class CardManager : NetworkBehaviour
         }
     }
 
+    // temporary card means, that this card doesnt really exist and is only played for its effects
+    // used for example in chest card effects
     [ServerRpc(RequireOwnership = false)]
-    public void TryPlayMovementCardServerRpc(int cardId, int instanceId, ulong playerId)
+    public void TryPlayMovementCardServerRpc(int cardId, int instanceId, ulong playerId, bool temporaryCard = false)
     {
+        Debug.Log("Try play Card. " + temporaryCard + " " + playerId);
         Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
 
         // if they are still allowed to play movementcards and its their turn
         if (player.PlayedMovementCards <= player.MaximumPlayableMovementCards &&
-            playerId == TurnManager.Instance.CurrentTurnPlayerId)
+            playerId == TurnManager.Instance.CurrentTurnPlayerId || temporaryCard)
         {
             // remove UI object from player that sent the request
             NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(playerId, instanceId);
 
-            CardEffectManager.Instance.InitializeCardEffectClientRpc(cardId, playerId, CardType.Movement);
-            PlayMovementCardClientRpc(cardId, playerId);
+            // Sending the ClientRPC only to the playerId
+            ClientRpcParams clientRpcParams = new ClientRpcParams
+            {
+                Send = new ClientRpcSendParams
+                {
+                    TargetClientIds = new ulong[] { playerId }
+                }
+            };
+
+            CardEffectManager.Instance.InitializeCardEffectClientRpc(cardId, playerId, CardType.Movement, clientRpcParams);
+
+            Card card = GetMovementCardById(cardId);
+            player.moveCount.Value += card.baseMoveCount;
+
+            PlayMovementCardClientRpc(cardId, playerId, temporaryCard);
         }
     }
 
     [ClientRpc]
-    private void PlayMovementCardClientRpc(int cardId, ulong playerId)
+    private void PlayMovementCardClientRpc(int cardId, ulong playerId, bool temporaryCard = false)
     {
+        Debug.Log("Play card " + temporaryCard);
         Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
-        Card card = GetMovementCardById(cardId);
-        // increment move card played counter
-        player.ChangePlayedMoveCardsClientRpc(1);
-        player.ChangeMoveCountClientRpc(card.baseMoveCount);
-        player.discardedMovementCards.Add(cardId);
+
+        if(!temporaryCard)
+        {
+            // increment move card played counter
+            player.ChangePlayedMoveCardsClientRpc(1);
+            player.discardedMovementCards.Add(cardId);
+        }
     }
 
     #endregion
@@ -212,7 +231,16 @@ public class CardManager : NetworkBehaviour
             // remove UI object from player that sent the request
             NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(playerId, instanceId);
 
-            CardEffectManager.Instance.InitializeCardEffectClientRpc(cardId, playerId, CardType.Chest);
+            // Sending the ClientRPC only to the playerId
+            ClientRpcParams clientRpcParams = new ClientRpcParams
+            {
+                Send = new ClientRpcSendParams
+                {
+                    TargetClientIds = new ulong[] { playerId }
+                }
+            };
+
+            CardEffectManager.Instance.InitializeCardEffectClientRpc(cardId, playerId, CardType.Chest, clientRpcParams);
         }
     }
     #endregion
