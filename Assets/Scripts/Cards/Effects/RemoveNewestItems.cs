@@ -52,11 +52,11 @@ public class RemoveNewestItems : CardEffect
             {
                 if(itemType == PickupType.Ressource)
                 {
-                    enemy.RemoveNewestRessource(itemCount);
+                    enemy.RemoveNewestRessourceServerRpc(itemCount);
                 }
                 else if(itemType == PickupType.Chest)
                 {
-                    enemy.RemoveNewestChestcard(itemCount);
+                    enemy.RemoveNewestChestcardServerRpc(itemCount);
                 }
             }
         }

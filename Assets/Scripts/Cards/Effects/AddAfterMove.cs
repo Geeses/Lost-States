@@ -28,22 +28,21 @@ public class AddAfterMove : CardEffect
         Player.OnPlayerMoved += AddRewardAfterMove;
     }
 
-    private void AddRewardAfterMove(GridCoordinates obj)
-    {
-        if(Player.movedInCurrentTurn.Value == moveCount)
-        {
-            if(reward == Rewards.Coins)
-            {
-                Player.CoinCount += rewardAmount;
-            }
-        }
-    }
-
     public override void RevertEffect()
     {
         base.RevertEffect();
         Player.OnPlayerMoved -= AddRewardAfterMove;
     }
 
+    private void AddRewardAfterMove(GridCoordinates obj)
+    {
+        if (Player.movedInCurrentTurn.Value == moveCount)
+        {
+            if (reward == Rewards.Coins)
+            {
+                Player.CoinCount += rewardAmount;
+            }
+        }
+    }
 }
 

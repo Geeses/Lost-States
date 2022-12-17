@@ -13,6 +13,11 @@ public class Selectable : NetworkBehaviour, INetworkSerializable
 
     public bool Selected { get => selected; protected set => selected = value; }
 
+    public virtual void Awake()
+    {
+
+    }
+
     public virtual void Start()
     {
 

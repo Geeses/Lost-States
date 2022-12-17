@@ -35,8 +35,9 @@ public class Player : Selectable
 
     private ObservableCollection<int> _movementCards = new ObservableCollection<int>();
     private ObservableCollection<int> _inventoryChestCards = new ObservableCollection<int>();
-    private ObservableCollection<Ressource> _inventoryRessources = new ObservableCollection<Ressource>();
-    private ObservableCollection<Ressource> _savedRessources = new ObservableCollection<Ressource>();
+
+    public NetworkList<int> inventoryRessources;
+    public NetworkList<int> savedRessources;
     private int _coinCount;
     private int _movementCardAmountPerCycle = 5;
 
@@ -47,8 +48,6 @@ public class Player : Selectable
     #endregion
 
     #region Properties
-    public ObservableCollection<Ressource> InventoryRessources { get => _inventoryRessources; set => _inventoryRessources = value; }
-    public ObservableCollection<Ressource> SavedRessources { get => _savedRessources; set => _savedRessources = value; }
     public ObservableCollection<int> InventoryChestCards { get => _inventoryChestCards; set => _inventoryChestCards = value; }
     public int CoinCount { get => _coinCount; set => _coinCount = value; }
     public int MovementCardAmountPerCycle { get => _movementCardAmountPerCycle; set => _movementCardAmountPerCycle = value; }
@@ -60,6 +59,14 @@ public class Player : Selectable
     #endregion
 
     #region Monobehavior Functions
+    public override void Awake()
+    {
+        inventoryRessources = new NetworkList<int>();
+        savedRessources = new NetworkList<int>();
+
+        base.Awake();
+    }
+
     public override void Start()
     {
         base.Start();
@@ -70,8 +77,8 @@ public class Player : Selectable
         }
 
         CurrentTile = GridManager.Instance.TileGrid[new GridCoordinates(0,0)];
-        InventoryRessources.CollectionChanged += ChangeCountInventory;
-        SavedRessources.CollectionChanged += ChangeCountSaved;
+        inventoryRessources.OnListChanged += ChangeCountInventory;
+        savedRessources.OnListChanged += ChangeCountSaved;
         InputManager.Instance.OnSelect += ChangeCurrentSelectedTarget;
         moveCount.OnValueChanged += ChangeMoveCountUI;
     }
@@ -79,8 +86,8 @@ public class Player : Selectable
     public override void OnDestroy()
     {
         base.OnDestroy();
-        InventoryRessources.CollectionChanged -= ChangeCountInventory;
-        SavedRessources.CollectionChanged -= ChangeCountSaved;
+        inventoryRessources.OnListChanged -= ChangeCountInventory;
+        savedRessources.OnListChanged -= ChangeCountSaved;
         InputManager.Instance.OnSelect -= ChangeCurrentSelectedTarget;
     }
     #endregion
@@ -219,47 +226,46 @@ public class Player : Selectable
     #endregion
 
     #region Ressources
-    public void ChangeCountInventory(object sender, NotifyCollectionChangedEventArgs e)
+    public void ChangeCountInventory(NetworkListEvent<int> changeEvent)
     {
-        inventoryRessourceCount = InventoryRessources.Count;
+        inventoryRessourceCount = inventoryRessources.Count;
     }
 
-    public void ChangeCountSaved(object sender, NotifyCollectionChangedEventArgs e)
+    public void ChangeCountSaved(NetworkListEvent<int> changeEvent)
     {
-        savedRessourceCount = SavedRessources.Count;
+        savedRessourceCount = savedRessources.Count;
     }
 
-    public Ressource RemoveNewestRessource(int count)
+    [ServerRpc]
+    public void AddRessourceServerRpc(Ressource ressource)
     {
-        Ressource res = 0;
+        inventoryRessources.Add((int)ressource);
+    }
 
+    [ServerRpc]
+    public void RemoveNewestRessourceServerRpc(int count)
+    {
         for (int i = 0; i < count; i++)
         {
-            Debug.Log(InventoryRessources.Count);
-            if(InventoryRessources.Count > 0)
+            Debug.Log(inventoryRessources.Count);
+            if(inventoryRessources.Count > 0)
             {
-                res = InventoryRessources[InventoryRessources.Count - 1];
-                InventoryRessources.RemoveAt(InventoryRessources.Count - 1);
+                inventoryRessources.RemoveAt(inventoryRessources.Count - 1);
             }
         }
-
-        return res;
     }
 
-    public int RemoveNewestChestcard(int count)
+    [ServerRpc]
+    public void RemoveNewestChestcardServerRpc(int count)
     {
-        int chestcardId = -1;
         for (int i = 0; i < count; i++)
         {
             Debug.Log(InventoryChestCards.Count);
             if (InventoryChestCards.Count > 0)
             {
-                chestcardId = InventoryChestCards[InventoryChestCards.Count - 1];
                 InventoryChestCards.RemoveAt(InventoryChestCards.Count - 1);
             }
         }
-
-        return chestcardId;
     }
     #endregion
 }
