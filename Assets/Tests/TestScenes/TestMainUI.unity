@@ -127,7 +127,7 @@ NavMeshSettings:
 --- !u!1 &792805243
 ========
 --- !u!1 &708986184
->>>>>>>> UI-fixes:Assets/Scenes/TestScenes/TestMainView.unity
+ UI-fixes:Assets/Scenes/TestScenes/TestMainView.unity
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 2008724183}
   - component: {fileID: 2008724182}
   - component: {fileID: 2008724185}
->>>>>>>> UI-fixes:Assets/Scenes/TestScenes/TestMainView.unity
+ UI-fixes:Assets/Scenes/TestScenes/TestMainView.unity
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera

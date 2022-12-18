@@ -16,4 +16,5 @@ MonoBehaviour:
   id: 5
   baseMoveCount: 5
   CardUi: {fileID: 5814282731637473512, guid: 476a91568e6902e4d956914c3d072e8c, type: 3}
-  cardEffects: []
+  cardEffects:
+  - {fileID: 11400000, guid: 18265bc819779504c94301a06401ab81, type: 2}

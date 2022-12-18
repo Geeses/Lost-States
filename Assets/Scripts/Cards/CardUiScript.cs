@@ -43,7 +43,7 @@ public class CardUiScript : NetworkBehaviour, IPointerDownHandler
 
     public void TryPlayCard()
     {
-        if(_card.cardType is CardType.Movement)
+        if (_card.cardType is CardType.Movement)
             CardManager.Instance.TryPlayMovementCardServerRpc(CardId, gameObject.GetInstanceID(), NetworkManager.LocalClientId);
         else if(_card.cardType is CardType.Chest)
             CardManager.Instance.TryPlayChestCardServerRpc(CardId, gameObject.GetInstanceID(), NetworkManager.LocalClientId);

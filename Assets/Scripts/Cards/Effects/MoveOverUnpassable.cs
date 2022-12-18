@@ -9,6 +9,7 @@ public class MoveOverUnpassable : CardEffect
     public override void ExecuteEffect()
     {
         base.ExecuteEffect();
+        Debug.Log("Effect: Move Over Unpassable Executed");
         Player.moveOverUnpassable = true;
     }
     public override void RevertEffect()

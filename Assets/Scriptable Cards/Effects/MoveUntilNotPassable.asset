@@ -9,11 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2181118646059948a6d77c41a735863, type: 3}
-  m_Name: 8_Gold
+  m_Script: {fileID: 11500000, guid: 8ccd15f92b38960468a106ff3f87166f, type: 3}
+  m_Name: MoveUntilNotPassable
   m_EditorClassIdentifier: 
-  cardType: 0
-  id: 8
-  baseMoveCount: 8
-  CardUi: {fileID: 5909072284395999296, guid: b2c6ec49e2fc81548995a27677106255, type: 3}
-  cardEffects: []

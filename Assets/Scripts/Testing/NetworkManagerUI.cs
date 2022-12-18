@@ -76,7 +76,6 @@ public class NetworkManagerUI : NetworkBehaviour
 
     private void ChangeChestCards(object sender, NotifyCollectionChangedEventArgs e)
     {
-        Debug.Log("chestcard list changed");
         if (e.NewItems != null)
         {
             foreach (int id in e.NewItems)
@@ -99,7 +98,7 @@ public class NetworkManagerUI : NetworkBehaviour
 
     private void ChangeMovementCards(object sender, NotifyCollectionChangedEventArgs e)
     {
-        Debug.Log("movementcard list changed");
+        // Debug.Log("movementcard list changed");
         if (e.NewItems != null)
         {
             foreach (var item in e.NewItems)

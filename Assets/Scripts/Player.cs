@@ -32,6 +32,9 @@ public class Player : Selectable
     public int inventoryRessourceCount;
     public int savedRessourceCount;
     public bool moveOverUnpassable;
+    public int _coinCount;
+    public NetworkVariable<ulong> currentSelectedPlayerId = new NetworkVariable<ulong>(default,
+        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     public event Action<GridCoordinates> OnPlayerMoved;
     public event Action OnCardPlayed;
@@ -40,15 +43,15 @@ public class Player : Selectable
     private ObservableCollection<int> _inventoryChestCards = new ObservableCollection<int>();
     private ObservableCollection<Ressource> _inventoryRessources = new ObservableCollection<Ressource>();
     private ObservableCollection<Ressource> _savedRessources = new ObservableCollection<Ressource>();
-    private int _coinCount;
+    
     private int _movementCardAmountPerCycle = 5;
-
     private Tile _currentTile;
     private Tile _oldTile;
     private int _moveCount;
     private int _maximumPlayableMovementCards;
     private int _playedMovementCards;
     private Direction _lastMoveDirection;
+    private Selectable _currentSelectedTarget;
     #endregion
 
     #region Properties
@@ -62,10 +65,9 @@ public class Player : Selectable
     public int MaximumPlayableMovementCards { get => _maximumPlayableMovementCards; set => _maximumPlayableMovementCards = value; }
     public int PlayedMovementCards { get => _playedMovementCards; set => _playedMovementCards = value; }
     public Tile CurrentTile { get => _currentTile; private set => _currentTile = value; }
-
     public Tile OldTile { get => _oldTile; private set => _oldTile = value; }
-
     public Direction LastMoveDirection { get => _lastMoveDirection; private set => _lastMoveDirection = value; }
+    public Selectable CurrentSelectedTarget { get => _currentSelectedTarget; set => _currentSelectedTarget = value; }
     #endregion
 
     #region Monobehavior Functions
@@ -78,14 +80,18 @@ public class Player : Selectable
             clientId.Value = OwnerClientId;
         }
 
-        if (!IsOwner)
-        {
-            _collider.enabled = false;
-        }
-
         CurrentTile = GridManager.Instance.TileGrid[new GridCoordinates(0, 0)];
         InventoryRessources.CollectionChanged += ChangeCountInventory;
         SavedRessources.CollectionChanged += ChangeCountSaved;
+        InputManager.Instance.OnSelect += ChangeCurrentSelectedTarget;
+    }
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+        InventoryRessources.CollectionChanged -= ChangeCountInventory;
+        SavedRessources.CollectionChanged -= ChangeCountSaved;
+        InputManager.Instance.OnSelect -= ChangeCurrentSelectedTarget;
     }
     #endregion
 
@@ -93,7 +99,9 @@ public class Player : Selectable
     public override void Select()
     {
         base.Select();
-        HighlightAdjacentTiles();
+
+        if (IsOwner)
+            HighlightAdjacentTiles();
     }
 
     public override void Unselect()
@@ -117,11 +125,23 @@ public class Player : Selectable
             tile.Unhighlight();
         }
     }
+
+    private void ChangeCurrentSelectedTarget(Selectable selectable)
+    {
+        CurrentSelectedTarget = selectable;
+
+        Player player = selectable.GetComponent<Player>();
+        if (player != null)
+        {
+            if (IsOwner)
+                currentSelectedPlayerId.Value = player.clientId.Value;
+        }
+    }
     #endregion
 
     #region Movement
-    [ServerRpc]
-    public void TryMoveServerRpc(GridCoordinates coordinates, bool subtractMoves = true)
+    [ServerRpc(RequireOwnership = false)]
+    public void TryMoveServerRpc(GridCoordinates coordinates, bool subtractMoves = true, bool invokeOnPlayerMovedEvent = true)
     {
         Tile tile = GridManager.Instance.TileGrid[coordinates];
 
@@ -129,15 +149,18 @@ public class Player : Selectable
         if (Array.Find(GridManager.Instance.GetAdjacentTiles(tile), x =>
             x.TileGridCoordinates.x == CurrentTile.TileGridCoordinates.x &&
             x.TileGridCoordinates.y == CurrentTile.TileGridCoordinates.y) &&
-            MoveCount > 0 &&
-            !(tile.passable && moveOverUnpassable))
+            MoveCount > 0
+            )
         {
-            movedInCurrentTurn.Value += 1;
+            if (moveOverUnpassable | tile.passable)
+            {
+                movedInCurrentTurn.Value += 1;
 
-            if (subtractMoves)
-                AddMoveCountClientRpc(-1);
-            
-            MoveClientRpc(coordinates);
+                if (subtractMoves)
+                    AddMoveCountClientRpc(-1);
+
+                MoveClientRpc(coordinates, invokeOnPlayerMovedEvent);
+            }
         }
     }
 
@@ -169,63 +192,37 @@ public class Player : Selectable
     }
 
     [ClientRpc]
-    private void MoveClientRpc(GridCoordinates coordinates)
+    public void MoveClientRpc(GridCoordinates coordinates, bool invokeEvent = true)
     {
         OldTile = CurrentTile;
-        LastMoveDirection = GetMoveDirection(OldTile.TileGridCoordinates, CurrentTile.TileGridCoordinates);
+
         if (IsLocalPlayer)
             UnhighlightAdjacentTiles();
 
         CurrentTile = GridManager.Instance.TileGrid[coordinates];
         CurrentTile.PlayerStepOnTile(this);
-        Debug.Log(CurrentTile);
 
         Vector3 cellWorldPosition = GridManager.Instance.Tilemap.CellToWorld(new Vector3Int(coordinates.x, coordinates.y, 0));
         cellWorldPosition += GridManager.Instance.Tilemap.cellSize / 2;
         transform.DOMove(cellWorldPosition, 0.5f);
 
+        LastMoveDirection = GetMoveDirection(OldTile.TileGridCoordinates, CurrentTile.TileGridCoordinates);
+
         if (IsLocalPlayer)
             HighlightAdjacentTiles();
 
-        OnPlayerMoved?.Invoke(coordinates);
+        if (invokeEvent)
+            OnPlayerMoved?.Invoke(coordinates);
     }
 
-    private Direction GetMoveDirection(GridCoordinates positionBefore, GridCoordinates positionAfter)
-    {
-        int x_b = positionBefore.x, x_a = positionAfter.x, y_b = positionBefore.y, y_a = positionAfter.y;
-        // moving up
-        if (x_b == x_a && y_b < y_a)
-        {
-            return Direction.up;
-        }
-        // moving down
-        else if (x_b == x_a && y_b > y_a)
-        {
-            return Direction.down;
-        }
-        // moving right
-        else if (y_b == y_a && x_b < x_a)
-        {
-            return Direction.right;
-        }
-        // moving left
-        else
-        {
-            return Direction.left;
-        }
-    }
 
     [ClientRpc]
     public void AddMovementCardClientRpc(int cardId)
     {
         //Debug.Log("add movecard Id " + cardId);
-        MovementCards.Add(0);
-        MovementCards.Add(1);
-        MovementCards.Add(2);
-        MovementCards.Add(3);
-        MovementCards.Add(4);
         MovementCards.Add(5);
         MovementCards.Add(6);
+        MovementCards.Add(7);
         //MovementCards.Add(cardId);
     }
 
@@ -248,28 +245,58 @@ public class Player : Selectable
         savedRessourceCount = SavedRessources.Count;
     }
 
-    public void RemoveNewestRessource(int count)
+    public Direction GetMoveDirection(GridCoordinates positionBefore, GridCoordinates positionAfter)
     {
+        int x_b = positionBefore.x, x_a = positionAfter.x, y_b = positionBefore.y, y_a = positionAfter.y;
+        if (x_b == x_a && y_b < y_a)
+        {
+            return Direction.up;
+        }
+        else if (x_b == x_a && y_b > y_a)
+        {
+            return Direction.down;
+        }
+        else if (y_b == y_a && x_b < x_a)
+        {
+            return Direction.right;
+        }
+        else
+        {
+            return Direction.left;
+        }
+    }
+
+    public Ressource RemoveNewestRessource(int count)
+    {
+        Ressource res = 0;
+
         for (int i = 0; i < count; i++)
         {
             Debug.Log(InventoryRessources.Count);
             if (InventoryRessources.Count > 0)
             {
+                res = InventoryRessources[InventoryRessources.Count - 1];
                 InventoryRessources.RemoveAt(InventoryRessources.Count - 1);
             }
         }
+
+        return res;
     }
 
-    public void RemoveNewestChestcard(int count)
+    public int RemoveNewestChestcard(int count)
     {
+        int chestcardId = -1;
         for (int i = 0; i < count; i++)
         {
             Debug.Log(InventoryChestCards.Count);
             if (InventoryChestCards.Count > 0)
             {
+                chestcardId = InventoryChestCards[InventoryChestCards.Count - 1];
                 InventoryChestCards.RemoveAt(InventoryChestCards.Count - 1);
             }
         }
+
+        return chestcardId;
     }
     #endregion
 }

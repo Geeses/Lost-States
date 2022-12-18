@@ -9,7 +9,7 @@ public enum Rewards
     Chestcard
 }
 [CreateAssetMenu(fileName = "Effect", menuName = "Scriptable Cards/AddAfterMove", order = 1)]
-public class AddAfterMove : CardEffect
+public class RewardAfterMove : CardEffect
 {
     public Rewards reward;
     public int rewardAmount;
@@ -35,6 +35,10 @@ public class AddAfterMove : CardEffect
             if(reward == Rewards.Coins)
             {
                 Player.CoinCount += rewardAmount;
+            }
+            else
+            {
+                CardManager.Instance.AddChestCardToPlayerServerRpc(Player.clientId.Value);
             }
         }
     }

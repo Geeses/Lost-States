@@ -9,6 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ccd15f92b38960468a106ff3f87166f, type: 3}
-  m_Name: MoveUntilDarkTile
+  m_Script: {fileID: 11500000, guid: c781aacc02e4fa1429ec70a6f56aa0b0, type: 3}
+  m_Name: DoubleRewardOnSecondMove
   m_EditorClassIdentifier: 
+  executeInstantly: 1
+  moveCount: 2
