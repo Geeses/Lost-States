@@ -123,6 +123,7 @@ public class Player : Selectable
     public void ChangeMoveCountClientRpc(int count)
     {
         MoveCount += count;
+        MyPlayerUI.Instance.myMovesText.text = MoveCount.ToString();
         TurnManager.Instance.currentTurnPlayerMovesText.text = MoveCount.ToString();
     }
 
@@ -130,6 +131,7 @@ public class Player : Selectable
     public void PlayCardClientRpc(int cardId)
     {
         //MoveCount = count;
+        MyPlayerUI.Instance.myMovesText.text = MoveCount.ToString();
         TurnManager.Instance.currentTurnPlayerMovesText.text = MoveCount.ToString();
     }
 
