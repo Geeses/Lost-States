@@ -117,7 +117,7 @@ public class CardManager : NetworkBehaviour
                 CreateMovementCardStack();
             }
 
-            player.AddMovementCardClientRpc(MovementCardStack[MovementCardStackPosition]);
+            player.movementCards.Add(MovementCardStack[MovementCardStackPosition]);
 
             MovementCardStackPosition += 1;
         }
@@ -217,7 +217,7 @@ public class CardManager : NetworkBehaviour
         }
 
         Debug.Log("try add", player);
-        player.AddChestCardClientRpc(ChestCardStack[ChestCardStackPosition]);
+        player.inventoryChestCards.Add(ChestCardStack[ChestCardStackPosition]);
 
         ChestCardStackPosition += 1;
     }

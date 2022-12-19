@@ -25,6 +25,11 @@ public class Player : Selectable
     public NetworkVariable<ulong> clientId;
     public NetworkVariable<int> movedInCurrentTurn;
     public NetworkVariable<int> moveCount;
+    public NetworkVariable<int> coinCount;
+    public NetworkList<int> movementCards;
+    public NetworkList<int> inventoryChestCards;
+    public NetworkList<int> inventoryRessources;
+    public NetworkList<int> savedRessources;
     public List<int> discardedMovementCards = new List<int>();
     public int inventoryRessourceCount;
     public int savedRessourceCount;
@@ -33,12 +38,6 @@ public class Player : Selectable
     public event Action<ulong> OnEnemyPlayerSelected;
     public event Action<GridCoordinates> OnPlayerMoved;
 
-    private ObservableCollection<int> _movementCards = new ObservableCollection<int>();
-    private ObservableCollection<int> _inventoryChestCards = new ObservableCollection<int>();
-
-    public NetworkList<int> inventoryRessources;
-    public NetworkList<int> savedRessources;
-    private int _coinCount;
     private int _movementCardAmountPerCycle = 5;
 
     private Tile _currentTile;
@@ -48,10 +47,7 @@ public class Player : Selectable
     #endregion
 
     #region Properties
-    public ObservableCollection<int> InventoryChestCards { get => _inventoryChestCards; set => _inventoryChestCards = value; }
-    public int CoinCount { get => _coinCount; set => _coinCount = value; }
     public int MovementCardAmountPerCycle { get => _movementCardAmountPerCycle; set => _movementCardAmountPerCycle = value; }
-    public ObservableCollection<int> MovementCards { get => _movementCards; set => _movementCards = value; }
     public int MaximumPlayableMovementCards { get => _maximumPlayableMovementCards; set => _maximumPlayableMovementCards = value; }
     public int PlayedMovementCards { get => _playedMovementCards; set => _playedMovementCards = value; }
     public Tile CurrentTile { get => _currentTile; private set => _currentTile = value; }
@@ -63,6 +59,8 @@ public class Player : Selectable
     {
         inventoryRessources = new NetworkList<int>();
         savedRessources = new NetworkList<int>();
+        movementCards = new NetworkList<int>();
+        inventoryChestCards = new NetworkList<int>();
 
         base.Awake();
     }
@@ -214,14 +212,14 @@ public class Player : Selectable
     public void AddMovementCardClientRpc(int cardId)
     {
         Debug.Log("add movecard Id " + cardId);
-        MovementCards.Add(cardId);
+        movementCards.Add(cardId);
     }
 
     [ClientRpc]
     public void AddChestCardClientRpc(int cardId)
     {
         Debug.Log("add chestcard Id " + cardId, this);
-        InventoryChestCards.Add(cardId);
+        inventoryChestCards.Add(cardId);
     }
     #endregion
 
@@ -236,13 +234,13 @@ public class Player : Selectable
         savedRessourceCount = savedRessources.Count;
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void AddRessourceServerRpc(Ressource ressource)
     {
         inventoryRessources.Add((int)ressource);
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void RemoveNewestRessourceServerRpc(int count)
     {
         for (int i = 0; i < count; i++)
@@ -255,15 +253,16 @@ public class Player : Selectable
         }
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void RemoveNewestChestcardServerRpc(int count)
     {
         for (int i = 0; i < count; i++)
         {
-            Debug.Log(InventoryChestCards.Count);
-            if (InventoryChestCards.Count > 0)
+            Debug.Log(inventoryChestCards.Count);
+            if (inventoryChestCards.Count > 0)
             {
-                InventoryChestCards.RemoveAt(InventoryChestCards.Count - 1);
+                Debug.Log("Remove Chestcard: " + inventoryChestCards[inventoryChestCards.Count - 1]);
+                inventoryChestCards.RemoveAt(inventoryChestCards.Count - 1);
             }
         }
     }

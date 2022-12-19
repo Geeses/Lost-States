@@ -28,7 +28,9 @@ public class RessourceTile : NetworkBehaviour, ITileExtension
 
         for (int i = 0; i < ressourceCount; i++)
         {
-            _cachedPlayer.AddRessourceServerRpc(ressourceType);
+            //_cachedPlayer.AddRessourceServerRpc(ressourceType);
+            if(IsServer)
+                _cachedPlayer.inventoryRessources.Add((int)ressourceType);
         }
 
         ressourceCount = 0;

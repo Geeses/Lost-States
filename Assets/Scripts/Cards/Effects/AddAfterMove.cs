@@ -40,7 +40,7 @@ public class AddAfterMove : CardEffect
         {
             if (reward == Rewards.Coins)
             {
-                Player.CoinCount += rewardAmount;
+                Player.coinCount.Value += rewardAmount;
             }
         }
     }

@@ -66,47 +66,41 @@ public class NetworkManagerUI : NetworkBehaviour
     {
         _player = NetworkManager.LocalClient.PlayerObject.GetComponent<Player>();
 
-        foreach (int id in _player.MovementCards)
+        foreach (int id in _player.movementCards)
         {
             InstantiateMovementCard(id);
         }
 
-        _player.MovementCards.CollectionChanged += ChangeMovementCards;
-        _player.InventoryChestCards.CollectionChanged += ChangeChestCards;
+        _player.movementCards.OnListChanged+= ChangeMovementCards;
+        _player.inventoryChestCards.OnListChanged += ChangeChestCards;
     }
 
-    private void ChangeChestCards(object sender, NotifyCollectionChangedEventArgs e)
+    private void ChangeChestCards(NetworkListEvent<int> changeEvent)
     {
-        Debug.Log("chestcard list changed");
-        if (e.NewItems != null)
+        Debug.Log(changeEvent.Type);
+        if(changeEvent.Type == NetworkListEvent<int>.EventType.Add)
         {
-            foreach (int id in e.NewItems)
-            {
-                InstantiateChestCard(id);
-            }
+            InstantiateChestCard(changeEvent.Value);
         }
-
-        if (e.OldItems != null)
+        else if(changeEvent.Type == NetworkListEvent<int>.EventType.Remove || changeEvent.Type == NetworkListEvent<int>.EventType.RemoveAt)
         {
-            Debug.Log(e.OldItems.Count);
-            foreach (int id in e.OldItems)
-            {
-                GameObject go = _cardUis.Find(x => x.CardId == id && x.CardType == CardType.Chest).gameObject;
-                Debug.Log(go.name, go);
-                Destroy(go);
-            }
+            GameObject go = _cardUis.Find(x => x.CardId == changeEvent.Value && x.CardType == CardType.Chest).gameObject;
+            Debug.Log(go.name, go);
+            Destroy(go);
         }
     }
 
-    private void ChangeMovementCards(object sender, NotifyCollectionChangedEventArgs e)
+    private void ChangeMovementCards(NetworkListEvent<int> changeEvent)
     {
-        Debug.Log("movementcard list changed");
-        if (e.NewItems != null)
+        if (changeEvent.Type == NetworkListEvent<int>.EventType.Add)
         {
-            foreach (var item in e.NewItems)
-            {
-                InstantiateMovementCard((int)item);
-            }
+            InstantiateMovementCard(changeEvent.Value);
+        }
+        else if (changeEvent.Type == NetworkListEvent<int>.EventType.Remove || changeEvent.Type == NetworkListEvent<int>.EventType.RemoveAt)
+        {
+            GameObject go = _cardUis.Find(x => x.CardId == changeEvent.Value && x.CardType == CardType.Movement).gameObject;
+            Debug.Log(go.name, go);
+            Destroy(go);
         }
     }
 
