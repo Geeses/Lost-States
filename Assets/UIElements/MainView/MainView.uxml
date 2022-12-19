@@ -1,86 +1,28 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Template name="char-cards" src="project://database/Assets/UIElements/MainView/char-cards.uxml?fileID=9197481963319205126&amp;guid=8d163903b4f73a842bc60b5442a20d7a&amp;type=3#char-cards" />
+    <ui:Template name="battellog" src="project://database/Assets/UIElements/MainView/Templates/battellog.uxml?fileID=9197481963319205126&amp;guid=936cacf0d689fd044adfb3c351b2ba06&amp;type=3#battellog" />
+    <ui:Template name="character-me" src="project://database/Assets/UIElements/MainView/Templates/character-me.uxml?fileID=9197481963319205126&amp;guid=fb8628019f5efb245a7da84cb2d9c373&amp;type=3#character-me" />
+    <ui:Template name="characters-gegner" src="project://database/Assets/UIElements/MainView/Templates/characters-gegner.uxml?fileID=9197481963319205126&amp;guid=5cb946e0905a5344090298763dc70b53&amp;type=3#characters-gegner" />
+    <ui:Template name="Inventory" src="project://database/Assets/UIElements/MainView/Templates/inventory.uxml?fileID=9197481963319205126&amp;guid=7fec4ed3bec9a604d8ffcb88f66badd8&amp;type=3#inventory" />
     <Style src="project://database/Assets/UIElements/MainView/MainView.uss?fileID=7433441132597879392&amp;guid=9267c834f4ad1f54e8dc9ed6291a80fb&amp;type=3#MainView" />
-    <ui:VisualElement name="Screen" style="width: 100%; height: 100%; flex-direction: column; justify-content: flex-start;">
-        <ui:GroupBox style="width: 100%; height: 79%; flex-direction: row; justify-content: space-between; flex-shrink: 1;">
-            <ui:VisualElement name="Left" style="align-items: flex-start; justify-content: space-between; flex-direction: column; width: 50%;">
-                <ui:GroupBox style="width: 47%; height: 28%; align-items: flex-start; justify-content: flex-start; flex-direction: column-reverse; flex-shrink: 1;">
-                    <ui:GroupBox name="turncount" style="width: 100%; height: 100%; background-image: url(&apos;project://database/Assets/Art/UI/UITurnCounter.png?fileID=2800000&amp;guid=7d78389a8c4045840976e806d7c21202&amp;type=3#UITurnCounter&apos;);" />
-                </ui:GroupBox>
-                <ui:ListView focusable="true" style="width: 47%; height: 100%; border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px; border-left-color: rgb(26, 25, 25); border-right-color: rgb(26, 25, 25); border-top-color: rgb(26, 25, 25); border-bottom-color: rgb(26, 25, 25); background-color: rgb(112, 166, 214); border-top-left-radius: 8px; border-bottom-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px;" />
-            </ui:VisualElement>
-            <ui:VisualElement name="Right" style="justify-content: space-between; align-items: flex-end; flex-direction: column; width: 50%;">
-                <ui:GroupBox name="buttons-bar" style="flex-direction: row-reverse; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-top: 0; padding-bottom: 0; align-items: flex-start; justify-content: flex-start; width: 100%;">
-                    <ui:Button tabindex="-1" display-tooltip-when-elided="true" name="shop-button" class="button" style="background-color: rgb(181, 173, 154); background-image: url(&apos;project://database/Assets/Art/UI/UIButtonShop.png?fileID=2800000&amp;guid=e728f1ee6a05fa5448e3208b44e6e7b6&amp;type=3#UIButtonShop&apos;);" />
-                    <ui:Button tabindex="-1" display-tooltip-when-elided="true" name="settings-button" focusable="false" class="button" style="background-image: url(&apos;project://database/Assets/Art/UI/UIButtonOptions.png?fileID=2800000&amp;guid=23fd8bde407bb884b89a12e64e23a0d1&amp;type=3#UIButtonOptions&apos;);" />
-                </ui:GroupBox>
-                <ui:GroupBox name="char-bar-group" style="flex-wrap: nowrap; flex-direction: column; align-items: flex-start; justify-content: space-between; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; height: 30%; flex-grow: 0; flex-shrink: 0; width: 70%; min-width: 448px; min-height: 216px;">
-                    <ui:GroupBox name="char-bar" style="flex-direction: row-reverse;">
-                        <ui:VisualElement class="char-card-box" style="flex-direction: row-reverse;">
-                            <ui:Instance template="char-cards" name="char-cards" />
-                            <ui:Instance template="char-cards" name="char-cards" />
-                            <ui:Instance template="char-cards" name="char-cards" />
-                            <ui:Instance template="char-cards" name="char-cards" />
-                            <ui:Instance template="char-cards" name="char-cards" />
-                            <ui:Instance template="char-cards" name="char-cards" />
-                            <ui:Instance template="char-cards" name="char-cards" />
-                        </ui:VisualElement>
-                        <ui:GroupBox name="char-fig" style="background-image: url(&apos;project://database/Assets/Art/UI/UIIconPlayer01.png?fileID=2800000&amp;guid=57487ecffe27b2649851d988d96f8223&amp;type=3#UIIconPlayer01&apos;); -unity-slice-left: 0;" />
-                    </ui:GroupBox>
-                    <ui:GroupBox name="char-bar" style="flex-direction: row;">
-                        <ui:GroupBox name="char-fig" style="background-image: url(&apos;project://database/Assets/Art/UI/UIIconPlayer02.png?fileID=2800000&amp;guid=d296b53c78fb5e74a9f1f5127002f6e7&amp;type=3#UIIconPlayer02&apos;);" />
-                        <ui:VisualElement class="char-card-box">
-                            <ui:Instance template="char-cards" name="char-cards" />
-                            <ui:Instance template="char-cards" name="char-cards" />
-                            <ui:Instance template="char-cards" name="char-cards" />
-                            <ui:Instance template="char-cards" name="char-cards" />
-                            <ui:Instance template="char-cards" name="char-cards" />
-                            <ui:Instance template="char-cards" name="char-cards" />
-                            <ui:Instance template="char-cards" name="char-cards" />
-                        </ui:VisualElement>
-                    </ui:GroupBox>
-                    <ui:GroupBox name="char-bar" style="background-color: rgb(255, 255, 233); flex-direction: row;">
-                        <ui:GroupBox name="char-fig" style="background-image: url(&apos;project://database/Assets/Art/UI/UIIconPlayer03.png?fileID=2800000&amp;guid=c6797f2ea626fc448932d1cab719f948&amp;type=3#UIIconPlayer03&apos;);" />
-                        <ui:VisualElement class="char-card-box">
-                            <ui:Instance template="char-cards" name="char-cards" />
-                            <ui:Instance template="char-cards" name="char-cards" />
-                            <ui:Instance template="char-cards" name="char-cards" />
-                            <ui:Instance template="char-cards" name="char-cards" />
-                            <ui:Instance template="char-cards" name="char-cards" />
-                            <ui:Instance template="char-cards" name="char-cards" />
-                            <ui:Instance template="char-cards" name="char-cards" />
-                        </ui:VisualElement>
-                    </ui:GroupBox>
-                </ui:GroupBox>
-            </ui:VisualElement>
-        </ui:GroupBox>
-        <ui:GroupBox name="Bottom" style="height: 23%; flex-direction: row; justify-content: space-between; align-items: stretch; bottom: 0; flex-shrink: 1; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
-            <ui:GroupBox name="character" style="width: 10%; left: 0; align-items: center; justify-content: center;">
-                <ui:Button tabindex="-1" display-tooltip-when-elided="true" class="buttonChar" style="align-items: center; justify-content: center; width: 100px; background-image: url(&apos;project://database/Assets/Art/UI/UIPlayerInterfaceBG.png?fileID=2800000&amp;guid=d2cb23fead292864aae3c5726441b916&amp;type=3#UIPlayerInterfaceBG&apos;); padding-right: 28px; padding-left: 11px; padding-top: 5px; background-color: rgba(0, 0, 0, 0);">
-                    <ui:GroupBox name="image" style="background-image: url(&apos;project://database/Assets/Art/UI/UIIconPlayer01.png?fileID=2800000&amp;guid=57487ecffe27b2649851d988d96f8223&amp;type=3#UIIconPlayer01&apos;); height: 68px; width: 56px;" />
-                </ui:Button>
+    <ui:VisualElement name="Screen" style="width: 100%; height: 100%; flex-direction: row; justify-content: flex-start;">
+        <ui:VisualElement name="Left" style="align-items: flex-start; justify-content: flex-start; flex-direction: column; width: 50%; height: 100%; flex-wrap: nowrap;">
+            <ui:GroupBox name="turncount" style="flex-direction: row; flex-shrink: 1; align-items: flex-start; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; -unity-background-scale-mode: scale-to-fit; flex-grow: 1; width: 50%; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; justify-content: flex-start; left: 0; top: 0; height: 15%;">
+                <GallantGames.UI.AspectRatioPanel aspect-ratio-x="846" aspect-ratio-y="254" balance-x="0" balance-y="0" style="background-image: url(&apos;project://database/Assets/Art/UI/TurnCounter/UITurnCounter.png?fileID=2800000&amp;guid=7d78389a8c4045840976e806d7c21202&amp;type=3#UITurnCounter&apos;); top: 0;" />
             </ui:GroupBox>
-            <ui:GroupBox style="width: 7%;" />
-            <ui:GroupBox name="box-move-Cards" class="boxcards box-move-card" style="flex-direction: row; justify-content: space-around;">
-                <ui:Button tabindex="-1" display-tooltip-when-elided="true" name="moveCard" class="move-cards cards" style="background-image: url(&apos;project://database/Assets/Art/Cards/Movement/CardMovementFrontCopper.png?fileID=2800000&amp;guid=b4e3328e02f325640b0e9e07c1a03f21&amp;type=3#CardMovementFrontCopper&apos;);" />
-                <ui:Button tabindex="-1" display-tooltip-when-elided="true" class="move-cards cards" style="background-image: url(&apos;project://database/Assets/Art/Cards/Movement/CardMovementFrontSilver.png?fileID=2800000&amp;guid=3e755c9daaa2aa24cab12097681c4111&amp;type=3#CardMovementFrontSilver&apos;);" />
-                <ui:Button tabindex="-1" display-tooltip-when-elided="true" class="move-cards cards" style="background-image: url(&apos;project://database/Assets/Art/Cards/Movement/CardMovementFrontGold.png?fileID=2800000&amp;guid=a7a0d64a7e56f1a4098606c94cccd987&amp;type=3#CardMovementFrontGold&apos;);" />
-                <ui:Button tabindex="-1" display-tooltip-when-elided="true" class="move-cards cards" style="background-image: url(&apos;project://database/Assets/Art/Cards/Movement/CardMovementFrontCopper.png?fileID=2800000&amp;guid=b4e3328e02f325640b0e9e07c1a03f21&amp;type=3#CardMovementFrontCopper&apos;);" />
-                <ui:Button tabindex="-1" display-tooltip-when-elided="true" class="move-cards cards" style="background-image: url(&apos;project://database/Assets/Art/Cards/Movement/CardMovementFrontSilver.png?fileID=2800000&amp;guid=3e755c9daaa2aa24cab12097681c4111&amp;type=3#CardMovementFrontSilver&apos;);" />
-                <ui:Button tabindex="-1" display-tooltip-when-elided="true" class="move-cards cards" style="background-image: url(&apos;project://database/Assets/Art/Cards/Movement/CardMovementFrontGold.png?fileID=2800000&amp;guid=a7a0d64a7e56f1a4098606c94cccd987&amp;type=3#CardMovementFrontGold&apos;);" />
-                <ui:Button tabindex="-1" display-tooltip-when-elided="true" class="move-cards cards" style="background-image: url(&apos;project://database/Assets/Art/Cards/Movement/CardMovementFrontCopper.png?fileID=2800000&amp;guid=b4e3328e02f325640b0e9e07c1a03f21&amp;type=3#CardMovementFrontCopper&apos;);" />
+            <ui:Instance template="battellog" name="battellog" style="width: 50%; flex-grow: 0; height: 70%;" />
+            <ui:Instance template="character-me" name="character-me" style="width: 30%; flex-grow: 1; left: 0; bottom: 0; flex-direction: row; align-items: flex-start; height: 15%;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Right" style="justify-content: space-between; align-items: flex-end; flex-direction: column; width: 50%;">
+            <ui:GroupBox name="buttons-bar" style="flex-direction: row-reverse; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-top: 0; padding-bottom: 0; align-items: flex-start; justify-content: flex-start; width: 100%; height: 10%;">
+                <ui:Button tabindex="-1" display-tooltip-when-elided="true" name="settings-button" focusable="false" class="button-round" style="background-image: url(&apos;project://database/Assets/Art/UI/UIButtonOptions.png?fileID=2800000&amp;guid=23fd8bde407bb884b89a12e64e23a0d1&amp;type=3#UIButtonOptions&apos;); visibility: visible; -unity-background-scale-mode: scale-to-fit; background-color: rgba(255, 255, 255, 0); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0;" />
+                <ui:Button tabindex="-1" display-tooltip-when-elided="true" name="shop-button" class="button-round" style="background-image: url(&apos;project://database/Assets/Art/UI/UIButtonShop.png?fileID=2800000&amp;guid=e728f1ee6a05fa5448e3208b44e6e7b6&amp;type=3#UIButtonShop&apos;); visibility: hidden; -unity-background-scale-mode: scale-to-fit;" />
             </ui:GroupBox>
-            <ui:GroupBox style="width: 7%;" />
-            <ui:GroupBox name="box-chest-Cards" class="box-chest-card" style="flex-direction: row; justify-content: space-around;">
-                <ui:Button tabindex="-1" display-tooltip-when-elided="true" name="chestCard" class="move-cards cards" style="background-image: url(&apos;project://database/Assets/Art/Cards/Chest/CardChestBack.png?fileID=2800000&amp;guid=7bbaae0e8a9265f41b5e37204eb401da&amp;type=3#CardChestBack&apos;);" />
-                <ui:Button tabindex="-1" display-tooltip-when-elided="true" class="move-cards cards" style="background-image: url(&apos;project://database/Assets/Art/Cards/Chest/CardChestBack.png?fileID=2800000&amp;guid=7bbaae0e8a9265f41b5e37204eb401da&amp;type=3#CardChestBack&apos;);" />
-                <ui:Button tabindex="-1" display-tooltip-when-elided="true" class="move-cards cards" style="background-image: url(&apos;project://database/Assets/Art/Cards/Chest/CardChestBack.png?fileID=2800000&amp;guid=7bbaae0e8a9265f41b5e37204eb401da&amp;type=3#CardChestBack&apos;);" />
+            <ui:GroupBox name="char-bar-group" style="flex-wrap: nowrap; flex-direction: column; align-items: flex-end; justify-content: center; margin-left: 0; margin-right: 0; margin-top: 20px; margin-bottom: 20px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; flex-grow: 0; flex-shrink: 1; height: 70%; width: 100%;">
+                <ui:Instance template="characters-gegner" name="characters-gegner" style="flex-grow: 0; height: 10%; flex-shrink: 1; position: relative; width: 70%;" />
+                <ui:Instance template="characters-gegner" name="characters-gegner" style="width: 70%; flex-grow: 0; height: 10%;" />
+                <ui:Instance template="characters-gegner" name="characters-gegner" style="width: 70%; position: relative; flex-grow: 0; height: 10%;" />
             </ui:GroupBox>
-            <ui:GroupBox style="width: 7%;" />
-            <ui:GroupBox name="ressource" style="width: 19%; justify-content: space-between; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
-                <ui:Foldout text="Inventar Ressource" style="flex-shrink: 0;" />
-                <ui:Foldout text="Safed Ressource" />
-            </ui:GroupBox>
-        </ui:GroupBox>
+            <ui:Instance template="Inventory" name="inventory" style="flex-grow: 0; flex-direction: column; align-items: flex-end; justify-content: flex-start; width: 50%; height: 25%;" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

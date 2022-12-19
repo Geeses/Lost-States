@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Abk\xFCrzung"
+  m_text: Base Card
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
@@ -195,10 +195,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1690342784632638810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 669fdfda180deeb44b1214d181eb4287, type: 3}
+  m_Script: {fileID: 11500000, guid: 0bce320b26863024581dfc7dbc5196c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundImage: {fileID: 6438962886761471313}
+  backgroundImage: {fileID: 1480469486721429585}
   cardText: {fileID: 1509961295722865966}
   moveCountText: {fileID: 0}
 --- !u!114 &6188234756938331179
@@ -283,7 +283,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: nehme die ressourcen die im radius von 2 feldern bei den gegnern liegen
+  m_text: Base Card Text
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}

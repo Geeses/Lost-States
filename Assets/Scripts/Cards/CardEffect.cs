@@ -5,14 +5,19 @@ using UnityEngine;
 
 public class CardEffect : ScriptableObject
 {
+    [Header("Card Effect Options")]
+    public bool executeInstantly = true;
+
     // player who played card
     private Player _player;
-    private List<Player> _enemyPlayer = new List<Player>();
+    private List<Player> _enemyPlayers;
 
-    protected Player Player { get => _player; set => _player = value; }
+    protected Player Player { get => _player; private set => _player = value; }
+    protected List<Player> EnemyPlayers { get => _enemyPlayers; private set => _enemyPlayers = value; }
 
     internal virtual void Initialize(Player player)
     {
+        EnemyPlayers = new List<Player>();
         _player = player;
 
         foreach (KeyValuePair<ulong, Player> entry in PlayerNetworkManager.Instance.PlayerDictionary)
@@ -20,7 +25,7 @@ public class CardEffect : ScriptableObject
             // if its not the same clientId as the local player´s id, then its the enemy
             if(!entry.Key.Equals(_player.clientId.Value))
             {
-                _enemyPlayer.Add(entry.Value);
+                EnemyPlayers.Add(entry.Value);
             }
         }
     }

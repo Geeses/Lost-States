@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using Unity.Netcode;
@@ -11,6 +10,7 @@ public class NetworkManagerUI : NetworkBehaviour
     [SerializeField] private Button _hostButton;
     [SerializeField] private Button _clientButton;
     [SerializeField] private Button _endTurnButton;
+    [SerializeField] private Button _skipTurnButton;
     [SerializeField] private TMPro.TMP_Text _moveCountText;
     [SerializeField] private TMPro.TMP_Text _playerId;
     [SerializeField] private TMPro.TMP_Text _currentTurnPlayerId;
@@ -20,7 +20,7 @@ public class NetworkManagerUI : NetworkBehaviour
     private static NetworkManagerUI s_instance;
     private Player _player;
     private List<Card> _cards = new List<Card>();
-    private List<CardUi> _cardUis = new List<CardUi>();
+    private List<CardUiScript> _cardUis = new List<CardUiScript>();
 
     public static NetworkManagerUI Instance { get { return s_instance; } }
 
@@ -76,19 +76,29 @@ public class NetworkManagerUI : NetworkBehaviour
 
     private void ChangeChestCards(object sender, NotifyCollectionChangedEventArgs e)
     {
-        Debug.Log("chestcard list changed");
         if (e.NewItems != null)
         {
-            foreach (var item in e.NewItems)
+            foreach (int id in e.NewItems)
             {
-                InstantiateChestCard((int)item);
+                InstantiateChestCard(id);
+            }
+        }
+
+        if (e.OldItems != null)
+        {
+            Debug.Log(e.OldItems.Count);
+            foreach (int id in e.OldItems)
+            {
+                GameObject go = _cardUis.Find(x => x.CardId == id && x.CardType == CardType.Chest).gameObject;
+                Debug.Log(go.name, go);
+                Destroy(go);
             }
         }
     }
 
     private void ChangeMovementCards(object sender, NotifyCollectionChangedEventArgs e)
     {
-        Debug.Log("movementcard list changed");
+        // Debug.Log("movementcard list changed");
         if (e.NewItems != null)
         {
             foreach (var item in e.NewItems)
@@ -102,7 +112,7 @@ public class NetworkManagerUI : NetworkBehaviour
     {
         Card card = CardManager.Instance.GetMovementCardById(id);
         _cards.Add(card);
-        CardUi cardUi = Instantiate(card.CardUi, CardLayoutGroup.transform).GetComponent<CardUi>();
+        CardUiScript cardUi = Instantiate(card.CardUi, CardLayoutGroup.transform).GetComponent<CardUiScript>();
         cardUi.Initialize(card);
         _cardUis.Add(cardUi);
     }
@@ -111,7 +121,7 @@ public class NetworkManagerUI : NetworkBehaviour
     {
         Card card = CardManager.Instance.GetChestCardById(id);
         _cards.Add(card);
-        CardUi cardUi = Instantiate(card.CardUi, CardLayoutGroup.transform).GetComponent<CardUi>();
+        CardUiScript cardUi = Instantiate(card.CardUi, CardLayoutGroup.transform).GetComponent<CardUiScript>();
         cardUi.Initialize(card);
         _cardUis.Add(cardUi);
     }
@@ -119,9 +129,9 @@ public class NetworkManagerUI : NetworkBehaviour
     [ClientRpc]
     public void RemoveCardFromPlayerUiClientRpc(ulong playerId, int instanceId)
     {
-        CardUi objectToRemove = null;
+        CardUiScript objectToRemove = null;
 
-        foreach (CardUi card in _cardUis)
+        foreach (CardUiScript card in _cardUis)
         {
             if(card.gameObject.GetInstanceID().Equals(instanceId))
             {

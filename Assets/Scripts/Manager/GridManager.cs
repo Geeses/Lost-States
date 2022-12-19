@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -35,11 +35,22 @@ public class GridManager : MonoBehaviour
     private Dictionary<GridCoordinates, Tile> _tileGrid = new Dictionary<GridCoordinates, Tile>();
 
     private static GridManager s_instance;
+    private int _width;
+    private int _height;
+    private int _yMax;
+    private int _yMin;
+    private int _xMax;
+    private int _xMin;
 
     public static GridManager Instance { get { return s_instance; } }
 
-    public Tilemap Tilemap { get => _tilemap;}
-    public Dictionary<GridCoordinates, Tile> TileGrid { get => _tileGrid;}
+    public Tilemap Tilemap { get => _tilemap; }
+    public Dictionary<GridCoordinates, Tile> TileGrid { get => _tileGrid; }
+    public int Width { get => _width; }
+    public int Height { get => _height; }
+
+
+
 
     private void Awake()
     {
@@ -63,6 +74,8 @@ public class GridManager : MonoBehaviour
     private void Start()
     {
         InitializeGrid();
+        _width = GetWidth();
+        _height = GetHeight();
     }
 
     private void InitializeGrid()
@@ -70,10 +83,12 @@ public class GridManager : MonoBehaviour
         foreach (Transform tileTransform in Tilemap.transform)
         {
             Vector3Int tileGridPos = Tilemap.WorldToCell(tileTransform.position);
+
             GridCoordinates coords = new GridCoordinates(tileGridPos.x, tileGridPos.y);
             Tile tile = tileTransform.GetComponent<Tile>();
 
-            if(tile != null)
+
+            if (tile != null)
             {
                 tile.TileGridCoordinates = coords;
                 _tileGrid.Add(coords, tile);
@@ -81,7 +96,7 @@ public class GridManager : MonoBehaviour
             else
             {
                 Debug.LogError("Non Tile-Object in Tilemap.", tileTransform);
-            }         
+            }
         }
     }
 
@@ -110,5 +125,73 @@ public class GridManager : MonoBehaviour
         }
 
         return adjacentTiles;
+    }
+
+    public int GetWidth()
+    {
+        List<int> xValues = new List<int>();
+        foreach (KeyValuePair<GridCoordinates, Tile> entry in TileGrid)
+        {
+            xValues.Add(entry.Key.x);
+
+        }
+        _xMax = xValues.Distinct().Max();
+        _xMin = xValues.Distinct().Min();
+        return xValues.Distinct().Count();
+    }
+
+    public int GetHeight()
+    {
+        List<int> yValues = new List<int>();
+        foreach (KeyValuePair<GridCoordinates, Tile> entry in TileGrid)
+        {
+            yValues.Add(entry.Key.y);
+        }
+        _yMax = yValues.Distinct().Max();
+        _yMin = yValues.Distinct().Min();
+        return yValues.Distinct().Count();
+    }
+
+    public List<Tile> GetTilesInDirection(Tile origin, Direction direction)
+    {
+        List<Tile> tiles = new List<Tile>();
+
+        if (direction == Direction.right)
+        {
+            var end = _xMax - origin.TileGridCoordinates.x;
+            for (int i = 0; i <= end; i++)
+            {
+                var coordinates = new GridCoordinates(origin.TileGridCoordinates.x + i, origin.TileGridCoordinates.y);
+                tiles.Add(TileGrid[coordinates]);
+            }
+        }
+
+        else if (direction == Direction.left)
+        {
+            var end = origin.TileGridCoordinates.x - _xMin;
+            for (int i = 0; i <= end; i++)
+            {
+                tiles.Add(TileGrid[new GridCoordinates(origin.TileGridCoordinates.x - i, origin.TileGridCoordinates.y)]);
+            }
+        }
+
+        else if (direction == Direction.up)
+        {
+            var end = _yMax - origin.TileGridCoordinates.y;
+            for (int i = 0; i <= end; i++)
+            {
+                tiles.Add(TileGrid[new GridCoordinates(origin.TileGridCoordinates.x, origin.TileGridCoordinates.y + i)]);
+            }
+        }
+
+        else
+        {
+            var end = origin.TileGridCoordinates.y - _yMin;
+            for (int i = 0; i <= end; i++)
+            {
+                tiles.Add(TileGrid[new GridCoordinates(origin.TileGridCoordinates.x, origin.TileGridCoordinates.y - i)]);
+            }
+        }
+        return tiles;
     }
 }

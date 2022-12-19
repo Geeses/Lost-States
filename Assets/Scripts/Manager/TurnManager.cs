@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
+public enum TurnType
+{
+    Day,
+    Night
+}
+
 public class TurnManager : NetworkBehaviour
 {
     #region Attributes
@@ -12,11 +18,10 @@ public class TurnManager : NetworkBehaviour
     public TMPro.TMP_Text currentTurnPlayerMovesText;
 
     //TODO: implement game end/start methods in GameManager
-    public event Action OnGameStart;
-    public event Action OnGameEnd;
     public event Action<ulong> OnTurnStart;
     public event Action<ulong> OnTurnEnd;
 
+    private TurnType turnType;
     private Queue<ulong> _playerTurnQueueId = new Queue<ulong>();
     private ulong _currentTurnPlayerId;
     private Player _currentTurnPlayer;
@@ -34,6 +39,7 @@ public class TurnManager : NetworkBehaviour
     public Player CurrentTurnPlayer { get => _currentTurnPlayer; set => _currentTurnPlayer = value; }
     public int CurrentTurnNumber { get => _currentTurnNumber; set => _currentTurnNumber = value; }
     public int TotalTurnCount { get => _totalTurnCount; set => _totalTurnCount = value; }
+    public TurnType TurnType { get => turnType; private set => turnType = value; }
     #endregion
 
     #region Monobehavior Functions
@@ -64,6 +70,7 @@ public class TurnManager : NetworkBehaviour
 
     #endregion
 
+    #region Turn Functionality
     public void CheckForTurnRotation()
     {
         if (!IsServer)
@@ -79,16 +86,31 @@ public class TurnManager : NetworkBehaviour
         {
             CurrentTurnNumber = 1;
         }
+
+        SetTurnType();
     
-        ShareTurnNumberClientRpc(CurrentTurnNumber, TotalTurnCount);
+        ShareTurnNumberClientRpc(CurrentTurnNumber, TotalTurnCount, TurnType);
         StartTurnServerRpc(PlayerTurnQueueId.Peek());
     }
 
+    private void SetTurnType()
+    {
+        if(CurrentTurnNumber > 5)
+        {
+            TurnType = TurnType.Night;
+        }
+        else
+        {
+            TurnType = TurnType.Day;
+        }
+    }
+
     [ClientRpc]
-    private void ShareTurnNumberClientRpc(int currentTurnNumber, int totalTurnCount)
+    private void ShareTurnNumberClientRpc(int currentTurnNumber, int totalTurnCount, TurnType turnType)
     {
         CurrentTurnNumber = currentTurnNumber;
         TotalTurnCount = totalTurnCount;
+        TurnType = turnType;
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -150,4 +172,23 @@ public class TurnManager : NetworkBehaviour
     {
         OnTurnEnd?.Invoke(playerId);
     }
+    #endregion
+
+    #region Debug
+    [ServerRpc(RequireOwnership = false)]
+    public void SkipTurnServerRpc()
+    {
+        var tmpId = CurrentTurnPlayerId;
+        PlayerTurnQueueId.Dequeue();
+
+        if (PlayerTurnQueueId.Count != 0)
+        {
+            CurrentTurnPlayerId = PlayerTurnQueueId.Peek();
+        }
+
+        EndTurnClientRpc(tmpId);
+        StartTurnServerRpc(CurrentTurnPlayerId);
+    }
+
+    #endregion
 }
