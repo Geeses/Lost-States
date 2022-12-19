@@ -7,18 +7,22 @@ public class CardEffect : ScriptableObject
 {
     [Header("Card Effect Options")]
     public bool executeInstantly = true;
+    [SerializeField] private int _executeAfterTurns = 0;
 
     // player who played card
     private Player _player;
     private List<Player> _enemyPlayers;
+    private int _timeToExecute;
 
-    protected Player Player { get => _player; private set => _player = value; }
-    protected List<Player> EnemyPlayers { get => _enemyPlayers; private set => _enemyPlayers = value; }
+    public Player Player { get => _player; protected set => _player = value; }
+    public List<Player> EnemyPlayers { get => _enemyPlayers; protected set => _enemyPlayers = value; }
+    public int TimeToExecute { get => _timeToExecute; set => _timeToExecute = value; }
 
     internal virtual void Initialize(Player player)
     {
         EnemyPlayers = new List<Player>();
         _player = player;
+        TimeToExecute = _executeAfterTurns;
 
         foreach (KeyValuePair<ulong, Player> entry in PlayerNetworkManager.Instance.PlayerDictionary)
         {

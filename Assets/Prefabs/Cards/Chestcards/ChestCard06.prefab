@@ -16,7 +16,7 @@ PrefabInstance:
       propertyPath: m_text
       value: If it is night, set a countdown of 1 turn for every player in the game.
         If its your turn again, and players are inside the dangerous zone, remove
-        2 ressources and 1 chestcard from them
+        4 ressources and 2 chestcard from them
       objectReference: {fileID: 0}
     - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_fontSize

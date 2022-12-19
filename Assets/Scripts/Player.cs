@@ -195,7 +195,6 @@ public class Player : Selectable
             UnhighlightAdjacentTiles();
         CurrentTile = GridManager.Instance.TileGrid[coordinates];
         CurrentTile.PlayerStepOnTile(this);
-        Debug.Log(CurrentTile);
 
         Vector3 cellWorldPosition = GridManager.Instance.Tilemap.CellToWorld(new Vector3Int(coordinates.x, coordinates.y, 0));
         cellWorldPosition += GridManager.Instance.Tilemap.cellSize / 2;
