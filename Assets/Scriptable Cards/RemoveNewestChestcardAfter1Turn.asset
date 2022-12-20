@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 481d86a8b413b5843b69c325cd0a0298, type: 3}
   m_Name: RemoveNewestChestcardAfter1Turn
   m_EditorClassIdentifier: 
-  executeInstantly: 1
-  executeAfterTurns: 1
+  executeInstantly: 0
+  _executeAfterTurns: 1
   turnType: 2
   tileZone: 3
   itemType: 1

@@ -44,6 +44,7 @@ public class Player : Selectable
     private int _maximumPlayableMovementCards;
     private int _playedMovementCards;
     private Selectable _currentSelectedTarget;
+    private RessourceCollectionCard _ressourceCollectionCard;
     #endregion
 
     #region Properties
@@ -52,6 +53,7 @@ public class Player : Selectable
     public int PlayedMovementCards { get => _playedMovementCards; set => _playedMovementCards = value; }
     public Tile CurrentTile { get => _currentTile; private set => _currentTile = value; }
     public Selectable CurrentSelectedTarget { get => _currentSelectedTarget; set => _currentSelectedTarget = value; }
+    public RessourceCollectionCard RessourceCollectionCard { get => _ressourceCollectionCard; set => _ressourceCollectionCard = value; }
     #endregion
 
     #region Monobehavior Functions
@@ -79,6 +81,7 @@ public class Player : Selectable
         savedRessources.OnListChanged += ChangeCountSaved;
         InputManager.Instance.OnSelect += ChangeCurrentSelectedTarget;
         moveCount.OnValueChanged += ChangeMoveCountUI;
+        savedRessources.OnListChanged += CheckForWin;
     }
 
     public override void OnDestroy()
@@ -87,6 +90,8 @@ public class Player : Selectable
         inventoryRessources.OnListChanged -= ChangeCountInventory;
         savedRessources.OnListChanged -= ChangeCountSaved;
         InputManager.Instance.OnSelect -= ChangeCurrentSelectedTarget;
+        moveCount.OnValueChanged -= ChangeMoveCountUI;
+        savedRessources.OnListChanged -= CheckForWin;
     }
     #endregion
 
@@ -265,5 +270,19 @@ public class Player : Selectable
             }
         }
     }
+    #endregion
+
+    #region Win Condition
+    [ClientRpc]
+    public void AssignRessourceCollectionCardClientRpc(int ressourceCollectionCardId)
+    {
+        RessourceCollectionCard = GameManager.Instance.ressourceCollectionCards[ressourceCollectionCardId];
+    }
+
+    private void CheckForWin(NetworkListEvent<int> changeEvent)
+    {
+        GameManager.Instance.CheckPlayerForWinServerRpc(clientId.Value);
+    }
+
     #endregion
 }

@@ -1,12 +1,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameManager : NetworkBehaviour
 {
     #region Attributes
+    [Header("References")]
+    public List<RessourceCollectionCard> ressourceCollectionCards = new List<RessourceCollectionCard>();
+
+    [Header("Debug")]
     public bool gameHasStarted;
 
     public event Action OnGameStart;
@@ -69,6 +75,34 @@ public class GameManager : NetworkBehaviour
         {
             PlayerNetworkManager.Instance.PlayerDictionary[0].MoveClientRpc(new GridCoordinates(0, 0));
             PlayerNetworkManager.Instance.PlayerDictionary[1].MoveClientRpc(new GridCoordinates(-1, 0));
+
+            AssignRessourceCollectionCards();
+        }
+    }
+
+    private void AssignRessourceCollectionCards()
+    {
+        List<int> randomIds = new List<int>();
+
+        for (int i = 0; i < PlayerNetworkManager.Instance.PlayerDictionary.Count; i++)
+        {
+            do
+            {
+                int rnd = Random.Range(0, ressourceCollectionCards.Count);
+
+                if (!randomIds.Contains(rnd))
+                {
+                    randomIds.Add(rnd);
+                }
+            } 
+            while (randomIds.Count == PlayerNetworkManager.Instance.PlayerDictionary.Count);
+        }
+
+        for (int i = 0; i < PlayerNetworkManager.Instance.PlayerDictionary.Count; i++)
+        {
+            KeyValuePair<ulong, Player> pair = PlayerNetworkManager.Instance.PlayerDictionary.ElementAt(i);
+            Debug.Log("Player " + pair.Value.clientId.Value + " gets ressource collection card " + randomIds[i]);
+            pair.Value.AssignRessourceCollectionCardClientRpc(randomIds[i]);
         }
     }
 
@@ -89,5 +123,50 @@ public class GameManager : NetworkBehaviour
     {
         if(!IsServer)
             ConnectedPlayersId.Add(playerId);
+    }
+
+    [ServerRpc]
+    public void CheckPlayerForWinServerRpc(ulong playerId)
+    {
+        Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
+
+        List<int> fruits = new List<int>();
+        List<int> wood = new List<int>();
+        List<int> steel = new List<int>();
+        List<int> water = new List<int>();
+
+        foreach (int id in player.inventoryRessources)
+        {
+            if ((Ressource)id == Ressource.fruit)
+            {
+                fruits.Add(id);
+            }
+            else if ((Ressource)id == Ressource.steel)
+            {
+                steel.Add(id);
+            }
+            else if ((Ressource)id == Ressource.water)
+            {
+                water.Add(id);
+            }
+            else if ((Ressource)id == Ressource.wood)
+            {
+                wood.Add(id);
+            }
+        }
+
+        if (player.RessourceCollectionCard.fruitAmount <= fruits.Count &&
+           player.RessourceCollectionCard.woodAmount <= wood.Count &&
+           player.RessourceCollectionCard.steelAmount <= steel.Count &&
+           player.RessourceCollectionCard.waterAmount <= water.Count)
+        {
+            InitializePlayerWinClientRpc(playerId);
+        }
+    }
+
+    [ClientRpc]
+    private void InitializePlayerWinClientRpc(ulong playerId)
+    {
+        Debug.Log("Player " + playerId + " won.");
     }
 }
