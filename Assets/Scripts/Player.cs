@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Random = UnityEngine.Random;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public enum Ressource
 {
@@ -23,7 +24,8 @@ public class Player : Selectable
     #region Attributes
 
     [Header("Debug")]
-    public NetworkVariable<ulong> clientId;
+    public NetworkVariable<ulong> clientId = new NetworkVariable<ulong>(default,
+        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<int> movedInCurrentTurn;
     public NetworkVariable<int> moveCount;
     public NetworkVariable<int> coinCount;
@@ -65,23 +67,26 @@ public class Player : Selectable
         movementCards = new NetworkList<int>();
         inventoryChestCards = new NetworkList<int>();
 
-        base.Awake();
+        base.Awake();        
     }
 
     public override void Start()
     {
         base.Start();
 
-        GameManager.Instance.OnGameStart += Initialize;
+        if(IsOwner)
+            clientId.Value = OwnerClientId;
+
+        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += LoadCompleted;
+    }
+
+    private void LoadCompleted(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
+    {
+        Initialize();
     }
 
     private void Initialize()
     {
-        if (IsServer)
-        {
-            clientId.Value = OwnerClientId;
-        }
-
         CurrentTile = GridManager.Instance.TileGrid[new GridCoordinates(0, 0)];
         inventoryRessources.OnListChanged += ChangeCountInventory;
         savedRessources.OnListChanged += ChangeCountSaved;

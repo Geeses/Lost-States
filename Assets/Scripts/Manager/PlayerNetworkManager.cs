@@ -28,22 +28,26 @@ public class PlayerNetworkManager : NetworkManager
         {
             s_instance = this;
         }
+
     }
 
     private void Start()
     {
-        GameManager.Instance.OnGameStart += GetPlayerReferences;
+        OnClientConnectedCallback += GetPlayerReferences;
     }
 
-    private void GetPlayerReferences()
+    private void GetPlayerReferences(ulong playerId)
     {
         _playerlist = GameObject.FindGameObjectsWithTag("Player").ToList();
 
         foreach (var item in _playerlist)
         {
             Player player = item.GetComponent<Player>();
-            PlayerDictionary.Add(player.clientId.Value, player);
-            Debug.Log(player.clientId.Value + " had been added", player);
+            if(!PlayerDictionary.ContainsKey(player.OwnerClientId))
+            {
+                PlayerDictionary.Add(player.OwnerClientId, player);
+                Debug.Log(player.clientId.Value + " had been added", player);
+            }
         }
     }
 }

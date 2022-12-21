@@ -4,11 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class GameManager : NetworkBehaviour
 {
     #region Attributes
+    [Header("Options")]
+    public bool isTestScene = false;
+
     [Header("References")]
     public List<RessourceCollectionCard> ressourceCollectionCards = new List<RessourceCollectionCard>();
 
@@ -41,30 +45,27 @@ public class GameManager : NetworkBehaviour
         {
             s_instance = this;
         }
-
-        DontDestroyOnLoad(this);
     }
 
     private void Start()
     {
-        NetworkManager.OnServerStarted += () => StartCoroutine(WaitForLobbyJoined());
+        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += LoadCompleted;
+    }
+
+    private void LoadCompleted(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
+    {
+        ConnectedPlayersId = clientsCompleted;
+        WaitForLobbyJoined();
     }
 
     private void OnDisable()
     {
-        NetworkManager.OnServerStarted -= () => StartCoroutine(WaitForLobbyJoined());
+        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= LoadCompleted;
     }
     #endregion
 
-    private IEnumerator WaitForLobbyJoined()
+    private void WaitForLobbyJoined()
     {
-        // Server updates list of all incoming players
-        AddClient(NetworkManager.ServerClientId);
-        NetworkManager.OnClientConnectedCallback += AddClient;
-
-        // wait until we have every player connected
-        yield return new WaitUntil(() => ConnectedPlayersId.Count == 2);
-
         // After everyone connected, we share the list of players with everyone else
         List<ulong> tmp = new List<ulong>(ConnectedPlayersId);
         foreach (var player in tmp)
@@ -107,11 +108,6 @@ public class GameManager : NetworkBehaviour
     {
         gameHasStarted = true;
         OnGameStart?.Invoke();
-    }
-
-    private void AddClient(ulong clientId)
-    {
-        ConnectedPlayersId.Add(clientId);
     }
 
     [ClientRpc]
