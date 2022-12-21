@@ -14,6 +14,7 @@ public class GameManager : NetworkBehaviour
 
     [Header("Debug")]
     public bool gameHasStarted;
+    public bool gameOver;
 
     public event Action OnGameStart;
     public event Action OnGameEnd;
@@ -84,18 +85,22 @@ public class GameManager : NetworkBehaviour
     {
         List<int> randomIds = new List<int>();
 
+        // get unique random numbers which represent the Id´s in a list
+        // give each player the random number; the random number is the index in the ressorce collection card list
         for (int i = 0; i < PlayerNetworkManager.Instance.PlayerDictionary.Count; i++)
         {
+            int rnd;
+
             do
             {
-                int rnd = Random.Range(0, ressourceCollectionCards.Count);
+                rnd = Random.Range(0, ressourceCollectionCards.Count);
 
                 if (!randomIds.Contains(rnd))
                 {
                     randomIds.Add(rnd);
                 }
             } 
-            while (randomIds.Count == PlayerNetworkManager.Instance.PlayerDictionary.Count);
+            while (!randomIds.Contains(rnd));
         }
 
         for (int i = 0; i < PlayerNetworkManager.Instance.PlayerDictionary.Count; i++)
@@ -125,7 +130,7 @@ public class GameManager : NetworkBehaviour
             ConnectedPlayersId.Add(playerId);
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void CheckPlayerForWinServerRpc(ulong playerId)
     {
         Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
@@ -160,13 +165,18 @@ public class GameManager : NetworkBehaviour
            player.RessourceCollectionCard.steelAmount <= steel.Count &&
            player.RessourceCollectionCard.waterAmount <= water.Count)
         {
-            InitializePlayerWinClientRpc(playerId);
+            if (!gameOver)
+            {
+                InitializePlayerWinClientRpc(playerId);
+            }
         }
     }
 
     [ClientRpc]
     private void InitializePlayerWinClientRpc(ulong playerId)
     {
+        gameOver = true;
+        OnGameEnd?.Invoke();
         Debug.Log("Player " + playerId + " won.");
     }
 }

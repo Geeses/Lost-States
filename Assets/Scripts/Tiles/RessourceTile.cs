@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class RessourceTile : NetworkBehaviour, ITileExtension
 {
+    #region Attributes
     [Header("Options")]
     public Ressource ressourceType;
     public int ressourceCount;
@@ -15,12 +16,15 @@ public class RessourceTile : NetworkBehaviour, ITileExtension
 
     private Tile _tile;
     private Player _cachedPlayer;
+    #endregion
 
+    #region Monobehavior Functions
     private void Start()
     {
         _tile = GetComponent<Tile>();
         _tile.OnStepOnTile += GivePlayerRessource;
     }
+    #endregion
 
     public void GivePlayerRessource(Player player)
     {

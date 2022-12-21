@@ -7,6 +7,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Random = UnityEngine.Random;
+using System.Linq;
 
 public enum Ressource
 {
@@ -113,7 +114,8 @@ public class Player : Selectable
     {
         foreach (Tile tile in GridManager.Instance.GetAdjacentTiles(CurrentTile))
         {
-            tile.Highlight();
+            if(tile)
+                tile.Highlight();
         }
     }
 
@@ -121,7 +123,8 @@ public class Player : Selectable
     {
         foreach (Tile tile in GridManager.Instance.GetAdjacentTiles(CurrentTile))
         {
-            tile.Unhighlight();
+            if(tile)
+                tile.Unhighlight();
         }
     }
 
@@ -161,12 +164,9 @@ public class Player : Selectable
         Tile tile = GridManager.Instance.TileGrid[coordinates];
 
         // if tile is adjacent
-        if (Array.Find(GridManager.Instance.GetAdjacentTiles(tile), x => 
-            x.TileGridCoordinates.x == CurrentTile.TileGridCoordinates.x && 
-            x.TileGridCoordinates.y == CurrentTile.TileGridCoordinates.y) && 
-            moveCount.Value > 0 &&
-            tile.passable ||
-            forceMove)
+        bool isAdjecant = GridManager.Instance.GetAdjacentTiles(CurrentTile).ToList().Contains(tile);
+
+        if (isAdjecant && moveCount.Value > 0 && tile.passable || forceMove)
         {
             if (!forceMove)
             {
@@ -268,6 +268,16 @@ public class Player : Selectable
                 Debug.Log("Remove Chestcard: " + inventoryChestCards[inventoryChestCards.Count - 1]);
                 inventoryChestCards.RemoveAt(inventoryChestCards.Count - 1);
             }
+        }
+    }
+
+    public void SafePlayerRessources()
+    {
+        for (int i = 0; i < inventoryRessources.Count; i++)
+        {
+            int tmp = inventoryRessources[i];
+            inventoryRessources.Remove(tmp);
+            savedRessources.Add(tmp);
         }
     }
     #endregion
