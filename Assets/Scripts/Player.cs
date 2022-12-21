@@ -72,12 +72,17 @@ public class Player : Selectable
     {
         base.Start();
 
+        GameManager.Instance.OnGameStart += Initialize;
+    }
+
+    private void Initialize()
+    {
         if (IsServer)
         {
             clientId.Value = OwnerClientId;
         }
 
-        CurrentTile = GridManager.Instance.TileGrid[new GridCoordinates(0,0)];
+        CurrentTile = GridManager.Instance.TileGrid[new GridCoordinates(0, 0)];
         inventoryRessources.OnListChanged += ChangeCountInventory;
         savedRessources.OnListChanged += ChangeCountSaved;
         InputManager.Instance.OnSelect += ChangeCurrentSelectedTarget;
@@ -88,6 +93,9 @@ public class Player : Selectable
     public override void OnDestroy()
     {
         base.OnDestroy();
+
+        GameManager.Instance.OnGameStart -= Initialize;
+
         inventoryRessources.OnListChanged -= ChangeCountInventory;
         savedRessources.OnListChanged -= ChangeCountSaved;
         InputManager.Instance.OnSelect -= ChangeCurrentSelectedTarget;

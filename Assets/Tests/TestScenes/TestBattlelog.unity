@@ -324,7 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bf83dcb711c8244ea9a79287b20b0ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  listEntryTemplate: {fileID: 0}
+  listEntryTemplate: {fileID: 9197481963319205126, guid: 1e4b3a20b909dd548b5df4223a30e4b6, type: 3}
 --- !u!114 &1891416471
 MonoBehaviour:
   m_ObjectHideFlags: 0

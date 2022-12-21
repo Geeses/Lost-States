@@ -31,7 +31,7 @@ public class LobbyCell
         _usersJoined.text = lobby.Players.Count.ToString();
     }
 
-    public void  JoinLobby()
+    public void JoinLobby()
     {
         _manager.JoinLobby(_lobby.Id);
     }

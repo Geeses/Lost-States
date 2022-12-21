@@ -7,7 +7,7 @@ public class CharacterModel
     List<Resource> resources = new List<Resource>();
     List<Kistenkarten> kistenkarten = new List<Kistenkarten>();
     List<Bewegungskarten> bewegungskarten = new List<Bewegungskarten>();
-    int munzenanzahl = 0;
+    // int munzenanzahl = 0;
     Character char_type;
 }
 

@@ -41,6 +41,8 @@ public class GameManager : NetworkBehaviour
         {
             s_instance = this;
         }
+
+        DontDestroyOnLoad(this);
     }
 
     private void Start()
