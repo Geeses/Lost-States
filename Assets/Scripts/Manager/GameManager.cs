@@ -85,23 +85,12 @@ public class GameManager : NetworkBehaviour
     {
         List<int> randomIds = new List<int>();
 
-        // get unique random numbers which represent the Id´s in a list
-        // give each player the random number; the random number is the index in the ressorce collection card list
-        for (int i = 0; i < PlayerNetworkManager.Instance.PlayerDictionary.Count; i++)
+        for (int i = 0; i < ressourceCollectionCards.Count; i++)
         {
-            int rnd;
-
-            do
-            {
-                rnd = Random.Range(0, ressourceCollectionCards.Count);
-
-                if (!randomIds.Contains(rnd))
-                {
-                    randomIds.Add(rnd);
-                }
-            } 
-            while (!randomIds.Contains(rnd));
+            randomIds.Add(i);
         }
+
+        randomIds.Shuffle();
 
         for (int i = 0; i < PlayerNetworkManager.Instance.PlayerDictionary.Count; i++)
         {
