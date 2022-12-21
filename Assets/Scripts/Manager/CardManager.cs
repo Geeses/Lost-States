@@ -109,6 +109,10 @@ public class CardManager : NetworkBehaviour
         Player player = NetworkManager.ConnectedClients[playerId].PlayerObject.GetComponent<Player>();
         int addCardAmount = player.MovementCardAmountPerCycle;
 
+        // if its the total beginning of the game, we give each player 2 more cards 
+        if(TurnManager.Instance.TotalTurnCount == 1)
+            addCardAmount += 2;
+
         for (int i = 0; i < addCardAmount; i++)
         {
             // if we have no more cards left in our stack
@@ -132,7 +136,7 @@ public class CardManager : NetworkBehaviour
         Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
 
         // if they are still allowed to play movementcards and its their turn
-        if (player.PlayedMovementCards <= player.MaximumPlayableMovementCards &&
+        if (player.PlayedMovementCards < player.MaximumPlayableMovementCards &&
             playerId == TurnManager.Instance.CurrentTurnPlayerId || temporaryCard)
         {
             // remove UI object from player that sent the request
