@@ -1,4 +1,5 @@
 using System.Collections.Specialized;
+using Unity.Netcode;
 using UnityEngine;
 
 public enum PickupType
@@ -17,20 +18,20 @@ public class AddOnPickup : CardEffect
     public override void ExecuteEffect()
     {
         base.ExecuteEffect();
-        Player.InventoryRessources.CollectionChanged += AddMoves;
+        Player.inventoryRessources.OnListChanged += AddMoves;
     }
 
     public override void RevertEffect()
     {
         base.RevertEffect();
-        Player.InventoryRessources.CollectionChanged -= AddMoves;
+        Player.inventoryRessources.OnListChanged -= AddMoves;
     }
 
-    private void AddMoves(object sender, NotifyCollectionChangedEventArgs e)
+    private void AddMoves(NetworkListEvent<int> changeEvent)
     {
-        if (e.NewItems != null)
+        if (changeEvent.Type == NetworkListEvent<int>.EventType.Add)
         {
-            Player.AddMoveCountClientRpc(moveCount);
+            Player.ChangeMoveCountServerRpc(moveCount);
         }
     }
 }

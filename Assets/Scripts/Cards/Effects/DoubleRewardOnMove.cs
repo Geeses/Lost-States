@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Effect", menuName = "Scriptable Cards/DoubleReward", order = 1)]
@@ -23,7 +20,7 @@ public class DoubleRewardOnMove : CardEffect
 
     private void DoubleRessource(GridCoordinates coordinates)
     {
-        Debug.Log("Double Ressource was called");
+        Debug.Log("DoubleRewardOnMove.DoubleRessource was called");
         var tile = Player.CurrentTile;
 
         if (Player.movedInCurrentTurn.Value == moveCount)
@@ -39,19 +36,19 @@ public class DoubleRewardOnMove : CardEffect
                     {
                         case Ressource.fruit:
                             Debug.Log("Added extra fruit");
-                            Player.InventoryRessources.Add(Ressource.fruit);
+                            Player.AddRessourceServerRpc(Ressource.fruit);
                             break;
                         case Ressource.water:
                             Debug.Log("Added extra water");
-                            Player.InventoryRessources.Add(Ressource.water);
+                            Player.AddRessourceServerRpc(Ressource.water);
                             break;
                         case Ressource.steel:
                             Debug.Log("Added extra steel");
-                            Player.InventoryRessources.Add(Ressource.steel);
+                            Player.AddRessourceServerRpc(Ressource.steel);
                             break;
                         case Ressource.wood:
                             Debug.Log("Added extra wood");
-                            Player.InventoryRessources.Add(Ressource.wood);
+                            Player.AddRessourceServerRpc(Ressource.wood);
                             break;
                         case Ressource.none:
                             Debug.Log("No ressource was found");

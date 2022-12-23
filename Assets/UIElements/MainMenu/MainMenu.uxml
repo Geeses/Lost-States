@@ -3,8 +3,10 @@
     <ui:VisualElement style="width: 100%; height: 100%; align-items: center;">
         <ui:Label tabindex="-1" text="TestScene" display-tooltip-when-elided="true" />
         <ui:Toggle style="width: 30%; flex-direction: column; align-items: center; flex-wrap: wrap;" />
-        <ui:TextField picking-mode="Ignore" value="filler text" text="Username" style="width: 30%;" />
-        <ui:Button tabindex="-1" text="Host" display-tooltip-when-elided="true" name="host-button" style="width: 30%;" />
-        <ui:Button tabindex="-1" text="Client" display-tooltip-when-elided="true" name="client-button" style="width: 30%;" />
+        <ui:TextField picking-mode="Ignore" value="filler text" text="Username" name="username-field" style="width: 30%;" />
+        <ui:TextField picking-mode="Ignore" value="filler text" text="Join Code" name="join-code-field" style="width: 30%;" />
+        <ui:Button tabindex="-1" text="Host" display-tooltip-when-elided="true" name="start-host" style="width: 30%;" />
+        <ui:Button tabindex="-1" text="Client" display-tooltip-when-elided="true" name="start-client" style="width: 30%;" />
+        <ui:Button tabindex="-1" text="Waiting..." display-tooltip-when-elided="true" name="start-game" style="width: 30%; visibility: hidden;" />
     </ui:VisualElement>
 </ui:UXML>

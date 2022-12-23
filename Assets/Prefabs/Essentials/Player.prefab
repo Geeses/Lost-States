@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3667005215213547534}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.42, y: 0.49, z: -0.1}
+  m_LocalPosition: {x: 0.42, y: 0.49, z: -0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -128,11 +128,14 @@ MonoBehaviour:
   selected: 0
   _spriteRenderer: {fileID: 3667005215213547532}
   _collider: {fileID: 3667005215213547533}
-  clientId: 0
-  _inventoryRessourceCount: 0
-  _savedRessourceCount: 0
-  _inventoryRessources: 
-  _savedRessources: 
+  clientId:
+    m_InternalValue: 0
+  movedInCurrentTurn:
+    m_InternalValue: 0
+  inventoryRessourceCount: 0
+  savedRessourceCount: 0
+  currentSelectedPlayerId:
+    m_InternalValue: 0
 --- !u!114 &1123490429
 MonoBehaviour:
   m_ObjectHideFlags: 0

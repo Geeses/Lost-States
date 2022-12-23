@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Effect", menuName = "Scriptable Cards/MoveOverUnpassable", order = 1)]
@@ -10,11 +8,11 @@ public class MoveOverUnpassable : CardEffect
     {
         base.ExecuteEffect();
         Debug.Log("Effect: Move Over Unpassable Executed");
-        Player.moveOverUnpassable = true;
+        // Player.moveOverUnpassable = true;
     }
     public override void RevertEffect()
     {
-        Player.moveOverUnpassable = false;
+        // Player.moveOverUnpassable = false;
         base.RevertEffect();
     }
 }

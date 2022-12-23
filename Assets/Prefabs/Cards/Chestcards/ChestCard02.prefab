@@ -14,8 +14,8 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: b199de8c7af2d834790f7c81b09fc368, type: 3}
     - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_text
-      value: Every player inside the dangerous zone loses of their newest 2 ressources
-        and 1 chest card.
+      value: Every player inside the dangerous zone at night loses their newest 2
+        ressources and 1 chest card.
       objectReference: {fileID: 0}
     - target: {fileID: 1690342784632638810, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_Name

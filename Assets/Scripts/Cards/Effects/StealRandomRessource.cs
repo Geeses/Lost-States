@@ -44,11 +44,21 @@ public class StealRandomRessource : CardEffect
             {
                 if (itemType == PickupType.Ressource)
                 {
-                    Player.InventoryRessources.Add(enemy.RemoveNewestRessource(itemCount));
+                    List<Ressource> newestRessources = new List<Ressource>();
+                    for (int i = 0; i < itemCount; i++)
+                    {
+                        newestRessources.Add((Ressource)enemy.inventoryRessources[enemy.inventoryRessources.Count - 1 - i]);
+                    }
+
+                    enemy.RemoveNewestRessourceServerRpc(itemCount);
+                    foreach (Ressource ressource in newestRessources)
+                    {
+                        Player.AddRessourceServerRpc(ressource);
+                    }                    
                 }
                 else if (itemType == PickupType.Chest)
                 {
-                    Player.AddChestCardClientRpc(enemy.RemoveNewestChestcard(itemCount));
+                    //Player.AddChestCardClientRpc(enemy.RemoveNewestChestcardServerRpc(itemCount));
                 }
             }
         }

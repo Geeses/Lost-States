@@ -19,8 +19,7 @@ public class CardManager : NetworkBehaviour
     private List<int> _chestCardStack = new List<int>();
     private int _movementCardStackPosition;
     private int _chestCardStackPosition;
-    private List<CardEffect> _activeCardEffects = new List<CardEffect>();
-    private List<CardEffect> _initializedCardEffects = new List<CardEffect>();
+
 
     private static CardManager s_instance;
     #endregion
@@ -29,12 +28,10 @@ public class CardManager : NetworkBehaviour
     public static CardManager Instance { get { return s_instance; } }
     public List<int> MovementCardStack { get => _movementCardStack; private set => _movementCardStack = value; }
     public int MovementCardStackPosition { get => _movementCardStackPosition; private set => _movementCardStackPosition = value; }
-    public List<CardEffect> ActiveCardEffects { get => _activeCardEffects; private set => _activeCardEffects = value; }
     public List<int> ChestCardStack { get => _chestCardStack; private set => _chestCardStack = value; }
     public int ChestCardStackPosition { get => _chestCardStackPosition; private set => _chestCardStackPosition = value; }
     public int MoveCardListInStack { get => moveCardListInStack; private set => moveCardListInStack = value; }
     public int ChestCardListInStack { get => chestCardListInStack; private set => chestCardListInStack = value; }
-    public List<CardEffect> InitializedCardEffects { get => _initializedCardEffects; set => _initializedCardEffects = value; }
     #endregion
 
     #region Monobehavior Functions
@@ -57,7 +54,6 @@ public class CardManager : NetworkBehaviour
     private void Start()
     {
         TurnManager.Instance.OnTurnStart += TryAddMovementCardsToPlayer;
-        TurnManager.Instance.OnTurnEnd += RevertCardEffectClientRpc;
     }
     #endregion
 
@@ -109,33 +105,68 @@ public class CardManager : NetworkBehaviour
         Player player = NetworkManager.ConnectedClients[playerId].PlayerObject.GetComponent<Player>();
         int addCardAmount = player.MovementCardAmountPerCycle;
 
-        //for (int i = 0; i < addCardAmount; i++)
-        //{
+        // if its the total beginning of the game, we give each player 2 more cards 
+        if (TurnManager.Instance.TotalTurnCount == 1)
+            addCardAmount += 2;
+
+        for (int i = 0; i < addCardAmount; i++)
+        {
             // if we have no more cards left in our stack
-            //if (MovementCardStack.Count == MovementCardStackPosition)
-            //{
-            //    CreateMovementCardStack();
-            //}
+            if (MovementCardStack.Count == MovementCardStackPosition)
+            {
+                CreateMovementCardStack();
+            }
 
-            player.AddMovementCardClientRpc(MovementCardStack[MovementCardStackPosition]);
+            player.movementCards.Add(MovementCardStack[MovementCardStackPosition]);
 
-            //MovementCardStackPosition += 1;
-        //}
+            MovementCardStackPosition += 1;
+        }
     }
 
+    // temporary card means, that this card doesnt really exist and is only played for its effects
+    // used for example in chest card effects
     [ServerRpc(RequireOwnership = false)]
-    public void TryPlayMovementCardServerRpc(int cardId, int instanceId, ulong playerId)
+    public void TryPlayMovementCardServerRpc(int cardId, int instanceId, ulong playerId, bool temporaryCard = false)
     {
+        Debug.Log("Try play Card. " + temporaryCard + " " + playerId);
         Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
 
         // if they are still allowed to play movementcards and its their turn
-        if (player.PlayedMovementCards <= player.MaximumPlayableMovementCards &&
-            playerId == TurnManager.Instance.CurrentTurnPlayerId)
+        if (player.PlayedMovementCards < player.MaximumPlayableMovementCards &&
+            playerId == TurnManager.Instance.CurrentTurnPlayerId || temporaryCard)
         {
             // remove UI object from player that sent the request
             NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(playerId, instanceId);
 
-            ExecuteCardEffectClientRpc(cardId, playerId, CardType.Movement);
+            // Sending the ClientRPC only to the playerId
+            ClientRpcParams clientRpcParams = new ClientRpcParams
+            {
+                Send = new ClientRpcSendParams
+                {
+                    TargetClientIds = new ulong[] { playerId }
+                }
+            };
+
+            CardEffectManager.Instance.InitializeCardEffectClientRpc(cardId, playerId, CardType.Movement, clientRpcParams);
+
+            Card card = GetMovementCardById(cardId);
+            player.moveCount.Value += card.baseMoveCount;
+
+            PlayMovementCardClientRpc(cardId, playerId, temporaryCard);
+        }
+    }
+
+    [ClientRpc]
+    private void PlayMovementCardClientRpc(int cardId, ulong playerId, bool temporaryCard = false)
+    {
+        Debug.Log("Play card " + temporaryCard);
+        Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
+
+        if (!temporaryCard)
+        {
+            // increment move card played counter
+            player.ChangePlayedMoveCardsClientRpc(1);
+            player.discardedMovementCards.Add(cardId);
         }
     }
 
@@ -175,7 +206,7 @@ public class CardManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void AddChestCardToPlayerServerRpc(ulong playerId)
     {
-        // Debug.Log("start add");
+        Debug.Log("start add");
 
         Player player = NetworkManager.ConnectedClients[playerId].PlayerObject.GetComponent<Player>();
 
@@ -185,8 +216,8 @@ public class CardManager : NetworkBehaviour
             CreateChestCardStack();
         }
 
-        // Debug.Log("try add", player);
-        player.AddChestCardClientRpc(ChestCardStack[ChestCardStackPosition]);
+        Debug.Log("try add", player);
+        player.inventoryChestCards.Add(ChestCardStack[ChestCardStackPosition]);
 
         ChestCardStackPosition += 1;
     }
@@ -200,63 +231,17 @@ public class CardManager : NetworkBehaviour
             // remove UI object from player that sent the request
             NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(playerId, instanceId);
 
-            ExecuteCardEffectClientRpc(cardId, playerId, CardType.Chest);
-        }
-    }
-    #endregion
-
-    #region Card Execution
-
-    // execute card effects
-    [ClientRpc]
-    private void ExecuteCardEffectClientRpc(int cardId, ulong playerId, CardType cardType)
-    {
-        Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
-        Card card = null;
-
-        if(cardType == CardType.Movement)
-        {
-            card = GetMovementCardById(cardId);
-            // increment move card played counter
-            player.ChangePlayedMoveCardsClientRpc(1);
-            player.AddMoveCountClientRpc(card.baseMoveCount);
-        }
-        else if(cardType == CardType.Chest)
-        {
-            card = GetChestCardById(cardId);
-        }
-
-        List<CardEffect> effects = card.cardEffects;
-
-        Debug.Log("executing card effect " + effects.Count + " " + card.cardEffects.Count);
-        foreach (CardEffect effect in effects)
-        {
-            InitializedCardEffects.Add(effect);
-            effect.Initialize(player);
-
-            if(effect.executeInstantly)
+            // Sending the ClientRPC only to the playerId
+            ClientRpcParams clientRpcParams = new ClientRpcParams
             {
-                ActiveCardEffects.Add(effect);
-                effect.ExecuteEffect();
-            }
+                Send = new ClientRpcSendParams
+                {
+                    TargetClientIds = new ulong[] { playerId }
+                }
+            };
+
+            CardEffectManager.Instance.InitializeCardEffectClientRpc(cardId, playerId, CardType.Chest, clientRpcParams);
         }
-    }
-
-    // end of turn revert of card effects
-    [ClientRpc]
-    private void RevertCardEffectClientRpc(ulong playerId)
-    {
-        Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
-
-        Debug.Log("call revert effect");
-        foreach (CardEffect effect in ActiveCardEffects)
-        {            
-            Debug.Log("revert effect in loop: " + effect.name);
-            effect.RevertEffect();
-        }
-
-        ActiveCardEffects.Clear();
-        InitializedCardEffects.Clear();
     }
     #endregion
 }

@@ -28,13 +28,19 @@ public class RewardAfterMove : CardEffect
         Player.OnPlayerMoved += AddRewardAfterMove;
     }
 
+    public override void RevertEffect()
+    {
+        base.RevertEffect();
+        Player.OnPlayerMoved -= AddRewardAfterMove;
+    }
+
     private void AddRewardAfterMove(GridCoordinates obj)
     {
-        if(Player.movedInCurrentTurn.Value == moveCount)
+        if (Player.movedInCurrentTurn.Value == moveCount)
         {
-            if(reward == Rewards.Coins)
+            if (reward == Rewards.Coins)
             {
-                Player.CoinCount += rewardAmount;
+                Player.coinCount.Value += rewardAmount;
             }
             else
             {
@@ -42,12 +48,5 @@ public class RewardAfterMove : CardEffect
             }
         }
     }
-
-    public override void RevertEffect()
-    {
-        base.RevertEffect();
-        Player.OnPlayerMoved -= AddRewardAfterMove;
-    }
-
 }
 

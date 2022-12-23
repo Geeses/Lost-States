@@ -152,7 +152,7 @@ public class TurnManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void EndTurnServerRpc(ulong playerId)
     {
-        if (CurrentTurnPlayerId == playerId && CurrentTurnPlayer.MoveCount == 0 &&
+        if (CurrentTurnPlayerId == playerId && CurrentTurnPlayer.moveCount.Value == 0 &&
             CurrentTurnPlayer.PlayedMovementCards == CurrentTurnPlayer.MaximumPlayableMovementCards)
         {
             PlayerTurnQueueId.Dequeue();

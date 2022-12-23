@@ -91,7 +91,8 @@ public class GridManager : MonoBehaviour
             if (tile != null)
             {
                 tile.TileGridCoordinates = coords;
-                _tileGrid.Add(coords, tile);
+                if (!_tileGrid.ContainsKey(coords))
+                    _tileGrid.Add(coords, tile);
             }
             else
             {
@@ -104,10 +105,22 @@ public class GridManager : MonoBehaviour
     {
         Tile[] adjacentTiles = new Tile[4];
 
-        adjacentTiles[0] = TileGrid[new GridCoordinates(tile.TileGridCoordinates.x, tile.TileGridCoordinates.y + 1)];
-        adjacentTiles[1] = TileGrid[new GridCoordinates(tile.TileGridCoordinates.x + 1, tile.TileGridCoordinates.y)];
-        adjacentTiles[2] = TileGrid[new GridCoordinates(tile.TileGridCoordinates.x, tile.TileGridCoordinates.y - 1)];
-        adjacentTiles[3] = TileGrid[new GridCoordinates(tile.TileGridCoordinates.x - 1, tile.TileGridCoordinates.y)];
+        GridCoordinates upperTileCoords = new GridCoordinates(tile.TileGridCoordinates.x, tile.TileGridCoordinates.y + 1);
+        GridCoordinates rightTileCoords = new GridCoordinates(tile.TileGridCoordinates.x + 1, tile.TileGridCoordinates.y);
+        GridCoordinates downTileCoords = new GridCoordinates(tile.TileGridCoordinates.x, tile.TileGridCoordinates.y - 1);
+        GridCoordinates leftTileCoords = new GridCoordinates(tile.TileGridCoordinates.x - 1, tile.TileGridCoordinates.y);
+
+        if(TileGrid.ContainsKey(upperTileCoords))
+            adjacentTiles[0] = TileGrid[new GridCoordinates(tile.TileGridCoordinates.x, tile.TileGridCoordinates.y + 1)];
+
+        if (TileGrid.ContainsKey(rightTileCoords))
+            adjacentTiles[1] = TileGrid[new GridCoordinates(tile.TileGridCoordinates.x + 1, tile.TileGridCoordinates.y)];
+
+        if (TileGrid.ContainsKey(downTileCoords))
+            adjacentTiles[2] = TileGrid[new GridCoordinates(tile.TileGridCoordinates.x, tile.TileGridCoordinates.y - 1)];
+
+        if (TileGrid.ContainsKey(leftTileCoords))
+            adjacentTiles[3] = TileGrid[new GridCoordinates(tile.TileGridCoordinates.x - 1, tile.TileGridCoordinates.y)];
 
         return adjacentTiles;
     }
