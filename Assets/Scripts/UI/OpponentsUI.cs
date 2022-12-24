@@ -13,11 +13,13 @@ public class OpponentsUI : NetworkBehaviour
     [SerializeField] private Button showButton;
 
     private Vector3 initialPosition;
+    private Player _player;
 
     private bool isHidden = true;
     public void Initialize(Player player)
     {
         Debug.Log("OpponentsUI.Initialize was called");
+        _player = player;
         player.moveCount.OnValueChanged += UpdateRemainingMovesText;
         player.movementCards.OnListChanged += UpdateMovementCardsText;
         player.inventoryChestCards.OnListChanged += UpdateChestCardsText;
@@ -49,13 +51,13 @@ public class OpponentsUI : NetworkBehaviour
     private void UpdateSafeText(NetworkListEvent<int> changeEvent)
     {
         Debug.Log("OpponentsUI.UpdateSafeText changeEvent: " + changeEvent);
-        safeCount.text = changeEvent.ToString();
+        safeCount.text = _player.savedRessourceCount.ToString();
     }
 
     private void UpdateRessourcesText(NetworkListEvent<int> changeEvent)
     {
         Debug.Log("OpponentsUI.UpdateRessourcesText changeEvent: " + changeEvent);
-        ressourcesCount.text = changeEvent.ToString();
+        ressourcesCount.text =_player.inventoryRessourceCount.ToString();
     }
 
     private void UpdateCoinsText(int previousValue, int newValue)
@@ -66,13 +68,13 @@ public class OpponentsUI : NetworkBehaviour
     private void UpdateChestCardsText(NetworkListEvent<int> changeEvent)
     {
         Debug.Log("OpponentsUI.UpdateChestCardsText changeEvent: " + changeEvent);
-        chestCardsCount.text = changeEvent.ToString();
+        chestCardsCount.text = _player.inventoryChestCards.Count.ToString();
     }
 
     private void UpdateMovementCardsText(NetworkListEvent<int> changeEvent)
     {
         Debug.Log("OpponentsUI.UpdateMovementCardsText changeEvent: " + changeEvent);
-        movementCardsCount.text = changeEvent.ToString();
+        movementCardsCount.text = _player.movementCards.Count.ToString();
     }
 
     private void UpdateRemainingMovesText(int previousValue, int newValue)

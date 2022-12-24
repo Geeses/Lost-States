@@ -46,6 +46,7 @@ public class TurnManager : NetworkBehaviour
     private void Awake()
     {
         // Singleton Pattern
+        Debug.Log("TurnManager singleton Initialized");
         if (s_instance != null && s_instance != this)
         {
             Destroy(gameObject);

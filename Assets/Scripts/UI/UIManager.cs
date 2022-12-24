@@ -10,8 +10,7 @@ public class UIManager : NetworkBehaviour
     [SerializeField] private VerticalLayoutGroup oponentsGroup;
     [SerializeField] private GameObject opponentsPrefab;
     [SerializeField] private Button endTurnButton;
-    [SerializeField] private TMPro.TMP_Text ressourcesCount;
-    [SerializeField] private TMPro.TMP_Text bagFoodText;
+    [SerializeField] private TMPro.TMP_Text bagFruitText;
     [SerializeField] private TMPro.TMP_Text bagWaterText;
     [SerializeField] private TMPro.TMP_Text bagSteelText;
     [SerializeField] private TMPro.TMP_Text bagWoodText;
@@ -20,6 +19,7 @@ public class UIManager : NetworkBehaviour
     [SerializeField] private TMPro.TMP_Text safeWaterText;
     [SerializeField] private TMPro.TMP_Text safeSteelText;
     [SerializeField] private TMPro.TMP_Text safeWoodText;
+    [SerializeField] private Image[] dayNightStones;
 
     private Player _player;
     private List<Player> _enemyPlayers;
@@ -60,7 +60,67 @@ public class UIManager : NetworkBehaviour
 
         // Register Listeners
         _player.moveCount.OnValueChanged += UpdatePlayerMoves;
-        _endTurnButton.onClick.AddListener(TurnManager.Instance.EndTurn);
+        endTurnButton.onClick.AddListener(TurnManager.Instance.EndTurn);
+        _player.inventoryRessources.OnListChanged += UpdateRessourcesLabels;
+        TurnManager.Instance.OnTurnStart += UpdateTurnCounter;
+    }
+
+    private void UpdateTurnCounter(ulong obj)
+    {
+        Debug.Log("UIManager.UpdateTurnCounter was called");
+        int index = 0;
+        Debug.Log("UIManager.UpdateTurnCounter TurnManager.Instance.CurrentTurnNumber: " + TurnManager.Instance.CurrentTurnNumber);
+        foreach (Image img in dayNightStones)
+        {
+            Debug.Log("UIManager.UpdateTurnCounter Inside for each");
+            if (index == TurnManager.Instance.CurrentTurnNumber - 1)
+            {
+                img.color = Color.white;
+            }
+            else
+            {
+                img.color = Color.black;
+            }
+            index++;
+        }
+    }
+
+    private void UpdateRessourcesLabels(NetworkListEvent<int> changeEvent)
+    {
+        // change Value is the Objects.Count
+        Debug.Log("UIManager.UpdateRessourcesLabels changeEvent.Value: " + changeEvent.Value);
+
+        int bagFruitCount = 0;
+        int bagWaterCount = 0;
+        int bagSteelCount = 0;
+        int bagWoodCount = 0;
+
+        foreach (int ressource in _player.inventoryRessources)
+        {
+            switch (ressource)
+            {
+                case (int)Ressource.fruit:
+                    bagFruitCount += 1;
+                    break;
+                case (int)Ressource.water:
+                    bagWaterCount += 1;
+                    break;
+                case (int)Ressource.steel:
+                    bagSteelCount += 1;
+                    break;
+                case (int)Ressource.wood:
+                    bagWoodCount += 1;
+                    break;
+                case (int)Ressource.none:
+                    Debug.Log("No ressource was found");
+                    break;
+            }
+        }
+
+        bagFruitText.text = bagFruitCount.ToString();
+        bagWaterText.text = bagWaterCount.ToString();
+        bagSteelText.text = bagSteelCount.ToString();
+        bagWoodText.text = bagWoodCount.ToString();
     }
 
     private void UpdatePlayerMoves(int previousValue, int newValue)
