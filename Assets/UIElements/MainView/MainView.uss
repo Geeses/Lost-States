@@ -1,45 +1,33 @@
-#char-bar {
-    background-color: rgb(236, 224, 195);
-    border-bottom-left-radius: 10px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    background-image: url('project://database/Assets/Art/UI/UIEnemyInterfaceBG.png?fileID=2800000&guid=96bb217f78aa8eb458e0417f3d6b6ecd&type=3#UIEnemyInterfaceBG');
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: 1px;
-    margin-bottom: 1px;
-    padding-left: 7%;
-    padding-top: 2%;
-    padding-bottom: 2%;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: stretch;
-    flex-grow: 1;
-    flex-shrink: 1;
-    width: 100%;
-    padding-right: 0;
-    left: 345px;
+:root {
+    --gegner-width: 1095px;
+    --gegner-height: 288px;
+    --fig-width: 213px;
+    --fig-height: 213px;
 }
 
-#char-bar:hover {
+.nono-bar:hover {
     transition-property: position;
     transition-duration: 1s;
-    left: 0;
     transition-timing-function: ease;
+    left: 0;
 }
 
 #char-fig {
     left: 0;
-    top: 0;
+    top: 13px;
     bottom: 0;
     margin-left: 0;
-    margin-right: 2%;
     margin-top: 0;
     margin-bottom: 0;
     flex-grow: 1;
     right: 0;
-    padding-right: 15%;
+    padding-right: 0;
+    -unity-background-scale-mode: scale-to-fit;
+    padding-left: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    width: 53px;
+    height: 53px;
 }
 
 #char-cards {
@@ -51,13 +39,15 @@
     border-bottom-color: rgba(0, 0, 0, 0.59);
     flex-grow: 1;
     justify-content: flex-end;
-    align-items: center;
-    flex-direction: column-reverse;
-    flex-wrap: wrap;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: nowrap;
     -unity-text-align: lower-left;
+    margin-left: 0;
+    margin-right: 12px;
 }
 
-.button {
+.button-round {
     -unity-background-scale-mode: stretch-to-fill;
     min-width: 20px;
     min-height: 20px;
@@ -70,10 +60,64 @@
     flex-grow: 1;
 }
 
+.nono-bar {
+    background-color: rgba(56, 56, 56, 0);
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-image: url('project://database/Assets/Art/UI/UIEnemyInterfaceBG.png?fileID=2800000&guid=96bb217f78aa8eb458e0417f3d6b6ecd&type=3#UIEnemyInterfaceBG');
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-grow: 1;
+    flex-shrink: 1;
+    right: -169px;
+    -unity-background-scale-mode: scale-to-fit;
+    width: 288px;
+    height: 1095px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
 .char-card-box {
     flex-direction: row;
     justify-content: space-between;
     left: 0;
-    width: 86%;
     right: 0;
+}
+
+.box-move-card:hover {
+    transition-property: width;
+    transition-duration: 0.5s;
+    left: 0;
+    right: 0;
+}
+
+.buttonChar {
+    height: auto;
+}
+
+.buttonChar:active {
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: rgb(53, 255, 0);
+    border-right-color: rgb(53, 255, 0);
+    border-top-color: rgb(53, 255, 0);
+    border-bottom-color: rgb(53, 255, 0);
+}
+
+.label-Inventar {
+    font-size: 12px;
+}
+
+.movescounter {
 }

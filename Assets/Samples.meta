@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Samples.meta
 guid: adef7dd5f64004148b4231c8a214a1cd
+========
+guid: adf2f27c1dfe0f84db050fed2afc9864
+>>>>>>>> Movement-Cards:Assets/Samples/Relay.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

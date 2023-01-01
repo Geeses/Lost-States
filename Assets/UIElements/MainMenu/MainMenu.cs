@@ -39,7 +39,6 @@ public class MainMenu : NetworkBehaviour
             Debug.Log($"Starting Game...");
             NetworkManager.Singleton.SceneManager.LoadScene("MainGame", LoadSceneMode.Single);
         };
-
     }
 
     public async void StartHost() {
