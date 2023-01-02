@@ -220,8 +220,8 @@ public class CardManager : NetworkBehaviour
             CreateChestCardStack();
         }
 
-        Debug.Log("try add", player);
         player.inventoryChestCards.Add(ChestCardStack[ChestCardStackPosition]);
+        Debug.Log("added chestcard. current chestcard count: " + player.inventoryChestCards.Count);
 
         ChestCardStackPosition += 1;
     }
@@ -243,7 +243,6 @@ public class CardManager : NetworkBehaviour
                     TargetClientIds = new ulong[] { playerId }
                 }
             };
-
             CardEffectManager.Instance.InitializeCardEffectClientRpc(cardId, playerId, CardType.Chest, clientRpcParams);
         }
     }

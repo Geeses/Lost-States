@@ -169,7 +169,7 @@ public class GridManager : MonoBehaviour
     {
         List<Tile> tiles = new List<Tile>();
 
-        if (direction == Direction.right)
+        if (direction == Direction.left)
         {
             var end = _xMax - origin.TileGridCoordinates.x;
             for (int i = 0; i <= end; i++)
@@ -179,7 +179,7 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        else if (direction == Direction.left)
+        else if (direction == Direction.right)
         {
             var end = origin.TileGridCoordinates.x - _xMin;
             for (int i = 0; i <= end; i++)

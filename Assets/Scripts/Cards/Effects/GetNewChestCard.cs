@@ -7,7 +7,8 @@ public class GetNewChestCard : CardEffect
 {
     public override void ExecuteEffect()
     {
-        Player.inventoryChestCards.OnListChanged += GetChestCard;
+        
+        CardManager.Instance.AddChestCardToPlayerServerRpc(Player.clientId.Value);
         base.ExecuteEffect();
     }
 
@@ -19,6 +20,5 @@ public class GetNewChestCard : CardEffect
     public override void RevertEffect()
     {
         base.RevertEffect();
-        Player.inventoryChestCards.OnListChanged -= GetChestCard;
     }
 }

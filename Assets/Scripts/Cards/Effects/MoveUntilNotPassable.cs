@@ -25,7 +25,7 @@ public class MoveUntilNotPassable : CardEffect
     {
         List<Tile> tiles = GridManager.Instance.GetTilesInDirection(Player.CurrentTile, Player.LastMoveDirection);
 
-        Debug.Log("Move in one direction was called");
+        Debug.Log("Move in one direction was called " + tiles.Count);
 
         if (isFirstMove)
         {
@@ -37,7 +37,8 @@ public class MoveUntilNotPassable : CardEffect
                 {
                     break;
                 }
-                Player.TryMoveServerRpc(tile.TileGridCoordinates, false, false);
+                
+                Player.TryMoveServerRpc(tile.TileGridCoordinates, true);
             }
         }
 

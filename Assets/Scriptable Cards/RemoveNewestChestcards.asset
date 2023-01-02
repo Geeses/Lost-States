@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 481d86a8b413b5843b69c325cd0a0298, type: 3}
-  m_Name: RemoveRandomChestcards
+  m_Name: RemoveNewestChestcards
   m_EditorClassIdentifier: 
   turnType: 2
   tileZone: 3

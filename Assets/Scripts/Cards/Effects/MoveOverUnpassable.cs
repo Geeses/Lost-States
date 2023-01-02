@@ -8,11 +8,12 @@ public class MoveOverUnpassable : CardEffect
     {
         base.ExecuteEffect();
         Debug.Log("Effect: Move Over Unpassable Executed");
-        // Player.moveOverUnpassable = true;
+        Player.canMoveOverUnpassable.Value = true;
     }
+    
     public override void RevertEffect()
     {
-        // Player.moveOverUnpassable = false;
+        Player.canMoveOverUnpassable.Value = false;
         base.RevertEffect();
     }
 }

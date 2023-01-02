@@ -36,11 +36,11 @@ public class MainMenu : NetworkBehaviour
         };
 
         canStartGame.OnValueChanged += (bool previousValue, bool newValue) => {
-            Debug.Log($"Starting Game...");
-            NetworkManager.Singleton.SceneManager.LoadScene("MainGame", LoadSceneMode.Single);
+            Debug.Log($"Starting Game... " + SceneManager.GetSceneByBuildIndex(0).name);
+            NetworkManager.Singleton.SceneManager.LoadScene("TestMovementCards", LoadSceneMode.Single);
         };
     }
-
+    
     public async void StartHost() {
         if (RelayManager.Instance.IsRelayEnabled) 
             result = await RelayManager.Instance.SetupRelay(usernameField.text);

@@ -10,10 +10,17 @@ public enum TurnTypeCondition
     Night
 }
 
+public enum PlayerType
+{
+    Enemy,
+    Local
+}
+
 [CreateAssetMenu(fileName = "Effect", menuName = "Scriptable Cards/RemoveNewestItems", order = 1)]
 public class RemoveNewestItems : CardEffect
 {
     [Header("Options")]
+    public PlayerType playerType;
     public TurnTypeCondition turnType;
     public TileZone tileZone;
     public PickupType itemType;
@@ -46,18 +53,34 @@ public class RemoveNewestItems : CardEffect
 
     private void RemoveNewestPickup()
     {
-        foreach (Player enemy in EnemyPlayers)
+        if (playerType == PlayerType.Enemy)
         {
-            if(enemy.CurrentTile.zoneType == tileZone)
+            foreach (Player enemy in EnemyPlayers)
             {
-                if(itemType == PickupType.Ressource)
+                if (enemy.CurrentTile.zoneType == tileZone || tileZone == TileZone.none)
                 {
-                    enemy.RemoveNewestRessourceServerRpc(itemCount);
+                    if (itemType == PickupType.Ressource)
+                    {
+                        enemy.RemoveNewestRessourceServerRpc(itemCount);
+                    }
+                    else if (itemType == PickupType.Chest)
+                    {
+                        Debug.Log("remove chest card " + enemy.inventoryChestCards.Count);
+                        enemy.RemoveNewestChestcardServerRpc(itemCount);
+                    }
                 }
-                else if(itemType == PickupType.Chest)
-                {
-                    enemy.RemoveNewestChestcardServerRpc(itemCount);
-                }
+            }
+        }
+        else if (playerType == PlayerType.Local)
+        {
+            if (itemType == PickupType.Ressource)
+            {
+                Player.RemoveNewestRessourceServerRpc(itemCount);
+            }
+            else if (itemType == PickupType.Chest)
+            {
+                Debug.Log("remove chest card " + Player.inventoryChestCards.Count);
+                Player.RemoveNewestChestcardServerRpc(itemCount);
             }
         }
     }

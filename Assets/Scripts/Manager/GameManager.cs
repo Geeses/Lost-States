@@ -49,7 +49,14 @@ public class GameManager : NetworkBehaviour
 
     private void Start()
     {
-        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += LoadCompleted;
+        if(isTestScene)
+        {
+            NetworkManager.OnServerStarted += () => StartCoroutine(WaitForLobbyJoinedTest());
+        }
+        else 
+        {
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += LoadCompleted;
+        }
     }
 
     private void LoadCompleted(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
@@ -77,8 +84,35 @@ public class GameManager : NetworkBehaviour
 
         if (IsServer)
         {
-            PlayerNetworkManager.Instance.PlayerDictionary[0].MoveClientRpc(new GridCoordinates(0, 0));
-            PlayerNetworkManager.Instance.PlayerDictionary[1].MoveClientRpc(new GridCoordinates(-1, 0));
+            PlayerNetworkManager.Instance.PlayerDictionary[0].MoveClientRpc(new GridCoordinates(0, 0), false, true);
+            PlayerNetworkManager.Instance.PlayerDictionary[1].MoveClientRpc(new GridCoordinates(-1, 0), false, true);
+
+            AssignRessourceCollectionCards();
+        }
+    }
+    
+    private IEnumerator WaitForLobbyJoinedTest()
+    {
+        // Server updates list of all incoming players
+        AddClient(NetworkManager.ServerClientId);
+        NetworkManager.OnClientConnectedCallback += AddClient;
+
+        // wait until we have every player connected
+        yield return new WaitUntil(() => ConnectedPlayersId.Count == 2);
+
+        // After everyone connected, we share the list of players with everyone else
+        List<ulong> tmp = new List<ulong>(ConnectedPlayersId);
+        foreach (var player in tmp)
+        {
+            SynchronizeLobbyDataClientRpc(player);
+        }
+
+        StartGameClientRpc();
+
+        if (IsServer)
+        {
+            PlayerNetworkManager.Instance.PlayerDictionary[0].MoveClientRpc(new GridCoordinates(0, 0), false, true);
+            PlayerNetworkManager.Instance.PlayerDictionary[1].MoveClientRpc(new GridCoordinates(-1, 0), false, true);
 
             AssignRessourceCollectionCards();
         }
@@ -109,6 +143,12 @@ public class GameManager : NetworkBehaviour
         gameHasStarted = true;
         OnGameStart?.Invoke();
     }
+
+    private void AddClient(ulong clientId)
+    {
+        ConnectedPlayersId.Add(clientId);
+    }
+
 
     [ClientRpc]
     private void SynchronizeLobbyDataClientRpc(ulong playerId)

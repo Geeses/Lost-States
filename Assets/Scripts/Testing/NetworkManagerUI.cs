@@ -80,13 +80,19 @@ public class NetworkManagerUI : NetworkBehaviour
         Debug.Log(changeEvent.Type);
         if(changeEvent.Type == NetworkListEvent<int>.EventType.Add)
         {
+            Debug.Log(changeEvent.Value);
             InstantiateChestCard(changeEvent.Value);
         }
         else if(changeEvent.Type == NetworkListEvent<int>.EventType.Remove || changeEvent.Type == NetworkListEvent<int>.EventType.RemoveAt)
         {
+            foreach(CardUiScript ui in _cardUis)
+            {
+                if(ui.CardType == CardType.Chest)
+                    Debug.Log(ui.CardId + " " + changeEvent.Value);
+            }
             GameObject go = _cardUis.Find(x => x.CardId == changeEvent.Value && x.CardType == CardType.Chest).gameObject;
             Debug.Log(go.name, go);
-            Destroy(go);
+            Destroy(go);    
         }
     }
 

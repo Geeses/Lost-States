@@ -1,12 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using Unity.Netcode;
 using System;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using Random = UnityEngine.Random;
 using System.Linq;
 using UnityEngine.SceneManagement;
 
@@ -17,6 +13,10 @@ public enum Ressource
     steel,
     wood,
     fruit
+}
+public enum Direction
+{
+    left, right, up, down
 }
 
 public class Player : Selectable
@@ -29,6 +29,8 @@ public class Player : Selectable
     public NetworkVariable<int> movedInCurrentTurn;
     public NetworkVariable<int> moveCount;
     public NetworkVariable<int> coinCount;
+    public NetworkVariable<bool> canMoveOverUnpassable = new NetworkVariable<bool>(default,
+        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkList<int> movementCards;
     public NetworkList<int> inventoryChestCards;
     public NetworkList<int> inventoryRessources;
@@ -43,11 +45,14 @@ public class Player : Selectable
 
     private int _movementCardAmountPerCycle = 5;
 
+    private Direction _lastMoveDirection;
     private Tile _currentTile;
     private int _maximumPlayableMovementCards;
     private int _playedMovementCards;
     private Selectable _currentSelectedTarget;
     private RessourceCollectionCard _ressourceCollectionCard;
+    private int _localMoveCount;
+    private int _localMovedInCurrentTurn;
     #endregion
 
     #region Properties
@@ -55,8 +60,11 @@ public class Player : Selectable
     public int MaximumPlayableMovementCards { get => _maximumPlayableMovementCards; set => _maximumPlayableMovementCards = value; }
     public int PlayedMovementCards { get => _playedMovementCards; set => _playedMovementCards = value; }
     public Tile CurrentTile { get => _currentTile; private set => _currentTile = value; }
+    public Direction LastMoveDirection { get => _lastMoveDirection; private set => _lastMoveDirection = value; }
     public Selectable CurrentSelectedTarget { get => _currentSelectedTarget; set => _currentSelectedTarget = value; }
     public RessourceCollectionCard RessourceCollectionCard { get => _ressourceCollectionCard; set => _ressourceCollectionCard = value; }
+    public int LocalMoveCount { get => _localMoveCount; set => _localMoveCount = value; }
+    public int LocalMovedInCurrentTurn { get => _localMovedInCurrentTurn; set => _localMovedInCurrentTurn = value; }
     #endregion
 
     #region Monobehavior Functions
@@ -78,21 +86,14 @@ public class Player : Selectable
             clientId.Value = OwnerClientId;
 
         NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += LoadCompleted;
-    }
 
-    private void LoadCompleted(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
-    {
-        Initialize();
-    }
-
-    private void Initialize()
-    {
-        CurrentTile = GridManager.Instance.TileGrid[new GridCoordinates(0, 0)];
-        inventoryRessources.OnListChanged += ChangeCountInventory;
-        savedRessources.OnListChanged += ChangeCountSaved;
-        InputManager.Instance.OnSelect += ChangeCurrentSelectedTarget;
-        moveCount.OnValueChanged += ChangeMoveCountUI;
-        savedRessources.OnListChanged += CheckForWin;
+        if(GameManager.Instance)
+        {
+            if(GameManager.Instance.isTestScene)
+            {
+                Initialize();
+            }
+        }
     }
 
     public override void OnDestroy()
@@ -108,7 +109,37 @@ public class Player : Selectable
         savedRessources.OnListChanged -= CheckForWin;
     }
     #endregion
+    
+    #region Initialize
 
+    private void LoadCompleted(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
+    {
+        Initialize();
+    }
+
+    private void Initialize()
+    {
+        CurrentTile = GridManager.Instance.TileGrid[new GridCoordinates(0, 0)];
+        inventoryRessources.OnListChanged += ChangeCountInventory;
+        savedRessources.OnListChanged += ChangeCountSaved;
+        InputManager.Instance.OnSelect += ChangeCurrentSelectedTarget;
+        moveCount.OnValueChanged += ChangeMoveCountUI;
+        moveCount.OnValueChanged += SynchronizeMoveCount;
+        movedInCurrentTurn.OnValueChanged += SynchronizeMovedInCurrent;
+        savedRessources.OnListChanged += CheckForWin;
+    }
+
+    private void SynchronizeMoveCount(int oldVal, int newVal)
+    {
+        LocalMoveCount = newVal;
+    }
+    private void SynchronizeMovedInCurrent(int oldVal, int newVal)
+    {
+        LocalMovedInCurrentTurn = newVal;
+    }
+
+    #endregion
+    
     #region Select and Highlight
     public override void Select()
     {
@@ -134,6 +165,8 @@ public class Player : Selectable
 
     private void UnhighlightAdjacentTiles()
     {
+        Debug.Log(CurrentTile);
+        Debug.Log(GridManager.Instance);
         foreach (Tile tile in GridManager.Instance.GetAdjacentTiles(CurrentTile))
         {
             if(tile)
@@ -177,16 +210,16 @@ public class Player : Selectable
         Tile tile = GridManager.Instance.TileGrid[coordinates];
 
         // if tile is adjacent
-        bool isAdjecant = GridManager.Instance.GetAdjacentTiles(CurrentTile).ToList().Contains(tile);
+        bool isAdjacent = GridManager.Instance.GetAdjacentTiles(CurrentTile).ToList().Contains(tile);
 
-        if (isAdjecant && moveCount.Value > 0 && tile.passable || forceMove)
+        if (isAdjacent && (moveCount.Value > 0) && (tile.passable || canMoveOverUnpassable.Value) || forceMove)
         {
             if (!forceMove)
             {
                 movedInCurrentTurn.Value += 1;
                 moveCount.Value += -1;
             }
-            MoveClientRpc(coordinates);
+            MoveClientRpc(coordinates, true, forceMove);
         }
     }
 
@@ -207,13 +240,22 @@ public class Player : Selectable
     }
 
     [ClientRpc]
-    public void MoveClientRpc(GridCoordinates coordinates, bool invokeEvent = true)
+    public void MoveClientRpc(GridCoordinates coordinates, bool invokeEvent = true, bool forceMove = false)
     {
         if(IsLocalPlayer)
+        {
+            // only clients need a local not-networked value, the server has all correct values
+            if (!forceMove && !IsHost)
+            {
+                LocalMoveCount += -1;
+                LocalMovedInCurrentTurn += 1;
+            }
+
             UnhighlightAdjacentTiles();
+        }
         CurrentTile = GridManager.Instance.TileGrid[coordinates];
         CurrentTile.PlayerStepOnTile(this);
-
+        Debug.Log(CurrentTile, CurrentTile);
         Vector3 cellWorldPosition = GridManager.Instance.Tilemap.CellToWorld(new Vector3Int(coordinates.x, coordinates.y, 0));
         cellWorldPosition += GridManager.Instance.Tilemap.cellSize / 2;
         transform.DOMove(cellWorldPosition + new Vector3(0, 0, -0.1f), 0.5f);
@@ -265,7 +307,8 @@ public class Player : Selectable
             Debug.Log(inventoryRessources.Count);
             if(inventoryRessources.Count > 0)
             {
-                inventoryRessources.RemoveAt(inventoryRessources.Count - 1);
+                int id = inventoryRessources[inventoryRessources.Count - 1];
+                inventoryRessources.Remove(id);
             }
         }
     }
@@ -278,8 +321,9 @@ public class Player : Selectable
             Debug.Log(inventoryChestCards.Count);
             if (inventoryChestCards.Count > 0)
             {
-                Debug.Log("Remove Chestcard: " + inventoryChestCards[inventoryChestCards.Count - 1]);
-                inventoryChestCards.RemoveAt(inventoryChestCards.Count - 1);
+                Debug.Log("Remove ChestcardId: " + inventoryChestCards[inventoryChestCards.Count - 1] + " at: " + (inventoryChestCards.Count - 1));
+                int id = inventoryChestCards[inventoryChestCards.Count - 1];
+                inventoryChestCards.Remove(id);
             }
         }
     }

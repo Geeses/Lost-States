@@ -9,10 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34bf0467b1504e4479e5f80221a43030, type: 3}
-  m_Name: DoubleRewardOnSecondMove
+  m_Script: {fileID: 11500000, guid: 481d86a8b413b5843b69c325cd0a0298, type: 3}
+  m_Name: RemoveNewestChestcardInstantly
   m_EditorClassIdentifier: 
   executeInstantly: 1
   _executeAfterTurns: 0
-  condition: 0
-  moveCount: 2
+  playerType: 1
+  turnType: 0
+  tileZone: 0
+  itemType: 1
+  itemCount: 1
