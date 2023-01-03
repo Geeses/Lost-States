@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class UIManager : NetworkBehaviour
 {
@@ -62,7 +63,25 @@ public class UIManager : NetworkBehaviour
         _player.moveCount.OnValueChanged += UpdatePlayerMoves;
         endTurnButton.onClick.AddListener(TurnManager.Instance.EndTurn);
         _player.inventoryRessources.OnListChanged += UpdateRessourcesLabels;
+        _player.savedRessources.OnListChanged += UpdateSavedRessourcesLabels;
         TurnManager.Instance.OnTurnStart += UpdateTurnCounter;
+
+        StartCoroutine(InitializeRessourceUi());
+    }
+
+    private IEnumerator InitializeRessourceUi()
+    {
+        yield return new WaitUntil(() => _player.RessourceCollectionCard != null);        
+                
+        safeFoodText.text = "0/" + _player.RessourceCollectionCard.fruitAmount;
+        safeWaterText.text = "0/" + _player.RessourceCollectionCard.waterAmount;
+        safeSteelText.text = "0/" + _player.RessourceCollectionCard.steelAmount;
+        safeWoodText.text = "0/" + _player.RessourceCollectionCard.woodAmount;
+
+        bagFruitText.text = "0";
+        bagWaterText.text = "0";
+        bagSteelText.text = "0";
+        bagWoodText.text = "0";
     }
 
     private void UpdateTurnCounter(ulong obj)
@@ -121,6 +140,44 @@ public class UIManager : NetworkBehaviour
         bagWaterText.text = bagWaterCount.ToString();
         bagSteelText.text = bagSteelCount.ToString();
         bagWoodText.text = bagWoodCount.ToString();
+    }
+
+    private void UpdateSavedRessourcesLabels(NetworkListEvent<int> changeEvent)
+    {
+        // change Value is the Objects.Count
+        Debug.Log("UIManager.UpdateRessourcesLabels changeEvent.Value: " + changeEvent.Value);
+
+        int bagFruitCount = 0;
+        int bagWaterCount = 0;
+        int bagSteelCount = 0;
+        int bagWoodCount = 0;
+
+        foreach (int ressource in _player.savedRessources)
+        {
+            switch (ressource)
+            {
+                case (int)Ressource.fruit:
+                    bagFruitCount += 1;
+                    break;
+                case (int)Ressource.water:
+                    bagWaterCount += 1;
+                    break;
+                case (int)Ressource.steel:
+                    bagSteelCount += 1;
+                    break;
+                case (int)Ressource.wood:
+                    bagWoodCount += 1;
+                    break;
+                case (int)Ressource.none:
+                    Debug.Log("No ressource was found");
+                    break;
+            }
+        }
+
+        safeFoodText.text = bagFruitCount.ToString() + "/" + _player.RessourceCollectionCard.fruitAmount;
+        safeWaterText.text = bagWaterCount.ToString() + "/" + _player.RessourceCollectionCard.waterAmount;
+        safeSteelText.text = bagSteelCount.ToString() + "/" + _player.RessourceCollectionCard.steelAmount;
+        safeWoodText.text = bagWoodCount.ToString() + "/" + _player.RessourceCollectionCard.woodAmount;
     }
 
     private void UpdatePlayerMoves(int previousValue, int newValue)
