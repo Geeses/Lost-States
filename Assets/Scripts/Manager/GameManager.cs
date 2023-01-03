@@ -64,11 +64,6 @@ public class GameManager : NetworkBehaviour
         ConnectedPlayersId = clientsCompleted;
         WaitForLobbyJoined();
     }
-
-    private void OnDisable()
-    {
-        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= LoadCompleted;
-    }
     #endregion
 
     private void WaitForLobbyJoined()

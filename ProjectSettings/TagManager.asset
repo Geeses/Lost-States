@@ -12,7 +12,7 @@ TagManager:
   - Selectable
   - Water
   - UI
-  - 
+  - Cards
   - 
   - 
   - 
@@ -53,4 +53,7 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 2650078659
+    locked: 0
+  - name: Cards
+    uniqueID: 3714209253
     locked: 0

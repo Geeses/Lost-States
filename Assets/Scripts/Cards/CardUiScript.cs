@@ -3,8 +3,9 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using DG.Tweening;
 
-public class CardUiScript : NetworkBehaviour, IPointerDownHandler
+public class CardUiScript : NetworkBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     #region Attributes
     [Header("Card Base References")]
@@ -15,6 +16,10 @@ public class CardUiScript : NetworkBehaviour, IPointerDownHandler
     private int _cardId;
     private Card _card;
     private CardType _cardType;
+    private Canvas _canvas;
+    private RectTransform _rectTransform;
+    private Tween _posTween;
+    private Tween _scaleTween;
 
     public event Action OnCardPlayed;
     #endregion
@@ -25,6 +30,50 @@ public class CardUiScript : NetworkBehaviour, IPointerDownHandler
     #endregion
 
     #region Monobehavior Functions
+
+    void Start()
+    {
+        _canvas = GetComponent<Canvas>();
+        _rectTransform = GetComponent<RectTransform>();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        _canvas.overrideSorting = true;
+        _canvas.sortingOrder = 1;
+
+        if(_posTween == null)
+        {
+            _posTween = _rectTransform.DOAnchorPos(_rectTransform.anchoredPosition + new Vector2(0, 100), 0.2f);
+            _posTween.SetAutoKill(false);
+        }
+
+        if(_scaleTween == null)
+        {
+            _scaleTween = _rectTransform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 0.2f);
+            _scaleTween.SetAutoKill(false);
+        }
+
+        if(!_posTween.IsPlaying())
+        {
+            _posTween.PlayForward();
+        }
+
+        if(!_scaleTween.IsPlaying())
+        {
+            _scaleTween.PlayForward();
+        }
+
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        _posTween.PlayBackwards();
+        _scaleTween.PlayBackwards();
+        _canvas.sortingOrder = 0;
+        _canvas.overrideSorting = false;
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         TryPlayCard();
