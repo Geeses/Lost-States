@@ -14,7 +14,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 469728987098826006, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_text
-      value: laufe geradeaus
+      value: Der erste begangene Schritt wird so lange begangen, bis an eine Wand
+        gelaufen wird.
       objectReference: {fileID: 0}
     - target: {fileID: 5157082764823254035, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: GlobalObjectIdHash

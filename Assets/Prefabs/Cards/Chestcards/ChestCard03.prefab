@@ -14,8 +14,12 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: bea340d4ca3ba6f49b4084f26f5e8294, type: 3}
     - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_text
-      value: While it is night, steal one random ressource from every enemy player
-        inside the dangerous zone.
+      value: "Klaue von jedem Spieler die neueste Ressource, wenn sie sich bei Nacht
+        in der gef\xE4hrlichen Zone befinden."
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
+      propertyPath: m_fontSize
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1690342784632638810, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_Name
@@ -23,7 +27,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3509083390678273663, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_text
-      value: Thievery
+      value: Diebstahl
       objectReference: {fileID: 0}
     - target: {fileID: 6188234756938331179, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: GlobalObjectIdHash

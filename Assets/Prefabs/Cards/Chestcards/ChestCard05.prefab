@@ -14,8 +14,8 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 0f72f4a694723c04498f3b4bdd4e4b2e, type: 3}
     - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_text
-      value: Play the last 2 movement card you played before, and activate their
-        effects one after another.
+      value: Spiele deine 2 zuletzt gespielten Bewegungskarten, und aktiviere deren
+        Effekte nacheinander.
       objectReference: {fileID: 0}
     - target: {fileID: 1690342784632638810, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_Name

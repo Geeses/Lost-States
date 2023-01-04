@@ -14,7 +14,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 469728987098826006, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_text
-      value: zweites feld gibt doppelt
+      value: "Wenn das zweite begangene Feld ein Ressourcen- oder Kistenfeld ist,
+        dann erhalte eine zus\xE4tzliche Ressource oder Kistenkarte."
       objectReference: {fileID: 0}
     - target: {fileID: 469728987098826006, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_fontSize

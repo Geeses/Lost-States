@@ -10,7 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 361950451134950754, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_Name
-      value: MovementCardBase
+      value: MovementCard02
+      objectReference: {fileID: 0}
+    - target: {fileID: 469728987098826006, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
+      propertyPath: m_text
+      value: "erhalte m\xFCnzen"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5157082764823254035, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
       objectReference: {fileID: 0}
     - target: {fileID: 8916346068369775523, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_Pivot.x
@@ -22,7 +30,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8916346068369775523, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 8916346068369775523, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_AnchorMax.x

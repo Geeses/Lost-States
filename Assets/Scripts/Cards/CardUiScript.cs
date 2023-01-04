@@ -44,7 +44,7 @@ public class CardUiScript : NetworkBehaviour, IPointerDownHandler, IPointerEnter
 
         if(_posTween == null)
         {
-            _posTween = _rectTransform.DOAnchorPos(_rectTransform.anchoredPosition + new Vector2(0, 100), 0.2f);
+            _posTween = _rectTransform.DOBlendableLocalMoveBy(new Vector2(0, 100), 0.2f);
             _posTween.SetAutoKill(false);
         }
 
@@ -63,7 +63,6 @@ public class CardUiScript : NetworkBehaviour, IPointerDownHandler, IPointerEnter
         {
             _scaleTween.PlayForward();
         }
-
     }
 
     public void OnPointerExit(PointerEventData eventData)
