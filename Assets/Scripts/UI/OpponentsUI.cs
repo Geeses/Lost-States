@@ -18,7 +18,7 @@ public class OpponentsUI : NetworkBehaviour
     private bool isHidden = true;
     public void Initialize(Player player)
     {
-        Debug.Log("OpponentsUI.Initialize was called");
+        Debug.Log("OpponentsUI.Initialize was called", player);
         _player = player;
         player.moveCount.OnValueChanged += UpdateRemainingMovesText;
         player.movementCards.OnListChanged += UpdateMovementCardsText;

@@ -92,7 +92,9 @@ public class GridManager : MonoBehaviour
             {
                 tile.TileGridCoordinates = coords;
                 if (!_tileGrid.ContainsKey(coords))
+                {
                     _tileGrid.Add(coords, tile);
+                }
             }
             else
             {
@@ -169,21 +171,23 @@ public class GridManager : MonoBehaviour
     {
         List<Tile> tiles = new List<Tile>();
 
-        if (direction == Direction.left)
+        if (direction == Direction.right)
         {
             var end = _xMax - origin.TileGridCoordinates.x;
             for (int i = 0; i <= end; i++)
             {
                 var coordinates = new GridCoordinates(origin.TileGridCoordinates.x + i, origin.TileGridCoordinates.y);
+                Debug.Log(origin.TileGridCoordinates.x + i + " " + origin.TileGridCoordinates.y);
                 tiles.Add(TileGrid[coordinates]);
             }
         }
 
-        else if (direction == Direction.right)
+        else if (direction == Direction.left)
         {
             var end = origin.TileGridCoordinates.x - _xMin;
             for (int i = 0; i <= end; i++)
             {
+                Debug.Log(origin.TileGridCoordinates.x + i + " " + origin.TileGridCoordinates.y);
                 tiles.Add(TileGrid[new GridCoordinates(origin.TileGridCoordinates.x - i, origin.TileGridCoordinates.y)]);
             }
         }

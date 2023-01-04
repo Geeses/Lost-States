@@ -501,6 +501,7 @@ MonoBehaviour:
   ressourcesCount: {fileID: 9199805468429868539}
   safeCount: {fileID: 7375921496508957949}
   remainingMovesCount: {fileID: 2406548689441539756}
+  showButton: {fileID: 0}
 --- !u!114 &1767022446358054243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -829,7 +830,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 409, y: 145.64362}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 587.6752, y: 145.6436}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &6891854416292928098

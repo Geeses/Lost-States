@@ -12,10 +12,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MovementCard03
       objectReference: {fileID: 0}
-    - target: {fileID: 457946213851397914, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: b4e3328e02f325640b0e9e07c1a03f21, type: 3}
     - target: {fileID: 469728987098826006, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_text
       value: "Du darfst in diesem Zug \xFCber un\xFCberquerbare Felder laufen."
