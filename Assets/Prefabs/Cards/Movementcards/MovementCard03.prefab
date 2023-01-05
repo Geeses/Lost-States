@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "Du darfst in diesem Zug \xFCber un\xFCberquerbare Felder laufen."
       objectReference: {fileID: 0}
+    - target: {fileID: 2306062493240514938, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 958012c4030d89b498c6432e896deb65, type: 3}
     - target: {fileID: 5157082764823254035, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334

@@ -16,6 +16,22 @@ PrefabInstance:
       propertyPath: m_text
       value: bewege andere spieler um 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2306062493240514938, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 80516b0d11f70e844a007df07ff4c723, type: 3}
+    - target: {fileID: 2306062493240514938, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2306062493240514938, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2306062493240514938, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
+      propertyPath: m_Color.r
+      value: 0.43576503
+      objectReference: {fileID: 0}
     - target: {fileID: 5157082764823254035, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334

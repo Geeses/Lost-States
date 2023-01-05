@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,7 @@ public class OpponentsUI : NetworkBehaviour
 
     private Vector3 initialPosition;
     private Player _player;
+    private RectTransform _rectTransform;
 
     private bool isHidden = true;
     public void Initialize(Player player)
@@ -28,6 +30,7 @@ public class OpponentsUI : NetworkBehaviour
         player.savedRessources.OnListChanged += UpdateSafeText;
         initialPosition = showButton.transform.localPosition;
         showButton.onClick.AddListener(MoveCharBar);
+        _rectTransform = GetComponent<RectTransform>();
     }
 
     private void MoveCharBar()
@@ -37,13 +40,15 @@ public class OpponentsUI : NetworkBehaviour
         if (isHidden)
         {
             isHidden = false;
-            showButton.transform.localPosition = showButton.transform.localPosition - new Vector3(409, 0, 0); ;
+            _rectTransform.DOBlendableLocalMoveBy(new Vector2(-409, 0), 0.2f);
+            //showButton.transform.localPosition = showButton.transform.localPosition - new Vector3(409, 0, 0); ;
             Debug.Log("OpponentsUI.OnMouseDown currentPosition: " + transform.position);
         }
         else
         {
             isHidden = true;
-            showButton.transform.localPosition = showButton.transform.localPosition + new Vector3(409, 0, 0);
+            _rectTransform.DOBlendableLocalMoveBy(new Vector2(409, 0), 0.2f);
+            //showButton.transform.localPosition = showButton.transform.localPosition + new Vector3(409, 0, 0);
             Debug.Log("OpponentsUI.OnMouseDown currentPosition: " + showButton.transform.localPosition);
         }
     }
