@@ -47,6 +47,7 @@ public class Player : Selectable
 
     private Direction _lastMoveDirection;
     private Tile _currentTile;
+    private Tile _oldTile;
     private int _maximumPlayableMovementCards;
     private int _playedMovementCards;
     private Selectable _currentSelectedTarget;
@@ -60,6 +61,7 @@ public class Player : Selectable
     public int MaximumPlayableMovementCards { get => _maximumPlayableMovementCards; set => _maximumPlayableMovementCards = value; }
     public int PlayedMovementCards { get => _playedMovementCards; set => _playedMovementCards = value; }
     public Tile CurrentTile { get => _currentTile; private set => _currentTile = value; }
+    public Tile OldTile { get => _oldTile; private set => _oldTile = value; }
     public Direction LastMoveDirection { get => _lastMoveDirection; private set => _lastMoveDirection = value; }
     public Selectable CurrentSelectedTarget { get => _currentSelectedTarget; set => _currentSelectedTarget = value; }
     public RessourceCollectionCard RessourceCollectionCard { get => _ressourceCollectionCard; set => _ressourceCollectionCard = value; }
@@ -242,7 +244,9 @@ public class Player : Selectable
     [ClientRpc]
     public void MoveClientRpc(GridCoordinates coordinates, bool invokeEvent = true, bool forceMove = false)
     {
-        if(IsLocalPlayer)
+        OldTile = CurrentTile;
+
+        if (IsLocalPlayer)
         {
             // only clients need a local not-networked value, the server has all correct values
             if (!forceMove && !IsHost)
@@ -260,25 +264,34 @@ public class Player : Selectable
         cellWorldPosition += GridManager.Instance.Tilemap.cellSize / 2;
         transform.DOMove(cellWorldPosition + new Vector3(0, 0, -0.1f), 0.5f);
 
-        if(IsLocalPlayer)
+        LastMoveDirection = GetMoveDirection(OldTile.TileGridCoordinates, CurrentTile.TileGridCoordinates);
+
+        if (IsLocalPlayer)
             HighlightAdjacentTiles();
 
         if(invokeEvent)
             OnPlayerMoved?.Invoke(coordinates);
     }
 
-    [ClientRpc]
-    private void AddMovementCardClientRpc(int cardId)
+    Direction GetMoveDirection(GridCoordinates positionBefore, GridCoordinates positionAfter)
     {
-        Debug.Log("add movecard Id " + cardId);
-        movementCards.Add(cardId);
-    }
-
-    [ClientRpc]
-    private void AddChestCardClientRpc(int cardId)
-    {
-        Debug.Log("add chestcard Id " + cardId, this);
-        inventoryChestCards.Add(cardId);
+        int x_b = positionBefore.x, x_a = positionAfter.x, y_b = positionBefore.y, y_a = positionAfter.y;
+        if (x_b == x_a && y_b < y_a)
+        {
+            return Direction.up;
+        }
+        else if (x_b == x_a && y_b > y_a)
+        {
+            return Direction.down;
+        }
+        else if (y_b == y_a && x_b < x_a)
+        {
+            return Direction.right;
+        }
+        else
+        {
+            return Direction.left;
+        }
     }
     #endregion
 
