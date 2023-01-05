@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3667005215213547532
 SpriteRenderer:
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 436737011
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4e6e66310fe2d564eb4f58cc4322b4f1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 01e48a21e697bf64aa79269bbd78e612, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -104,7 +104,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.2, y: 1}
+    oldSize: {x: 0.76, y: 1.08}
     newSize: {x: 6, y: 5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -132,10 +132,16 @@ MonoBehaviour:
     m_InternalValue: 0
   movedInCurrentTurn:
     m_InternalValue: 0
+  moveCount:
+    m_InternalValue: 0
+  coinCount:
+    m_InternalValue: 0
+  canMoveOverUnpassable:
+    m_InternalValue: 0
+  discardedMovementCards: 
   inventoryRessourceCount: 0
   savedRessourceCount: 0
-  currentSelectedPlayerId:
-    m_InternalValue: 0
+  currentSelectedPlayerId: 0
 --- !u!114 &1123490429
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -82,6 +82,8 @@ public class UIManager : NetworkBehaviour
         bagWaterText.text = "0";
         bagSteelText.text = "0";
         bagWoodText.text = "0";
+
+        moveCountText.text = "0";
     }
 
     private void UpdateTurnCounter(ulong obj)
