@@ -132,7 +132,6 @@ public class CardManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void TryPlayMovementCardServerRpc(int cardId, int instanceId, ulong playerId, bool temporaryCard = false)
     {
-        Battlelog.Instance.AddLog("Try play Card. " + temporaryCard);
         Debug.Log("Try play Card. " + temporaryCard + " " + playerId);
         Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
 

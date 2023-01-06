@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Battlelog : MonoBehaviour
+public class Battlelog : NetworkBehaviour
 {
     [SerializeField]
     private Transform scrollViewContent;
@@ -58,6 +59,11 @@ public class Battlelog : MonoBehaviour
                 item.text = log;
             }
         }
+    }
 
+    [ClientRpc]
+    public void AddLogClientRpc(string content)
+    {
+        AddLog(content);
     }
 }
