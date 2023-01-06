@@ -46,7 +46,7 @@ public class GetPickupsInProximity : CardEffect
                         if (extension is RessourceTile)
                         {
                             RessourceTile ressource = tile.GetComponent<RessourceTile>();
-                            ressource.GivePlayerRessource(Player);
+                            ressource.GivePlayerRessourceServerRpc(Player.clientId.Value);
                         }
                     }
                 }

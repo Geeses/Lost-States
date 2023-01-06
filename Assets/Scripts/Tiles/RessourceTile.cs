@@ -26,7 +26,7 @@ public class RessourceTile : NetworkBehaviour, ITileExtension
     }
     #endregion
 
-    public void GivePlayerRessource(Player player)
+    private void GivePlayerRessource(Player player)
     {
         _cachedPlayer = player;
 
@@ -37,6 +37,27 @@ public class RessourceTile : NetworkBehaviour, ITileExtension
                 _cachedPlayer.inventoryRessources.Add((int)ressourceType);
         }
 
+        ressourceCount = 0;
+        ressourceRenderer.material.color = Color.red;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void GivePlayerRessourceServerRpc(ulong playerId)
+    {
+        _cachedPlayer = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
+
+        for (int i = 0; i < ressourceCount; i++)
+        {
+            //_cachedPlayer.AddRessourceServerRpc(ressourceType);
+            _cachedPlayer.inventoryRessources.Add((int)ressourceType);
+        }
+
+        DisableResourceClientRpc();
+    }
+
+    [ClientRpc]
+    private void DisableResourceClientRpc()
+    {
         ressourceCount = 0;
         ressourceRenderer.material.color = Color.red;
     }

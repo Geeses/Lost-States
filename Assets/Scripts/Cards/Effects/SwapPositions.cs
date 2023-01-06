@@ -10,7 +10,7 @@ public class SwapPositions : CardEffect
     internal override void Initialize(Player player)
     {
         base.Initialize(player);
-        Player.OnEnemyPlayerSelected += SwapPlayers;
+        Player.OnEnemyPlayerSelected += SetSelectedPlayer;
     }
 
     public override void ExecuteEffect()
@@ -25,6 +25,12 @@ public class SwapPositions : CardEffect
         Player.OnEnemyPlayerSelected += SwapPlayers;
     }
 
+    private void SetSelectedPlayer(ulong selectedPlayer)
+    {
+        _currentSelectedPlayerId = selectedPlayer;
+        ExecuteEffect();
+    }
+
     private void SwapPlayers(ulong playerId)
     {
         Player selectedPlayer = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
@@ -36,10 +42,11 @@ public class SwapPositions : CardEffect
             GridCoordinates playerCoords = Player.CurrentTile.TileGridCoordinates;
             GridCoordinates enemyCoords = selectedPlayer.CurrentTile.TileGridCoordinates;
 
-            Player.TryMoveServerRpc(enemyCoords, true);
-            selectedPlayer.TryMoveServerRpc(playerCoords, true);
+            Player.TryMoveServerRpc(enemyCoords, true, false);
+            selectedPlayer.TryMoveServerRpc(playerCoords, true, false);
             Debug.Log("wooosh teleport!");
-            Player.OnEnemyPlayerSelected += SwapPlayers;
+            Player.OnEnemyPlayerSelected -= SetSelectedPlayer;
+            Player.OnEnemyPlayerSelected -= SwapPlayers;
         }
     }
 }

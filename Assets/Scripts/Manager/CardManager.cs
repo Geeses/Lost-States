@@ -139,9 +139,6 @@ public class CardManager : NetworkBehaviour
         if (player.PlayedMovementCards < player.MaximumPlayableMovementCards &&
             playerId == TurnManager.Instance.CurrentTurnPlayerId || temporaryCard)
         {
-            // remove UI object from player that sent the request
-            NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(playerId, instanceId);
-
             // Sending the ClientRPC only to the playerId
             ClientRpcParams clientRpcParams = new ClientRpcParams
             {
@@ -150,6 +147,8 @@ public class CardManager : NetworkBehaviour
                     TargetClientIds = new ulong[] { playerId }
                 }
             };
+            // remove UI object from player that sent the request
+            NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(playerId, instanceId, clientRpcParams);
 
             CardEffectManager.Instance.InitializeCardEffectClientRpc(cardId, playerId, CardType.Movement, clientRpcParams);
 
@@ -232,9 +231,6 @@ public class CardManager : NetworkBehaviour
         // if its their turn
         if (playerId == TurnManager.Instance.CurrentTurnPlayerId)
         {
-            // remove UI object from player that sent the request
-            NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(playerId, instanceId);
-
             // Sending the ClientRPC only to the playerId
             ClientRpcParams clientRpcParams = new ClientRpcParams
             {
@@ -243,6 +239,9 @@ public class CardManager : NetworkBehaviour
                     TargetClientIds = new ulong[] { playerId }
                 }
             };
+            // remove UI object from player that sent the request
+            NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(playerId, instanceId, clientRpcParams);
+
             CardEffectManager.Instance.InitializeCardEffectClientRpc(cardId, playerId, CardType.Chest, clientRpcParams);
         }
     }

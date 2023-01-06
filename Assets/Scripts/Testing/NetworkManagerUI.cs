@@ -129,7 +129,7 @@ public class NetworkManagerUI : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void RemoveCardFromPlayerUiClientRpc(ulong playerId, int instanceId)
+    public void RemoveCardFromPlayerUiClientRpc(ulong playerId, int instanceId, ClientRpcParams clientRpcParams = default)
     {
         CardUiScript objectToRemove = null;
 
