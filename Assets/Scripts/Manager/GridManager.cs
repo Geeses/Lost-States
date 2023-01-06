@@ -177,8 +177,11 @@ public class GridManager : MonoBehaviour
             for (int i = 0; i <= end; i++)
             {
                 var coordinates = new GridCoordinates(origin.TileGridCoordinates.x + i, origin.TileGridCoordinates.y);
-                Debug.Log(origin.TileGridCoordinates.x + i + " " + origin.TileGridCoordinates.y);
-                tiles.Add(TileGrid[coordinates]);
+                Debug.Log(coordinates.x + " " + coordinates.y);
+                if(TileGrid.ContainsKey(coordinates))
+                {
+                    tiles.Add(TileGrid[coordinates]);
+                }
             }
         }
 
@@ -187,8 +190,12 @@ public class GridManager : MonoBehaviour
             var end = origin.TileGridCoordinates.x - _xMin;
             for (int i = 0; i <= end; i++)
             {
-                Debug.Log(origin.TileGridCoordinates.x + i + " " + origin.TileGridCoordinates.y);
-                tiles.Add(TileGrid[new GridCoordinates(origin.TileGridCoordinates.x - i, origin.TileGridCoordinates.y)]);
+                var coordinates = new GridCoordinates(origin.TileGridCoordinates.x - i, origin.TileGridCoordinates.y);
+                Debug.Log(coordinates.x + " " + coordinates.y);
+                if (TileGrid.ContainsKey(coordinates))
+                {
+                    tiles.Add(TileGrid[coordinates]);
+                }
             }
         }
 
@@ -197,7 +204,12 @@ public class GridManager : MonoBehaviour
             var end = _yMax - origin.TileGridCoordinates.y;
             for (int i = 0; i <= end; i++)
             {
-                tiles.Add(TileGrid[new GridCoordinates(origin.TileGridCoordinates.x, origin.TileGridCoordinates.y + i)]);
+                var coordinates = new GridCoordinates(origin.TileGridCoordinates.x, origin.TileGridCoordinates.y + i);
+                Debug.Log(coordinates.x + " " + coordinates.y);
+                if (TileGrid.ContainsKey(coordinates))
+                {
+                    tiles.Add(TileGrid[coordinates]);
+                }
             }
         }
 
@@ -206,7 +218,12 @@ public class GridManager : MonoBehaviour
             var end = origin.TileGridCoordinates.y - _yMin;
             for (int i = 0; i <= end; i++)
             {
-                tiles.Add(TileGrid[new GridCoordinates(origin.TileGridCoordinates.x, origin.TileGridCoordinates.y - i)]);
+                var coordinates = new GridCoordinates(origin.TileGridCoordinates.x, origin.TileGridCoordinates.y - i);
+                Debug.Log(coordinates.x + " " + coordinates.y);
+                if (TileGrid.ContainsKey(coordinates))
+                {
+                    tiles.Add(TileGrid[coordinates]);
+                }
             }
         }
         return tiles;

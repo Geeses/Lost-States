@@ -170,6 +170,10 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 951099334
       objectReference: {fileID: 0}
+    - target: {fileID: 2406548689441539756, guid: d6d93bb8db34dcc45a0ff52050518d1f, type: 3}
+      propertyPath: m_text
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7381576573936023687, guid: d6d93bb8db34dcc45a0ff52050518d1f, type: 3}
       propertyPath: m_Name
       value: OpponentBar

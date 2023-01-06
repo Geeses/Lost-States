@@ -122,6 +122,7 @@ public class Player : Selectable
     private void Initialize()
     {
         CurrentTile = GridManager.Instance.TileGrid[new GridCoordinates(0, 0)];
+        OldTile = GridManager.Instance.TileGrid[new GridCoordinates(0, 0)];
         inventoryRessources.OnListChanged += ChangeCountInventory;
         savedRessources.OnListChanged += ChangeCountSaved;
         InputManager.Instance.OnSelect += ChangeCurrentSelectedTarget;
@@ -167,8 +168,6 @@ public class Player : Selectable
 
     private void UnhighlightAdjacentTiles()
     {
-        Debug.Log(CurrentTile);
-        Debug.Log(GridManager.Instance);
         foreach (Tile tile in GridManager.Instance.GetAdjacentTiles(CurrentTile))
         {
             if(tile)
@@ -207,7 +206,7 @@ public class Player : Selectable
     #region Movement
     // forceMove is used for effects, that want to bypass the normal behavior of moving in the game
     [ServerRpc(RequireOwnership = false)]
-    public void TryMoveServerRpc(GridCoordinates coordinates, bool forceMove = false)
+    public void TryMoveServerRpc(GridCoordinates coordinates, bool forceMove = false, bool invokeEvent = true)
     {
         Tile tile = GridManager.Instance.TileGrid[coordinates];
 
@@ -221,7 +220,7 @@ public class Player : Selectable
                 movedInCurrentTurn.Value += 1;
                 moveCount.Value += -1;
             }
-            MoveClientRpc(coordinates, true, forceMove);
+            MoveClientRpc(coordinates, invokeEvent, forceMove);
         }
     }
 
@@ -259,7 +258,6 @@ public class Player : Selectable
         }
         CurrentTile = GridManager.Instance.TileGrid[coordinates];
         CurrentTile.PlayerStepOnTile(this);
-        Debug.Log(CurrentTile, CurrentTile);
         Vector3 cellWorldPosition = GridManager.Instance.Tilemap.CellToWorld(new Vector3Int(coordinates.x, coordinates.y, 0));
         cellWorldPosition += GridManager.Instance.Tilemap.cellSize / 2;
         transform.DOMove(cellWorldPosition + new Vector3(0, 0, -0.1f), 0.5f);

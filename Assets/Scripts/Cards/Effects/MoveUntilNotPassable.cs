@@ -23,13 +23,11 @@ public class MoveUntilNotPassable : CardEffect
 
     private void MoveInOneDirection(GridCoordinates coordinates)
     {
-        List<Tile> tiles = GridManager.Instance.GetTilesInDirection(Player.CurrentTile, Player.LastMoveDirection);
-
-        Debug.Log("Move in one direction was called " + tiles.Count);
-
         if (isFirstMove)
         {
-            Debug.Log("Is First Move");
+            List<Tile> tiles = GridManager.Instance.GetTilesInDirection(Player.CurrentTile, Player.LastMoveDirection);
+
+            Debug.Log("Move in one direction was called " + tiles.Count + " Direction: " + Player.LastMoveDirection);
             isFirstMove = false; 
             foreach (Tile tile in tiles)
             {
@@ -38,7 +36,7 @@ public class MoveUntilNotPassable : CardEffect
                     break;
                 }
                 
-                Player.TryMoveServerRpc(tile.TileGridCoordinates, true);
+                Player.TryMoveServerRpc(tile.TileGridCoordinates, true, false);
             }
         }
 
