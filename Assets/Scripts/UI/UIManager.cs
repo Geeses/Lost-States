@@ -88,20 +88,19 @@ public class UIManager : NetworkBehaviour
 
     private void UpdateTurnCounter(ulong obj)
     {
-        Debug.Log("UIManager.UpdateTurnCounter was called");
         int index = 0;
         Debug.Log("UIManager.UpdateTurnCounter TurnManager.Instance.CurrentTurnNumber: " + TurnManager.Instance.CurrentTurnNumber);
         foreach (Image img in dayNightStones)
         {
-            Debug.Log("UIManager.UpdateTurnCounter Inside for each");
             if (index == TurnManager.Instance.CurrentTurnNumber - 1)
             {
-                img.color = Color.white;
+                img.color = Color.clear;
             }
             else
             {
-                img.color = Color.black;
+                img.color = Color.grey;
             }
+
             index++;
         }
     }
