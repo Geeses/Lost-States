@@ -2082,7 +2082,7 @@ RectTransform:
   - {fileID: 4228801040948516886}
   - {fileID: 4228801040180155512}
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5613,6 +5613,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 4228801041122909407}
     m_Modifications:
+    - target: {fileID: 1706802725053013009, guid: 59cb0cc4fb0f3e34eaf81bae1b0c7283, type: 3}
+      propertyPath: m_text
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3740577186215032358, guid: 59cb0cc4fb0f3e34eaf81bae1b0c7283, type: 3}
       propertyPath: m_Name
       value: Move

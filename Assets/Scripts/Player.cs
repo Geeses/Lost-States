@@ -101,7 +101,11 @@ public class Player : Selectable
             }
         }
 
-        profileName.Value = AuthenticationService.Instance.Profile;
+        // if gamemanager doesnt exist, then we are in relayscene
+        if(!GameManager.Instance)
+            profileName.Value = AuthenticationService.Instance.Profile;
+
+        SpawnSelectedSprite();
     }
 
     public override void OnDestroy()
@@ -135,9 +139,7 @@ public class Player : Selectable
         moveCount.OnValueChanged += ChangeMoveCountUI;
         moveCount.OnValueChanged += SynchronizeMoveCount;
         movedInCurrentTurn.OnValueChanged += SynchronizeMovedInCurrent;
-        savedRessources.OnListChanged += CheckForWin;
-
-        
+        savedRessources.OnListChanged += CheckForWin;        
     }
 
     private void SynchronizeMoveCount(int oldVal, int newVal)
@@ -149,8 +151,19 @@ public class Player : Selectable
         LocalMovedInCurrentTurn = newVal;
     }
 
+    private void SpawnSelectedSprite()
+    {
+        selectedSprite = Instantiate(selectedSprite, transform);
+        selectedSprite.color = Color.green;
+
+        if(!IsLocalPlayer)
+        {
+            selectedSprite.color = Color.red;
+        }
+    }
+
     #endregion
-    
+
     #region Select and Highlight
     public override void Select()
     {

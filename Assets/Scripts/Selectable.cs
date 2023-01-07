@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Selectable : NetworkBehaviour, INetworkSerializable
 {
+    [Header("References")]
+    public SpriteRenderer selectedSprite;
+
     [Header("Debugging")]
     [SerializeField] protected bool selected;
 
@@ -25,13 +28,13 @@ public class Selectable : NetworkBehaviour, INetworkSerializable
 
     public virtual void Select()
     {
-        _spriteRenderer.material.color = Color.red;
+        selectedSprite.gameObject.SetActive(true);
         selected = true;
     }
 
     public virtual void Unselect()
     {
-        _spriteRenderer.material.color = Color.white;
+        selectedSprite.gameObject.SetActive(false);
         selected = false;
     }
 
