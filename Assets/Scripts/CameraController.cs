@@ -12,6 +12,7 @@ public class CameraController : MonoBehaviour
     [Header("Options")]
     public float panSpeed = 1f;
     public Vector2 panningZone = new Vector2(5, 18);
+    public Vector2 panningZoneStartPoint = new Vector2(0, 0);
     public CursorLockMode cursorMode = CursorLockMode.Confined;
     public float minZoomValue = 0.5f;
     public float maxZoomValue = 1.5f;
@@ -43,20 +44,20 @@ public class CameraController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (MousePositionScreenRelative.x >= 0.95f && cam.transform.position.x <= panningZone.x)
+        if (MousePositionScreenRelative.x >= 0.95f && cam.transform.position.x <= panningZone.x + panningZoneStartPoint.x)
         {
             PanCamera(Vector2.right);
         }
-        if (MousePositionScreenRelative.x <= 0.05f && cam.transform.position.x >= -panningZone.x)
+        if (MousePositionScreenRelative.x <= 0.05f && cam.transform.position.x >= -panningZone.x + panningZoneStartPoint.x)
         {
             PanCamera(Vector2.left);
         }
 
-        if (MousePositionScreenRelative.y >= 0.95f && cam.transform.position.y <= panningZone.y)
+        if (MousePositionScreenRelative.y >= 0.95f && cam.transform.position.y <= panningZone.y + panningZoneStartPoint.y)
         {
             PanCamera(Vector2.up);
         }
-        if (MousePositionScreenRelative.y <= 0.05f && cam.transform.position.y >= -panningZone.y)
+        if (MousePositionScreenRelative.y <= 0.05f && cam.transform.position.y >= -panningZone.y + panningZoneStartPoint.y)
         {
             PanCamera(Vector2.down);
         }

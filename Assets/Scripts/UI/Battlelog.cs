@@ -51,19 +51,17 @@ public class Battlelog : NetworkBehaviour
     public void AddLog(string content)
     {
         logs.Add(content);
-        foreach (string log in logs)
+        GameObject newLog = Instantiate(prefab, scrollViewContent);
+        if (newLog.TryGetComponent<TMPro.TextMeshProUGUI>(out TMPro.TextMeshProUGUI item))
         {
-            GameObject newLog = Instantiate(prefab, scrollViewContent);
-            if (newLog.TryGetComponent<TMPro.TextMeshProUGUI>(out TMPro.TextMeshProUGUI item))
-            {
-                item.text = log;
-            }
+            item.text = content;
         }
     }
 
     [ClientRpc]
     public void AddLogClientRpc(string content)
     {
+        Debug.Log("Battle Log called");
         AddLog(content);
     }
 }

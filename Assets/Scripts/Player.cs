@@ -102,7 +102,7 @@ public class Player : Selectable
         }
 
         // if gamemanager doesnt exist, then we are in relayscene
-        if(!GameManager.Instance)
+        if(!GameManager.Instance && IsLocalPlayer)
             profileName.Value = AuthenticationService.Instance.Profile;
 
         SpawnSelectedSprite();
