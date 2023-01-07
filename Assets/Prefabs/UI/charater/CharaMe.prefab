@@ -172,6 +172,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Move
       objectReference: {fileID: 0}
+    - target: {fileID: 261600916467451526, guid: 25ee8930ad01e7b46a1c212683b223d7, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 261600916467451526, guid: 25ee8930ad01e7b46a1c212683b223d7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 11.4
+      objectReference: {fileID: 0}
     - target: {fileID: 1425131958284318953, guid: 25ee8930ad01e7b46a1c212683b223d7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -255,6 +263,10 @@ PrefabInstance:
     - target: {fileID: 1425131958284318953, guid: 25ee8930ad01e7b46a1c212683b223d7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491590517833822130, guid: 25ee8930ad01e7b46a1c212683b223d7, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
