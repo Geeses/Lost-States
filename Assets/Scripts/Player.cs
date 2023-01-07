@@ -5,6 +5,8 @@ using Unity.Netcode;
 using System;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using Unity.Services.Authentication;
+using Unity.Collections;
 
 public enum Ressource
 {
@@ -24,6 +26,8 @@ public class Player : Selectable
     #region Attributes
 
     [Header("Debug")]
+    public NetworkVariable<FixedString128Bytes> profileName = new NetworkVariable<FixedString128Bytes>(default,
+        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<ulong> clientId = new NetworkVariable<ulong>(default,
         NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<int> movedInCurrentTurn;
@@ -96,6 +100,8 @@ public class Player : Selectable
                 Initialize();
             }
         }
+
+        profileName.Value = AuthenticationService.Instance.Profile;
     }
 
     public override void OnDestroy()
@@ -130,6 +136,8 @@ public class Player : Selectable
         moveCount.OnValueChanged += SynchronizeMoveCount;
         movedInCurrentTurn.OnValueChanged += SynchronizeMovedInCurrent;
         savedRessources.OnListChanged += CheckForWin;
+
+        
     }
 
     private void SynchronizeMoveCount(int oldVal, int newVal)

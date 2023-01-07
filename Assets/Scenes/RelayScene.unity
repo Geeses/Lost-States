@@ -277,7 +277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   environment: production
-  maxNumberOfConnections: 4
+  maxNumberOfConnections: 2
 --- !u!1 &535920220
 GameObject:
   m_ObjectHideFlags: 0

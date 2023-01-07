@@ -11,8 +11,9 @@ public class RessourceTile : NetworkBehaviour, ITileExtension
     public Ressource ressourceType;
     public int ressourceCount;
 
-    [Header("Ressource Sprite Renderer")]
+    [Header("References")]
     [SerializeField] private SpriteRenderer ressourceRenderer;
+    [SerializeField] private SpriteRenderer podestRenderer;
 
     private Tile _tile;
     private Player _cachedPlayer;
@@ -23,6 +24,11 @@ public class RessourceTile : NetworkBehaviour, ITileExtension
     {
         _tile = GetComponent<Tile>();
         _tile.OnStepOnTile += GivePlayerRessource;
+
+        if(ressourceCount > 0)
+        {
+            ressourceRenderer.enabled = true;
+        }
     }
     #endregion
 
@@ -32,13 +38,11 @@ public class RessourceTile : NetworkBehaviour, ITileExtension
 
         for (int i = 0; i < ressourceCount; i++)
         {
-            //_cachedPlayer.AddRessourceServerRpc(ressourceType);
             if(IsServer)
                 _cachedPlayer.inventoryRessources.Add((int)ressourceType);
         }
 
-        ressourceCount = 0;
-        ressourceRenderer.material.color = Color.red;
+        DisableResourceClientRpc();
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -48,7 +52,6 @@ public class RessourceTile : NetworkBehaviour, ITileExtension
 
         for (int i = 0; i < ressourceCount; i++)
         {
-            //_cachedPlayer.AddRessourceServerRpc(ressourceType);
             _cachedPlayer.inventoryRessources.Add((int)ressourceType);
         }
 
@@ -59,6 +62,6 @@ public class RessourceTile : NetworkBehaviour, ITileExtension
     private void DisableResourceClientRpc()
     {
         ressourceCount = 0;
-        ressourceRenderer.material.color = Color.red;
+        ressourceRenderer.enabled = false;
     }
 }

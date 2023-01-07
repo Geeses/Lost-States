@@ -8,8 +8,9 @@ public class ChestTile : NetworkBehaviour, ITileExtension
     [Header("Options")]
     public int count;
 
-    [Header("Ressource Sprite Renderer")]
-    [SerializeField] private SpriteRenderer ressourceRenderer;
+    [Header("References")]
+    [SerializeField] private SpriteRenderer chestClosedRenderer;
+    [SerializeField] private SpriteRenderer chestUsedRenderer;
 
     private Tile _tile;
     private Player _cachedPlayer;
@@ -18,6 +19,12 @@ public class ChestTile : NetworkBehaviour, ITileExtension
     {
         _tile = GetComponent<Tile>();
         _tile.OnStepOnTile += GivePlayerChestCard;
+
+        if(count > 0)
+        {
+            chestUsedRenderer.enabled = false;
+            chestClosedRenderer.enabled = true;
+        }
     }
 
     public void GivePlayerChestCard(Player player)
@@ -30,7 +37,14 @@ public class ChestTile : NetworkBehaviour, ITileExtension
                 CardManager.Instance.AddChestCardToPlayerServerRpc(_cachedPlayer.clientId.Value);
         }
 
+        DisableResourceClientRpc();
+    }
+
+    [ClientRpc]
+    private void DisableResourceClientRpc()
+    {
         count = 0;
-        ressourceRenderer.material.color = Color.red;
+        chestUsedRenderer.enabled = true;
+        chestClosedRenderer.enabled = false;
     }
 }
