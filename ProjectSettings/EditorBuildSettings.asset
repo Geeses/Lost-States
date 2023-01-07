@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RelayScene.unity
     guid: b9611b9da5053ac42bd80611586ce908
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TestScenes/TestMovementCards.unity
     guid: 57fcf89d4aec2eeff8bcac334290ff3d
   - enabled: 1
