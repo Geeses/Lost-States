@@ -35,24 +35,24 @@ public class CardUiScript : NetworkBehaviour, IPointerDownHandler, IPointerEnter
     {
         _canvas = GetComponent<Canvas>();
         _rectTransform = GetComponent<RectTransform>();
+
+        if (_posTween == null)
+        {
+            _posTween = _rectTransform.DOBlendableLocalMoveBy(new Vector2(0, Screen.height * 0.2f), 0.2f).Pause();
+            _posTween.SetAutoKill(false);
+        }
+
+        if (_scaleTween == null)
+        {
+            _scaleTween = _rectTransform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 0.2f).Pause();
+            _scaleTween.SetAutoKill(false);
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         _canvas.overrideSorting = true;
         _canvas.sortingOrder = 1;
-
-        if(_posTween == null)
-        {
-            _posTween = _rectTransform.DOBlendableLocalMoveBy(new Vector2(0, 100), 0.2f);
-            _posTween.SetAutoKill(false);
-        }
-
-        if(_scaleTween == null)
-        {
-            _scaleTween = _rectTransform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 0.2f);
-            _scaleTween.SetAutoKill(false);
-        }
 
         if(!_posTween.IsPlaying())
         {

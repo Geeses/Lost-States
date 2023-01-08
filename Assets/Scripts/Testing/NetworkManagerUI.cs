@@ -135,10 +135,13 @@ public class NetworkManagerUI : NetworkBehaviour
 
         foreach (CardUiScript card in _cardUis)
         {
-            if(card.gameObject.GetInstanceID().Equals(instanceId))
+            if(card != null)
             {
-                objectToRemove = card;
-                Debug.Log("found card to remove " + objectToRemove.name);
+                if (card.gameObject.GetInstanceID().Equals(instanceId))
+                {
+                    objectToRemove = card;
+                    Debug.Log("found card to remove " + objectToRemove.name);
+                }
             }
         }
 
