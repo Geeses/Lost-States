@@ -38,7 +38,7 @@ public class CardUiScript : NetworkBehaviour, IPointerDownHandler, IPointerEnter
 
         if (_posTween == null)
         {
-            _posTween = _rectTransform.DOBlendableLocalMoveBy(new Vector2(0, (Screen.height/600) * 120f), 0.2f).Pause();
+            _posTween = _rectTransform.DOBlendableLocalMoveBy(new Vector2(0, 110), 0.2f).Pause();
             _posTween.SetAutoKill(false);
         }
 
