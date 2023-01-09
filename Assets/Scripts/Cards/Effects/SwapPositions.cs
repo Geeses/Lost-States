@@ -7,28 +7,16 @@ using UnityEngine;
 public class SwapPositions : CardEffect
 {
     private ulong _currentSelectedPlayerId;
-    internal override void Initialize(Player player)
-    {
-        base.Initialize(player);
-        Player.OnEnemyPlayerSelected += SetSelectedPlayer;
-    }
 
     public override void ExecuteEffect()
     {
         base.ExecuteEffect();
-        SwapPlayers(_currentSelectedPlayerId);
+        SwapPlayers(EnemyPlayers[0].clientId.Value);
     }
 
     public override void RevertEffect()
     {
         base.RevertEffect();
-        Player.OnEnemyPlayerSelected += SwapPlayers;
-    }
-
-    private void SetSelectedPlayer(ulong selectedPlayer)
-    {
-        _currentSelectedPlayerId = selectedPlayer;
-        ExecuteEffect();
     }
 
     private void SwapPlayers(ulong playerId)
@@ -44,9 +32,6 @@ public class SwapPositions : CardEffect
 
             Player.TryMoveServerRpc(enemyCoords, true, false);
             selectedPlayer.TryMoveServerRpc(playerCoords, true, false);
-            Debug.Log("wooosh teleport!");
-            Player.OnEnemyPlayerSelected -= SetSelectedPlayer;
-            Player.OnEnemyPlayerSelected -= SwapPlayers;
         }
     }
 }

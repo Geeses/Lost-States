@@ -362,10 +362,9 @@ public class Player : Selectable
 
     public void SafePlayerRessources()
     {
-        int count = inventoryRessources.Count;
-        for (int i = 0; i < count; i++)
+        for (int i = inventoryRessources.Count; i > 0; i--)
         {
-            int tmp = inventoryRessources[i];
+            int tmp = inventoryRessources[i - 1];
             inventoryRessources.Remove(tmp);
             savedRessources.Add(tmp);
         }
