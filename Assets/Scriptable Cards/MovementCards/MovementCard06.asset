@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2181118646059948a6d77c41a735863, type: 3}
   m_Name: MovementCard06
   m_EditorClassIdentifier: 
+  cardName: Rot
   cardType: 0
   id: 6
   baseMoveCount: 6

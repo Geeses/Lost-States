@@ -18,10 +18,13 @@ public class OpponentsUI : NetworkBehaviour
     private RectTransform _rectTransform;
 
     private bool isHidden = true;
+
+    public Player Player { get => _player; set => _player = value; }
+
     public void Initialize(Player player)
     {
         Debug.Log("OpponentsUI.Initialize was called", player);
-        _player = player;
+        Player = player;
         player.moveCount.OnValueChanged += UpdateRemainingMovesText;
         player.movementCards.OnListChanged += UpdateMovementCardsText;
         player.inventoryChestCards.OnListChanged += UpdateChestCardsText;
@@ -56,13 +59,13 @@ public class OpponentsUI : NetworkBehaviour
     private void UpdateSafeText(NetworkListEvent<int> changeEvent)
     {
         Debug.Log("OpponentsUI.UpdateSafeText changeEvent: " + changeEvent);
-        safeCount.text = _player.savedRessourceCount.ToString();
+        safeCount.text = Player.savedRessourceCount.ToString();
     }
 
     private void UpdateRessourcesText(NetworkListEvent<int> changeEvent)
     {
         Debug.Log("OpponentsUI.UpdateRessourcesText changeEvent: " + changeEvent);
-        ressourcesCount.text =_player.inventoryRessourceCount.ToString();
+        ressourcesCount.text =Player.inventoryRessourceCount.ToString();
     }
 
     private void UpdateCoinsText(int previousValue, int newValue)
@@ -73,13 +76,13 @@ public class OpponentsUI : NetworkBehaviour
     private void UpdateChestCardsText(NetworkListEvent<int> changeEvent)
     {
         Debug.Log("OpponentsUI.UpdateChestCardsText changeEvent: " + changeEvent);
-        chestCardsCount.text = _player.inventoryChestCards.Count.ToString();
+        chestCardsCount.text = Player.inventoryChestCards.Count.ToString();
     }
 
     private void UpdateMovementCardsText(NetworkListEvent<int> changeEvent)
     {
         Debug.Log("OpponentsUI.UpdateMovementCardsText changeEvent: " + changeEvent);
-        movementCardsCount.text = _player.movementCards.Count.ToString();
+        movementCardsCount.text = Player.movementCards.Count.ToString();
     }
 
     private void UpdateRemainingMovesText(int previousValue, int newValue)

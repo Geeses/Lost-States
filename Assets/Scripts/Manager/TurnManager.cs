@@ -162,7 +162,8 @@ public class TurnManager : NetworkBehaviour
             {
                 CurrentTurnPlayerId = PlayerTurnQueueId.Peek();
             }
-            Battlelog.Instance.AddLogClientRpc(CurrentTurnPlayer.profileName.Value + " has ended their turn.");
+            Battlelog.Instance.AddLogClientRpc(CurrentTurnPlayer.profileName.Value + " hat den Zug beendet.");
+            Battlelog.Instance.AddLogClientRpc("----------------------------------");
             EndTurnClientRpc(playerId);
             StartTurnServerRpc(CurrentTurnPlayerId);
         }

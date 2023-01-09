@@ -7,6 +7,7 @@ using System.Linq;
 using UnityEngine.SceneManagement;
 using Unity.Services.Authentication;
 using Unity.Collections;
+using System.Collections;
 
 public enum Ressource
 {
@@ -108,6 +109,7 @@ public class Player : Selectable
         SpawnSelectedSprite();
     }
 
+
     public override void OnDestroy()
     {
         base.OnDestroy();
@@ -161,7 +163,6 @@ public class Player : Selectable
             selectedSprite.color = Color.red;
         }
     }
-
     #endregion
 
     #region Select and Highlight

@@ -170,6 +170,7 @@ public class CardManager : NetworkBehaviour
             // increment move card played counter
             player.ChangePlayedMoveCardsClientRpc(1);
             player.discardedMovementCards.Add(cardId);
+            Battlelog.Instance.AddLog(player.profileName.Value + " hat die Bewegungskarte: \"" + GetMovementCardById(cardId).cardName + "\" gespielt.");
         }
     }
 
@@ -241,7 +242,7 @@ public class CardManager : NetworkBehaviour
             };
             // remove UI object from player that sent the request
             NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(playerId, instanceId, clientRpcParams);
-
+            Battlelog.Instance.AddLogClientRpc(PlayerNetworkManager.Instance.PlayerDictionary[playerId].profileName.Value + " hat die Kistenkarte: \"" + GetChestCardById(cardId).cardName + "\" gespielt.");
             CardEffectManager.Instance.InitializeCardEffectClientRpc(cardId, playerId, CardType.Chest, clientRpcParams);
         }
     }

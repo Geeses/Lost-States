@@ -13,6 +13,7 @@ public enum CardType
 public class Card : ScriptableObject
 {
     [Header("Options")]
+    public string cardName;
     public CardType cardType;
     public int id;
     public int baseMoveCount;

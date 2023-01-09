@@ -28,7 +28,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 9176713909726289400}
+  - {fileID: 8721883447413651551}
   - {fileID: 5174413583922558522}
   - {fileID: 2808897761671678794}
   m_Father: {fileID: 0}
@@ -160,6 +160,56 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &6866809241232271688
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8721883447413651551}
+  - component: {fileID: 5739378412727830840}
+  m_Layer: 5
+  m_Name: CharacterImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8721883447413651551
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6866809241232271688}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 9176713909726289400}
+  m_Father: {fileID: 5174413583825394280}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5739378412727830840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6866809241232271688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3046261e92875444fbc0eb99adc21f15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3835976540332716963
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -282,7 +332,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 2
-    m_TransformParent: {fileID: 5174413583825394280}
+    m_TransformParent: {fileID: 8721883447413651551}
     m_Modifications:
     - target: {fileID: 2178204931703005034, guid: 9d370f32ecd858e49b882e4b0711e20f, type: 3}
       propertyPath: m_Pivot.x
@@ -318,7 +368,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2178204931703005034, guid: 9d370f32ecd858e49b882e4b0711e20f, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 25
+      value: 113.28601
       objectReference: {fileID: 0}
     - target: {fileID: 2178204931703005034, guid: 9d370f32ecd858e49b882e4b0711e20f, type: 3}
       propertyPath: m_LocalPosition.x

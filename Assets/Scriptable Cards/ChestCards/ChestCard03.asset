@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2181118646059948a6d77c41a735863, type: 3}
   m_Name: ChestCard03
   m_EditorClassIdentifier: 
+  cardName: Diebstahl
   cardType: 1
   id: 2
   baseMoveCount: 0
