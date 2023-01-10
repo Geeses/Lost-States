@@ -199,6 +199,6 @@ public class GameManager : NetworkBehaviour
     {
         gameOver = true;
         OnGameEnd?.Invoke();
-        Debug.Log("Player " + playerId + " won.");
+        Battlelog.Instance.AddLog(PlayerNetworkManager.Instance.PlayerDictionary[playerId].profileName.Value + " won the game. ez clap");
     }
 }

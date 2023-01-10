@@ -84,6 +84,7 @@ public class NetworkManagerUI : NetworkBehaviour
         else if(changeEvent.Type == NetworkListEvent<int>.EventType.Remove || changeEvent.Type == NetworkListEvent<int>.EventType.RemoveAt)
         {
             GameObject removedCard = null;
+            CardUiScript toBeRemoved = null;
 
             foreach (CardUiScript cardUi in _cardUis)
             {
@@ -97,8 +98,13 @@ public class NetworkManagerUI : NetworkBehaviour
                 else
                 {
                     Debug.LogError("Null Card in UI Cards.");
-                    _cardUis.Remove(cardUi);
+                    toBeRemoved = cardUi;
                 }
+            }
+
+            if(toBeRemoved != null)
+            {
+                _cardUis.Remove(toBeRemoved);
             }
 
             Debug.Log(removedCard.name + " removed.", removedCard);

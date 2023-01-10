@@ -338,7 +338,7 @@ public class Player : Selectable
         for (int i = 0; i < count; i++)
         {
             Debug.Log(inventoryRessources.Count);
-            if(inventoryRessources.Count > 0)
+            if(inventoryRessources.Count > i)
             {
                 int id = inventoryRessources[inventoryRessources.Count - 1];
                 inventoryRessources.Remove(id);
@@ -352,7 +352,7 @@ public class Player : Selectable
         for (int i = 0; i < count; i++)
         {
             Debug.Log(inventoryChestCards.Count);
-            if (inventoryChestCards.Count > 0)
+            if (inventoryChestCards.Count > i)
             {
                 Debug.Log("Remove ChestcardId: " + inventoryChestCards[inventoryChestCards.Count - 1] + " at: " + (inventoryChestCards.Count - 1));
                 int id = inventoryChestCards[inventoryChestCards.Count - 1];

@@ -3371,10 +3371,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4228801040326498391, guid: 9e68581bb0f59654e92c00ae46a91be7, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.000032901764
-      objectReference: {fileID: 0}
     - target: {fileID: 4228801040600560804, guid: 9e68581bb0f59654e92c00ae46a91be7, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3547,10 +3543,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5157794493529157414, guid: 9e68581bb0f59654e92c00ae46a91be7, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5319081311919915260, guid: 9e68581bb0f59654e92c00ae46a91be7, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -3574,10 +3566,6 @@ PrefabInstance:
     - target: {fileID: 7208349818260912761, guid: 9e68581bb0f59654e92c00ae46a91be7, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 420932807
-      objectReference: {fileID: 0}
-    - target: {fileID: 7561018538938179009, guid: 9e68581bb0f59654e92c00ae46a91be7, type: 3}
-      propertyPath: m_Value
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -15177,7 +15165,7 @@ PrefabInstance:
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: chestCards.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 9f47a8ea2c71af44abc955e783c6d328, type: 2}
+      objectReference: {fileID: 11400000, guid: a7fe730b1ea4e3146af80973d0c3f4c9, type: 2}
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: chestCards.Array.data[1]
       value: 

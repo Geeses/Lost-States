@@ -65,7 +65,7 @@ public class OpponentsUI : NetworkBehaviour
     private void UpdateRessourcesText(NetworkListEvent<int> changeEvent)
     {
         Debug.Log("OpponentsUI.UpdateRessourcesText changeEvent: " + changeEvent);
-        ressourcesCount.text =Player.inventoryRessourceCount.ToString();
+        ressourcesCount.text = Player.inventoryRessourceCount.ToString();
     }
 
     private void UpdateCoinsText(int previousValue, int newValue)
@@ -81,7 +81,7 @@ public class OpponentsUI : NetworkBehaviour
 
     private void UpdateMovementCardsText(NetworkListEvent<int> changeEvent)
     {
-        Debug.Log("OpponentsUI.UpdateMovementCardsText changeEvent: " + changeEvent);
+        Debug.Log("OpponentsUI.UpdateMovementCardsText changeEvent: " + changeEvent.Type);
         movementCardsCount.text = Player.movementCards.Count.ToString();
     }
 
