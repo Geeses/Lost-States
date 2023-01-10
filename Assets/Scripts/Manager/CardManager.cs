@@ -78,6 +78,7 @@ public class CardManager : NetworkBehaviour
 
     private void CreateMovementCardStack()
     {
+        Battlelog.Instance.AddLogClientRpc("Es wurde ein frisches Bewegungskartendeck erstellt.");
         MovementCardStack.Clear();
         MovementCardStackPosition = 0;
 
@@ -193,6 +194,7 @@ public class CardManager : NetworkBehaviour
 
     private void CreateChestCardStack()
     {
+        Battlelog.Instance.AddLogClientRpc("Es wurde ein frisches Kistenkartendeck erstellt.");
         ChestCardStack.Clear();
         ChestCardStackPosition = 0;
 
