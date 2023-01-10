@@ -97,7 +97,7 @@ public class NetworkManagerUI : NetworkBehaviour
                 }
                 else
                 {
-                    Debug.LogError("Null Card in UI Cards.");
+                    Debug.LogWarning("Null Card in UI Cards.");
                     toBeRemoved = cardUi;
                 }
             }
@@ -107,7 +107,6 @@ public class NetworkManagerUI : NetworkBehaviour
                 _cardUis.Remove(toBeRemoved);
             }
 
-            Debug.Log(removedCard.name + " removed.", removedCard);
             Destroy(removedCard);
         }
     }
