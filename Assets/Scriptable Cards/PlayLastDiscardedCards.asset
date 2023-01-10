@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: PlayLastDiscardedCards
   m_EditorClassIdentifier: 
   executeInstantly: 1
-  amount: 1
+  _executeAfterTurns: 0
+  amount: 2

@@ -135,7 +135,10 @@ public class GridManager : MonoBehaviour
         {
             for (int y = -radius; y <= radius; y++)
             {
-                adjacentTiles.Add(TileGrid[new GridCoordinates(tile.TileGridCoordinates.x + x, tile.TileGridCoordinates.y + y)]);
+                if(TileGrid.ContainsKey(new GridCoordinates(tile.TileGridCoordinates.x + x, tile.TileGridCoordinates.y + y)))
+                {
+                    adjacentTiles.Add(TileGrid[new GridCoordinates(tile.TileGridCoordinates.x + x, tile.TileGridCoordinates.y + y)]);
+                }
             }
         }
 

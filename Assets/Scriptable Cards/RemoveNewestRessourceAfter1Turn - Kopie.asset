@@ -9,10 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79a2b4821549ab344a1177938c122c13, type: 3}
-  m_Name: AddMovesOnPickup
+  m_Script: {fileID: 11500000, guid: 481d86a8b413b5843b69c325cd0a0298, type: 3}
+  m_Name: RemoveNewestRessourceAfter1Turn - Kopie
   m_EditorClassIdentifier: 
-  executeInstantly: 1
-  _executeAfterTurns: 0
-  pickupType: 0
-  moveCount: 2
+  executeInstantly: 0
+  _executeAfterTurns: 1
+  playerType: 1
+  turnType: 2
+  tileZone: 3
+  itemType: 0
+  itemCount: 4

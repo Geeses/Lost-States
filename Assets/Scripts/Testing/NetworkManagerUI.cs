@@ -77,22 +77,32 @@ public class NetworkManagerUI : NetworkBehaviour
 
     private void ChangeChestCards(NetworkListEvent<int> changeEvent)
     {
-        Debug.Log(changeEvent.Type);
         if(changeEvent.Type == NetworkListEvent<int>.EventType.Add)
         {
-            Debug.Log(changeEvent.Value);
             InstantiateChestCard(changeEvent.Value);
         }
         else if(changeEvent.Type == NetworkListEvent<int>.EventType.Remove || changeEvent.Type == NetworkListEvent<int>.EventType.RemoveAt)
         {
-            foreach(CardUiScript ui in _cardUis)
+            GameObject removedCard = null;
+
+            foreach (CardUiScript cardUi in _cardUis)
             {
-                if(ui.CardType == CardType.Chest)
-                    Debug.Log(ui.CardId + " " + changeEvent.Value);
+                if(cardUi != null)
+                {
+                    if (cardUi.CardId == changeEvent.Value && cardUi.CardType == CardType.Chest)
+                    {
+                        removedCard = cardUi.gameObject;
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Null Card in UI Cards.");
+                    _cardUis.Remove(cardUi);
+                }
             }
-            GameObject go = _cardUis.Find(x => x.CardId == changeEvent.Value && x.CardType == CardType.Chest).gameObject;
-            Debug.Log(go.name, go);
-            Destroy(go);    
+
+            Debug.Log(removedCard.name + " removed.", removedCard);
+            Destroy(removedCard);
         }
     }
 

@@ -20,8 +20,14 @@ public class PlayDiscardedCards : CardEffect
 
     private void PlayCards()
     {
-        Debug.Log(Player.clientId.Value + " Player, is saying that we should play this card.");
-        CardManager.Instance.TryPlayMovementCardServerRpc(Player.discardedMovementCards[Player.discardedMovementCards.Count - 1], -1, Player.clientId.Value, true);
+        for (int i = 0; i < amount; i++)
+        {
+            if(Player.discardedMovementCards.Count > i)
+            {
+                Card card = CardManager.Instance.GetMovementCardById(Player.discardedMovementCards[Player.discardedMovementCards.Count - i - 1]);
+                Player.ChangeMoveCountServerRpc(card.baseMoveCount);
+            }
+        }
     }
 }
 

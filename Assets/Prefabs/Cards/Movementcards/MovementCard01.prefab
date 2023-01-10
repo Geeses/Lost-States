@@ -15,7 +15,7 @@ PrefabInstance:
     - target: {fileID: 469728987098826006, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_text
       value: "Jedes Mal wenn eine Ressource in diesem Zug eingesammelt wird, erhalte
-        3 zus\xE4tzliche Schritte."
+        2 zus\xE4tzliche Schritte."
       objectReference: {fileID: 0}
     - target: {fileID: 2306062493240514938, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_Sprite
