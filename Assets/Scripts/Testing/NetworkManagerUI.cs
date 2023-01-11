@@ -81,6 +81,7 @@ public class NetworkManagerUI : NetworkBehaviour
         {
             InstantiateChestCard(changeEvent.Value);
         }
+        /*
         else if(changeEvent.Type == NetworkListEvent<int>.EventType.Remove || changeEvent.Type == NetworkListEvent<int>.EventType.RemoveAt)
         {
             GameObject removedCard = null;
@@ -109,6 +110,7 @@ public class NetworkManagerUI : NetworkBehaviour
 
             Destroy(removedCard);
         }
+        */
     }
 
     private void ChangeMovementCards(NetworkListEvent<int> changeEvent)
@@ -117,12 +119,37 @@ public class NetworkManagerUI : NetworkBehaviour
         {
             InstantiateMovementCard(changeEvent.Value);
         }
+        /*
         else if (changeEvent.Type == NetworkListEvent<int>.EventType.Remove || changeEvent.Type == NetworkListEvent<int>.EventType.RemoveAt)
         {
-            GameObject go = _cardUis.Find(x => x.CardId == changeEvent.Value && x.CardType == CardType.Movement).gameObject;
-            Debug.Log(go.name, go);
-            Destroy(go);
+            GameObject removedCard = null;
+            CardUiScript toBeRemoved = null;
+
+            foreach (CardUiScript cardUi in _cardUis)
+            {
+                if (cardUi != null)
+                {
+                    if (cardUi.CardId == changeEvent.Value && cardUi.CardType == CardType.Movement)
+                    {
+                        removedCard = cardUi.gameObject;
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Null Card in UI Cards.");
+                    //toBeRemoved = cardUi;
+                }
+            }
+            
+            if (toBeRemoved != null)
+            {
+                _cardUis.Remove(toBeRemoved);
+            }
+            
+            Debug.Log("Destroy Card");
+            Destroy(removedCard);
         }
+        */
     }
 
     private void InstantiateMovementCard(int id)
@@ -144,24 +171,43 @@ public class NetworkManagerUI : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void RemoveCardFromPlayerUiClientRpc(ulong playerId, int instanceId, ClientRpcParams clientRpcParams = default)
+    public void RemoveCardFromPlayerUiClientRpc(int cardId, CardType type, int instanceId, bool removeRandom = false, ClientRpcParams clientRpcParams = default)
     {
         CardUiScript objectToRemove = null;
 
-        foreach (CardUiScript card in _cardUis)
+        if(!removeRandom)
         {
-            if(card != null)
+            foreach (CardUiScript card in _cardUis)
             {
-                if (card.gameObject.GetInstanceID().Equals(instanceId))
+                if (card != null)
                 {
-                    objectToRemove = card;
-                    Debug.Log("found card to remove " + objectToRemove.name);
+                    if (card.gameObject.GetInstanceID().Equals(instanceId))
+                    {
+                        objectToRemove = card;
+                        Debug.Log("found card to remove " + objectToRemove.name);
+                    }
                 }
             }
+        }
+        else
+        {
+            foreach (CardUiScript card in _cardUis)
+            {
+                if (card != null)
+                {
+                    if (card.CardType == type && card.CardId == cardId)
+                    {
+                        objectToRemove = card;
+                        Debug.Log("found card to remove " + objectToRemove.name);
+                    }
+                }
+            }
+
         }
 
         if(objectToRemove != null)
         {
+            Debug.Log("Destroy prefab");
             _cardUis.Remove(objectToRemove);
             Destroy(objectToRemove.gameObject);
         }

@@ -36,6 +36,11 @@ public class OpponentsUI : NetworkBehaviour
         _rectTransform = GetComponent<RectTransform>();
     }
 
+    private void Update()
+    {
+        //movementCardsCount.text = Player.movementCards.Count.ToString();
+    }
+
     private void MoveCharBar()
     {
         Debug.Log("OpponentsUI.OnMouseDown isShowing: " + isHidden);
@@ -58,13 +63,13 @@ public class OpponentsUI : NetworkBehaviour
 
     private void UpdateSafeText(NetworkListEvent<int> changeEvent)
     {
-        Debug.Log("OpponentsUI.UpdateSafeText changeEvent: " + changeEvent);
+        Debug.Log("OpponentsUI.UpdateSafeText changeEvent: " + changeEvent.Type);
         safeCount.text = Player.savedRessourceCount.ToString();
     }
 
     private void UpdateRessourcesText(NetworkListEvent<int> changeEvent)
     {
-        Debug.Log("OpponentsUI.UpdateRessourcesText changeEvent: " + changeEvent);
+        Debug.Log("OpponentsUI.UpdateRessourcesText changeEvent: " + changeEvent.Type);
         ressourcesCount.text = Player.inventoryRessourceCount.ToString();
     }
 
@@ -75,7 +80,7 @@ public class OpponentsUI : NetworkBehaviour
 
     private void UpdateChestCardsText(NetworkListEvent<int> changeEvent)
     {
-        Debug.Log("OpponentsUI.UpdateChestCardsText changeEvent: " + changeEvent);
+        Debug.Log("OpponentsUI.UpdateChestCardsText changeEvent: " + changeEvent.Type);
         chestCardsCount.text = Player.inventoryChestCards.Count.ToString();
     }
 

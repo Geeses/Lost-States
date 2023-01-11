@@ -357,6 +357,7 @@ public class Player : Selectable
                 Debug.Log("Remove ChestcardId: " + inventoryChestCards[inventoryChestCards.Count - 1] + " at: " + (inventoryChestCards.Count - 1));
                 int id = inventoryChestCards[inventoryChestCards.Count - 1];
                 inventoryChestCards.Remove(id);
+                NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(id, CardType.Chest, -1, true);
             }
         }
     }

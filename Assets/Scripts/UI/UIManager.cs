@@ -51,7 +51,7 @@ public class UIManager : NetworkBehaviour
         {
             if (!entry.Key.Equals(_player.clientId.Value))
             {
-                _enemyPlayers.Add(entry.Value);
+                EnemyPlayers.Add(entry.Value);
                 GameObject newOpponent = Instantiate(opponentsPrefab, oponentsGroup.transform);
                 if (newOpponent.TryGetComponent(out OpponentsUI ui)) {
                     ui.Initialize(entry.Value);

@@ -149,14 +149,15 @@ public class CardManager : NetworkBehaviour
                 }
             };
             // remove UI object from player that sent the request
-            NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(playerId, instanceId, clientRpcParams);
-
+            NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(cardId, CardType.Movement, instanceId, false, clientRpcParams);
             CardEffectManager.Instance.InitializeCardEffectClientRpc(cardId, playerId, CardType.Movement, clientRpcParams);
 
             Card card = GetMovementCardById(cardId);
             player.moveCount.Value += card.baseMoveCount;
+            Debug.Log("Remove movement card");
 
             PlayMovementCardClientRpc(cardId, playerId, temporaryCard);
+            player.movementCards.Remove(cardId);
         }
     }
 
@@ -234,6 +235,7 @@ public class CardManager : NetworkBehaviour
         // if its their turn
         if (playerId == TurnManager.Instance.CurrentTurnPlayerId)
         {
+            Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
             // Sending the ClientRPC only to the playerId
             ClientRpcParams clientRpcParams = new ClientRpcParams
             {
@@ -243,9 +245,10 @@ public class CardManager : NetworkBehaviour
                 }
             };
             // remove UI object from player that sent the request
-            NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(playerId, instanceId, clientRpcParams);
-            Battlelog.Instance.AddLogClientRpc(PlayerNetworkManager.Instance.PlayerDictionary[playerId].profileName.Value + " hat die Kistenkarte: \"" + GetChestCardById(cardId).cardName + "\" gespielt.");
+            NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(cardId, CardType.Chest, instanceId, false, clientRpcParams);
+            Battlelog.Instance.AddLogClientRpc(player.profileName.Value + " hat die Kistenkarte: \"" + GetChestCardById(cardId).cardName + "\" gespielt.");
             CardEffectManager.Instance.InitializeCardEffectClientRpc(cardId, playerId, CardType.Chest, clientRpcParams);
+            player.inventoryChestCards.Remove(cardId);
         }
     }
     #endregion
