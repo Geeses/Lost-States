@@ -39,6 +39,7 @@ public class RelayViewController
         {
             if (PlayersManager.Instance.PlayersInGame >= 2)
             {
+                relayInfo.visible = false;
                 startGameButton.visible = true;
                 startGameButton.text = "Start";
                 startGameButton.clicked += StartGame;
@@ -85,6 +86,7 @@ public class RelayViewController
 
         if (NetworkManager.Singleton.StartClient())
             Debug.Log("Client started");
+
         else {
             Debug.Log("Unable to start client");
             relayInfo.text = "Unable to start client";
@@ -94,10 +96,12 @@ public class RelayViewController
     public void Show()
     {
         relayScreen.visible = true;
+        
     }
 
     public void Hide()
     {
         relayScreen.visible = false;
+        startGameButton.visible = false;
     }
 }
