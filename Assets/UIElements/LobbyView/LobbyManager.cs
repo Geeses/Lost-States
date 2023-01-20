@@ -7,23 +7,20 @@ using UnityEngine.SceneManagement;
 
 public class LobbyManager
 {
-    // Attempt to create a new Public lobby.
-    public async Task<Lobby> TryCreatePublicLobbyAsync()
+    int maxPlayers = 2;
+    public async Task<Lobby> TryCreatePublicLobbyAsync(string lobbyName)
     {
-        string lobbyName = "Public Lobby";
-        int maxPlayers = 4;
         CreateLobbyOptions options = new CreateLobbyOptions();
         options.IsPrivate = false;
         Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
         return lobby;
     }
-    public async void TryCreatePrivateLobbyAsync()
+    public async Task<Lobby> TryCreatePrivateLobbyAsync(string lobbyName)
     {
-        string lobbyName = "private lobby";
-        int maxPlayers = 4;
         CreateLobbyOptions options = new CreateLobbyOptions();
         options.IsPrivate = true;
         Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
+        return lobby;
     }
 
     public async Task<List<Lobby>> GetAllLobbies()

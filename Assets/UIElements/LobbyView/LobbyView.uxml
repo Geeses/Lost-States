@@ -5,11 +5,16 @@
             <ui:ListView focusable="true" name="lobby-list" />
         </ui:VisualElement>
         <ui:VisualElement name="bottom" style="width: 100%; align-items: center; flex-direction: column-reverse;">
-            <ui:Label tabindex="-1" text="Create a new Lobby" display-tooltip-when-elided="true" name="player-info" />
-            <ui:VisualElement name="buttons" style="flex-direction: row; justify-content: center;">
-                <ui:Button tabindex="-1" text="Create" display-tooltip-when-elided="true" name="create-button" style="background-color: rgb(245, 245, 245);" />
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Button tabindex="-1" text="Create Lobby" display-tooltip-when-elided="true" name="create-lobby-button" style="background-color: rgb(245, 245, 245);" />
                 <ui:Button tabindex="-1" text="Refresh" display-tooltip-when-elided="true" name="refresh-button" style="background-color: rgb(245, 245, 245);" />
+                <ui:Button tabindex="-1" text="Join With Code" display-tooltip-when-elided="true" name="join-with-code-button" style="background-color: rgb(245, 245, 245);" />
             </ui:VisualElement>
+            <ui:VisualElement name="buttons" style="flex-direction: row; justify-content: center;" />
+            <ui:Toggle label="Private" name="is-private-lobby-toggle" style="color: rgb(255, 255, 255); -unity-font-style: bold;" />
+            <ui:TextField picking-mode="Ignore" label="Lobby Name" value="filler text" name="lobby-name-text-field" style="width: 60%; -unity-font-style: bold; color: rgb(255, 255, 255);" />
+            <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="player-info" />
         </ui:VisualElement>
     </ui:VisualElement>
+    <ui:VisualElement name="overlay" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; align-items: center; justify-content: center; visibility: hidden;" />
 </ui:UXML>

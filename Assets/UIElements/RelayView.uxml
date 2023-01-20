@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement style="align-items: center; justify-content: center; position: absolute; left: 0; top: 0; right: 0; bottom: 0; visibility: visible;">
+        <ui:VisualElement name="relay-screen" style="width: 60%; align-items: center; background-color: rgb(113, 77, 67); visibility: visible; border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; justify-content: center;">
+            <ui:VisualElement style="flex-direction: row-reverse; width: 100%;">
+                <ui:Button tabindex="-1" text="X" display-tooltip-when-elided="true" name="relay-close" style="flex-direction: row-reverse; width: 30px; height: 30px; border-top-left-radius: 15px; border-bottom-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-direction: row; flex-shrink: 0; width: 100%; align-items: center; justify-content: center;">
+                <ui:Label tabindex="-1" text="Code" display-tooltip-when-elided="true" />
+                <ui:TextField picking-mode="Ignore" value="Code" name="join-code-field" style="width: 60%;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="align-items: center; width: 60%; flex-direction: row; justify-content: center;">
+                <ui:Button tabindex="-1" text="Start Host" display-tooltip-when-elided="true" name="start-host" />
+                <ui:Button tabindex="-1" text="Join Game" display-tooltip-when-elided="true" name="start-client" />
+            </ui:VisualElement>
+            <ui:VisualElement style="width: 100%; align-items: center; justify-content: center;">
+                <ui:Button tabindex="-1" text="Waiting..." display-tooltip-when-elided="true" name="start-game" style="width: 40%; visibility: hidden;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="relay-info" style="position: absolute; visibility: hidden;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

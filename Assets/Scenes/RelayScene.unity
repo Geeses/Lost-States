@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.2019307, g: 0.19815361, b: 0.19582509, a: 1}
+  m_IndirectSpecularColor: {r: 0.20193091, g: 0.19815648, b: 0.19581898, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -182,7 +182,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &353238059
 PrefabInstance:
@@ -214,7 +214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5935124967399663275, guid: 77fe97ec48f792d4593993903ab8c018, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5935124967399663275, guid: 77fe97ec48f792d4593993903ab8c018, type: 3}
       propertyPath: m_LocalPosition.x
@@ -259,25 +259,6 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 77fe97ec48f792d4593993903ab8c018, type: 3}
---- !u!1 &353238060 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3151726856503015706, guid: 77fe97ec48f792d4593993903ab8c018, type: 3}
-  m_PrefabInstance: {fileID: 353238059}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &353238062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 353238060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfc9b6ef34d6acf4b95cd6977786c4d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  environment: production
-  maxNumberOfConnections: 2
 --- !u!1 &535920220
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,9 +406,11 @@ GameObject:
   - component: {fileID: 823639612}
   - component: {fileID: 823639611}
   - component: {fileID: 823639613}
-  - component: {fileID: 823639614}
+  - component: {fileID: 823639615}
+  - component: {fileID: 823639616}
+  - component: {fileID: 823639617}
   m_Layer: 5
-  m_Name: UIDocument
+  m_Name: LobbyManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -447,7 +430,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PanelSettings: {fileID: 11400000, guid: 5289afe880571a540913a1b1f8b31860, type: 2}
   m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: be408b8ed936e734bb4ab87eb35066d6, type: 3}
+  sourceAsset: {fileID: 9197481963319205126, guid: faf6c0e9fed7e8e41af34156895e942b, type: 3}
   m_SortingOrder: 0
 --- !u!4 &823639612
 Transform:
@@ -462,7 +445,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &823639613
 MonoBehaviour:
@@ -480,7 +463,7 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &823639614
+--- !u!114 &823639615
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -489,6 +472,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 823639610}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56e3708c22e6cc145b0de556bf69ccef, type: 3}
+  m_Script: {fileID: 11500000, guid: c35acbbe45a9698409062227d31742d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cellTemplate: {fileID: 9197481963319205126, guid: 3daa75c3426f0154e96d40bfac2d941f, type: 3}
+  relayTemplate: {fileID: 9197481963319205126, guid: cbc357cd5fd5f424bbe3d0f5467aa459, type: 3}
+--- !u!114 &823639616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823639610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfc9b6ef34d6acf4b95cd6977786c4d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  environment: production
+  maxNumberOfConnections: 4
+--- !u!114 &823639617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823639610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 695bf6848b1aea54f9cecf3fee144804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  environment: production
