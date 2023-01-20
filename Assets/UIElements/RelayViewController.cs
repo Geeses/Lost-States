@@ -71,8 +71,6 @@ public class RelayViewController
             relayInfo.text = "Unable to start host";
             Debug.Log("Unable to start host");
         }
-
-        startGameButton.visible = true;
     }
 
     public void StartGame()
@@ -85,8 +83,10 @@ public class RelayViewController
             await RelayManager.Instance.JoinRelay(joinCodeField.text);
 
         if (NetworkManager.Singleton.StartClient())
+        {
+            startGameButton.visible = true;
             Debug.Log("Client started");
-
+        }
         else {
             Debug.Log("Unable to start client");
             relayInfo.text = "Unable to start client";
@@ -95,13 +95,13 @@ public class RelayViewController
 
     public void Show()
     {
-        relayScreen.visible = true;
-        
+        relayScreen.visible = true;   
     }
 
     public void Hide()
     {
         relayScreen.visible = false;
         startGameButton.visible = false;
+        relayInfo.visible = false;
     }
 }
