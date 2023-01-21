@@ -2,4 +2,4 @@ timestamp, playerId, movementCardId,
             movedInTurn, inventoryWaterCount, inventoryFoodCount,
             inventoryWoodCount, inventorySteelCount, savedWaterCount,
             savedFoodCount, savedWoodCount, savedSteelCount, 
-            totalTurnCount, turnNumber, chestCardPlayed, isNight
+            totalTurnCount, turnNumber, chestCardPlayed

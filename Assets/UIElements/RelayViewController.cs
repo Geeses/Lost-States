@@ -84,7 +84,7 @@ public class RelayViewController
 
         if (NetworkManager.Singleton.StartClient())
         {
-            startGameButton.visible = true;
+            relayInfo.text = "Waiting for Host to Start Game...";
             Debug.Log("Client started");
         }
         else {

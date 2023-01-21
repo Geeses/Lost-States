@@ -28,7 +28,7 @@ public class LobbyCell
     {
         _lobby = lobby;
         _nameLabel.text = lobby.Name;
-        _usersJoined.text = lobby.Players.Count.ToString();
+        _usersJoined.text = lobby.Players.Count.ToString() + "/4";
     }
 
     public void  JoinLobby()

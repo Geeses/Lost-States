@@ -15,6 +15,7 @@ public class LobbyViewController
     private Button _createButton;
     private Button _joinWithCodeButton;
     private Button _refreshButton;
+    private TextInputBaseField<string> _nameTextInput;
 
     private VisualTreeAsset _cellTemplate;
     private RelayViewController _relayView;
@@ -38,6 +39,7 @@ public class LobbyViewController
         _createButton = _root.Q<Button>("create-lobby-button");
         _refreshButton = _root.Q <Button>("refresh-button");
         _joinWithCodeButton = _root.Q<Button>("join-with-code-button");
+        _nameTextInput = _root.Q<TextInputBaseField<string>>("unity-text-input");
 
         _createButton.clicked += AddNewLobby;
         _refreshButton.clicked += RefreshLobbies;
@@ -71,8 +73,13 @@ public class LobbyViewController
     }
 
     async void AddNewLobby()
-    {
-        _createButton.text = "Waiting";
+    {      
+        if (_lobbyName.text == "")
+        {
+            _playerInfo.text = "Please, enter a lobby name";
+            return;
+        }
+
         _playerInfo.text = "Waiting for other players to join";
         if (_isPrivate.value)
         {
@@ -82,7 +89,6 @@ public class LobbyViewController
         {
             var lobby = await _manager.TryCreatePublicLobbyAsync(_lobbyName.text);
         }
-        _createButton.clicked -= AddNewLobby;
         RefreshLobbies();
     }
 

@@ -50,7 +50,6 @@ public class RelayManager : Singleton<RelayManager>
 
     public async Task<RelayJoinData> JoinRelay(string joinCode)
     {
-        Debug.Log($"Client Joining Game With Join Code: {joinCode}");
         JoinAllocation allocation = await Relay.Instance.JoinAllocationAsync(joinCode);
         RelayJoinData relayJoinData = new RelayJoinData
         {

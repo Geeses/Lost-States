@@ -56,8 +56,7 @@ public class AnalyticsManager : Singleton<AnalyticsManager>
     public void WriteCSVLine()
     {
         var tw = new StreamWriter(filename, true);
-        tw.WriteLine(@"{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7},
-                    {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}",
+        tw.WriteLine("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}",
             dataOnTurnEnd.playerId, 
             dataOnTurnEnd.movementCardId, 
             dataOnTurnEnd.movedInTurn, 
@@ -79,11 +78,7 @@ public class AnalyticsManager : Singleton<AnalyticsManager>
     void WriteHeadings()
     {
         var tw = new StreamWriter(filename, false);
-        tw.WriteLine(@"timestamp, playerId, movementCardId,
-            movedInTurn, inventoryWaterCount, inventoryFoodCount,
-            inventoryWoodCount, inventorySteelCount, savedWaterCount,
-            savedFoodCount, savedWoodCount, savedSteelCount, 
-            totalTurnCount, turnNumber, chestCardPlayed", false);
+        tw.WriteLine("timestamp, playerId, movementCardId, movedInTurn, inventoryWaterCount, inventoryFoodCount, inventoryWoodCount, inventorySteelCount, savedWaterCount, savedFoodCount, savedWoodCount, savedSteelCount, totalTurnCount, turnNumber, chestCardPlayed", false);
         tw.Close(); 
     }
 

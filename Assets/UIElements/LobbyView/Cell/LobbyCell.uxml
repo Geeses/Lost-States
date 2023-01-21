@@ -1,10 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UIElements/LobbyView/LobbyCell.uss?fileID=7433441132597879392&amp;guid=63e3b2811d6bc3d45a17c4ba3cdda9c5&amp;type=3#LobbyCell" />
-    <ui:VisualElement style="flex-direction: row; justify-content: space-between;">
-        <ui:VisualElement style="justify-content: space-around; flex-grow: 1;">
-            <ui:Label tabindex="-1" text="LobbyName" display-tooltip-when-elided="true" name="lobby-name" />
-            <ui:Label tabindex="-1" text="1/4" display-tooltip-when-elided="true" name="joined-count" />
+    <Style src="project://database/Assets/UIElements/LobbyView/Cell/LobbyCell.uss?fileID=7433441132597879392&amp;guid=63e3b2811d6bc3d45a17c4ba3cdda9c5&amp;type=3#LobbyCell" />
+    <ui:VisualElement style="flex-direction: row; justify-content: space-between; background-color: rgb(94, 60, 54); border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; margin-top: 1px; margin-bottom: 1px; flex-grow: 0; flex-shrink: 0;">
+        <ui:VisualElement style="justify-content: space-around; flex-grow: 0; flex-shrink: 0;">
+            <ui:Label tabindex="-1" text="LobbyName" display-tooltip-when-elided="true" name="lobby-name" style="color: rgb(255, 255, 255); -unity-font-style: bold; margin-left: 10px;" />
+            <ui:Label tabindex="-1" text="1/4" display-tooltip-when-elided="true" name="joined-count" style="-unity-font-style: bold; color: rgb(255, 255, 255); margin-left: 10px;" />
         </ui:VisualElement>
-        <ui:Button tabindex="-1" text="Join Lobby" display-tooltip-when-elided="true" name="join-lobby" />
+        <ui:Button tabindex="-1" text="Join Lobby" display-tooltip-when-elided="true" name="join-lobby" style="background-color: rgb(62, 41, 41); color: rgb(255, 255, 255); -unity-font-style: bold; border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-left-width: 8px; border-right-width: 8px; border-top-width: 8px; border-bottom-width: 8px; border-left-color: rgb(58, 41, 41); border-right-color: rgb(58, 41, 41); border-top-color: rgb(58, 41, 41); border-bottom-color: rgb(58, 41, 41); margin-top: 5px; margin-bottom: 5px;" />
     </ui:VisualElement>
 </ui:UXML>
