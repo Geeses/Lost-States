@@ -20,7 +20,7 @@ public class InitializeServices: Singleton<InitializeServices>
 
         try
         {
-            await UnityServices.InitializeAsync();
+            await UnityServices.InitializeAsync(options);
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
 
             // Check Consents
@@ -36,6 +36,7 @@ public class InitializeServices: Singleton<InitializeServices>
         // General Player Info
         Debug.Log(UnityServices.State);
         Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
+        Debug.Log($"Profile: {AuthenticationService.Instance.Profile}");
         Debug.Log($"Is SignedIn: {AuthenticationService.Instance.IsSignedIn}");
         Debug.Log($"Is Authorized: {AuthenticationService.Instance.IsAuthorized}");
         Debug.Log($"Is Expired: {AuthenticationService.Instance.IsExpired}");

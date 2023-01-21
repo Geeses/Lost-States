@@ -37,7 +37,6 @@ public class RelayManager : Singleton<RelayManager>
 
         Transport.SetRelayServerData(relayHostData.IPv4Address, relayHostData.Port, relayHostData.AllocationIDBytes,
                 relayHostData.Key, relayHostData.ConnectionData);
-        PlayerInfo info = await AuthenticationService.Instance.GetPlayerInfoAsync();
 
         Debug.Log($"Relay Server Generated Join Code: {relayHostData.JoinCode}");
 

@@ -22,6 +22,7 @@ public class AnalyticsManager : Singleton<AnalyticsManager>
 
     private void SendData(ulong playerId)
     {
+        Debug.Log("SavingData");
         var player = TurnManager.Instance.CurrentTurnPlayer;
         var inventoryRessources = player.GetBagRessourcesIndividually(RessourceLocation.inventory);
         var savedRessources = player.GetBagRessourcesIndividually(RessourceLocation.safe);
@@ -99,7 +100,7 @@ public class AnalyticsManager : Singleton<AnalyticsManager>
             { "savedSteelCount", dataOnTurnEnd.savedSteelCount },
             { "totalTurnCount", dataOnTurnEnd.totalTurnCount },
             { "turnNumber", dataOnTurnEnd.turnNumber },
-            { "chestCardPlayed", dataOnTurnEnd.chestCardPlayed },
+//            { "chestCardPlayed", dataOnTurnEnd.chestCardPlayed },
         };
 
         // The ‘OnTurnEnd’ event will get queued up and sent every minute
