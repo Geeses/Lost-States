@@ -6,16 +6,17 @@ using Unity.Services.Analytics;
 using System.Collections.Generic;
 
 // Game developer code
-public class InitializeServices: MonoBehaviour
+public class InitializeServices: Singleton<InitializeServices>
 {
 
     [SerializeField]
     private string environment = "production";
 
-    async void Start()
+    public async void InitializeWithUsername(string username)
     {
         var options = new InitializationOptions();
         options.SetEnvironmentName(environment);
+        options.SetProfile(username);
 
         try
         {

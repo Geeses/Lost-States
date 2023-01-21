@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using System;
 
-public class RelayViewController
+public class RelayViewController: NetworkBehaviour
 {
     Button startHost;
     Button startClient;
@@ -14,9 +14,9 @@ public class RelayViewController
     Label relayInfo;
     VisualElement relayScreen;
     RelayHostData result;
+    private VisualElement _root;
 
     private NetworkVariable<bool> canStartGame = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    private VisualElement _root;
     
     public RelayViewController(VisualElement root) {
         _root = root;
@@ -30,18 +30,22 @@ public class RelayViewController
 
         startHost.clicked += StartHost;
         startClient.clicked += StartClient;
+
         relayInfo.visible = false;
         startGameButton.visible = false;
+
         relayCloseButton.clicked += Hide;
         Hide();
 
         NetworkManager.Singleton.OnClientConnectedCallback += (id) =>
         {
-            if (PlayersManager.Instance.PlayersInGame >= 2)
+            Debug.Log("OnClientConnectedCallback: " + GameObject.FindGameObjectsWithTag("Player").Length);
+            if (GameObject.FindGameObjectsWithTag("Player").Length >= 2)
             {
-                relayInfo.visible = false;
+                Debug.Log("OnClientConnectedCallback: All players are here");
                 startGameButton.visible = true;
                 startGameButton.text = "Start";
+                relayInfo.visible = false;
                 startGameButton.clicked += StartGame;
             }
         };
@@ -62,14 +66,14 @@ public class RelayViewController
         if (NetworkManager.Singleton.StartHost())
         {
             relayInfo.visible = true;
-            relayInfo.text = "Host started. Waiting for Client...";
-            Debug.Log("Host started");
+            relayInfo.text = "Host started. Waiting for Client...";;
         }
         else
         {
             relayInfo.visible = true;
+            // most of the times, because a host was already initialized in that game instance
+            // fix: see if possible to remove old host and create a new room
             relayInfo.text = "Unable to start host";
-            Debug.Log("Unable to start host");
         }
     }
 
@@ -84,8 +88,8 @@ public class RelayViewController
 
         if (NetworkManager.Singleton.StartClient())
         {
-            relayInfo.text = "Waiting for Host to Start Game...";
             Debug.Log("Client started");
+            relayInfo.text = "Waiting for server to start Game";
         }
         else {
             Debug.Log("Unable to start client");

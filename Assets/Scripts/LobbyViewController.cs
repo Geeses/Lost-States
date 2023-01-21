@@ -16,15 +16,19 @@ public class LobbyViewController
     private Button _joinWithCodeButton;
     private Button _refreshButton;
     private TextInputBaseField<string> _nameTextInput;
-
+    private VisualElement _lobbyScreen;
     private VisualTreeAsset _cellTemplate;
     private RelayViewController _relayView;
     private VisualElement _root;
     private LobbyManager _manager;
+    private TextField _usernameTextField;
+    private Button _loginButton;
+    private VisualElement _authenticationWindow;
+    private Label _authenticationInfo;
 
     private static List<Lobby> _lobbies = new List<Lobby>();
     private NetworkVariable<bool> canStartGame = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    
+
     public LobbyViewController(LobbyManager manager, VisualElement root, VisualTreeAsset cellTemplate, RelayViewController relayView)
     {
         _manager = manager;
@@ -40,19 +44,36 @@ public class LobbyViewController
         _refreshButton = _root.Q <Button>("refresh-button");
         _joinWithCodeButton = _root.Q<Button>("join-with-code-button");
         _nameTextInput = _root.Q<TextInputBaseField<string>>("unity-text-input");
+        _lobbyScreen = _root.Q<VisualElement>("lobby-screen");
+        _loginButton = root.Q<Button>("login-button");
+        _usernameTextField = root.Q<TextField>("username");
+        _authenticationWindow = root.Q<VisualElement>("authentication-overlay");
+        _authenticationInfo = root.Q<Label>("authentication-info");
 
         _createButton.clicked += AddNewLobby;
         _refreshButton.clicked += RefreshLobbies;
-        _lobbyList.itemsSource = _lobbies;
+        _lobbyScreen.visible = false;
         InitializeList();
 
         // Relay
         _joinWithCodeButton.clicked += _relayView.Show;
+        _loginButton.clicked += InitializeUnityServices;
 
         canStartGame.OnValueChanged += (bool previousValue, bool newValue) => {
             Debug.Log($"Starting Game... " + SceneManager.GetSceneByBuildIndex(0).name);
             NetworkManager.Singleton.SceneManager.LoadScene("2PlayerMap", LoadSceneMode.Single);
         };
+    }
+
+    private void InitializeUnityServices()
+    {
+        if (_usernameTextField.text == "") {
+            _authenticationInfo.text = "Please, insert an username";
+            return;
+        }
+        InitializeServices.Instance.InitializeWithUsername(_usernameTextField.text);
+        _authenticationWindow.visible = false;
+        _lobbyScreen.visible = true;
     }
 
     private void InitializeList()
@@ -95,13 +116,7 @@ public class LobbyViewController
     async void RefreshLobbies()
     { 
         _lobbies = await _manager.GetAllLobbies();
-        if (_lobbyName.text == "")
-        {
-            _playerInfo.text = "Please give your lobby a name or enter the name of an existing lobby";
-            return;
-        }
         if (_lobbies.Count == 0) {
-            _createButton.text = "Create";
             _playerInfo.text = "Timeout: Please create a new Lobby";
             _createButton.clicked += AddNewLobby;
         }

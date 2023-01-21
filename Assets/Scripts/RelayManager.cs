@@ -12,9 +12,6 @@ using UnityEngine;
 
 public class RelayManager : Singleton<RelayManager>
 {
-    //[SerializeField]
-    //private string environment = "production";
-
     [SerializeField]
     private int maxNumberOfConnections = 2;
 
@@ -43,7 +40,6 @@ public class RelayManager : Singleton<RelayManager>
         PlayerInfo info = await AuthenticationService.Instance.GetPlayerInfoAsync();
 
         Debug.Log($"Relay Server Generated Join Code: {relayHostData.JoinCode}");
-        Debug.Log($"PlayerInfo: {info}");
 
         return relayHostData;
     }
