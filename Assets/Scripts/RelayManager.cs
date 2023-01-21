@@ -12,8 +12,8 @@ using UnityEngine;
 
 public class RelayManager : Singleton<RelayManager>
 {
-    [SerializeField]
-    private string environment = "production";
+    //[SerializeField]
+    //private string environment = "production";
 
     [SerializeField]
     private int maxNumberOfConnections = 2;

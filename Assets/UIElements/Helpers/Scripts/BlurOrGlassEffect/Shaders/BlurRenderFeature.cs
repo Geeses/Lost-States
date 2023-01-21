@@ -62,8 +62,10 @@ public class BlurRenderFeature : ScriptableRendererFeature
 			tmpRT1 = new RenderTargetIdentifier(tmpId1);
 			tmpRT2 = new RenderTargetIdentifier(tmpId2);
 
+#pragma warning disable 60618
 			ConfigureTarget(tmpRT1);
 			ConfigureTarget(tmpRT2);
+#pragma warning restore 60618
 		}
 
 		public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
@@ -127,7 +129,9 @@ public class BlurRenderFeature : ScriptableRendererFeature
 
 	public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
 	{
+#pragma warning disable 60618
 		var src = renderer.cameraColorTarget;
+#pragma warning restore 60618
 		scriptablePass.Setup(src);
 		renderer.EnqueuePass(scriptablePass);
 	}
