@@ -489,8 +489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfc9b6ef34d6acf4b95cd6977786c4d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  environment: production
-  maxNumberOfConnections: 4
+  maxNumberOfConnections: 2
 --- !u!114 &823639617
 MonoBehaviour:
   m_ObjectHideFlags: 0

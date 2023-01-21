@@ -27,7 +27,6 @@ public class LobbyViewController
     private Label _authenticationInfo;
 
     private static List<Lobby> _lobbies = new List<Lobby>();
-    private NetworkVariable<bool> canStartGame = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     public LobbyViewController(LobbyManager manager, VisualElement root, VisualTreeAsset cellTemplate, RelayViewController relayView)
     {
@@ -58,11 +57,6 @@ public class LobbyViewController
         // Relay
         _joinWithCodeButton.clicked += _relayView.Show;
         _loginButton.clicked += InitializeUnityServices;
-
-        canStartGame.OnValueChanged += (bool previousValue, bool newValue) => {
-            Debug.Log($"Starting Game... " + SceneManager.GetSceneByBuildIndex(0).name);
-            NetworkManager.Singleton.SceneManager.LoadScene("2PlayerMap", LoadSceneMode.Single);
-        };
     }
 
     private void InitializeUnityServices()
@@ -122,9 +116,5 @@ public class LobbyViewController
         }
         _lobbyList.itemsSource = _lobbies;
         _lobbyList.Rebuild();
-    }
-    public void StartGame()
-    {
-        canStartGame.Value = true;
     }
 }

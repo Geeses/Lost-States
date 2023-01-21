@@ -28,12 +28,12 @@ public class DoubleRewardOnMove : CardEffect
 
     private void DoubleRessource(GridCoordinates coordinates)
     {
-        Debug.Log("DoubleRewardOnMove.DoubleRessource was called");
+        //Debug.Log("DoubleRewardOnMove.DoubleRessource was called");
         var tile = Player.CurrentTile;
-        Debug.Log(Player.LocalMovedInCurrentTurn + " " + Player.LocalMoveCount);
+        //Debug.Log(Player.LocalMovedInCurrentTurn + " " + Player.LocalMoveCount);
         if (Player.LocalMovedInCurrentTurn == moveCount && condition == MoveEffectCondition.None)
         {
-            Debug.Log("PlayerMovedInCurrentTurn is moveCount");
+            //Debug.Log("PlayerMovedInCurrentTurn is moveCount");
             foreach (ITileExtension extension in tile.TileExtensions)
             {
                 if (extension is RessourceTile)
@@ -42,14 +42,14 @@ public class DoubleRewardOnMove : CardEffect
                 }
                 else if (extension is ChestTile)
                 {
-                    Debug.Log("Extra Chest Card Added");
+                    //Debug.Log("Extra Chest Card Added");
                     CardManager.Instance.AddChestCardToPlayerServerRpc(Player.clientId.Value);
                 }
             }
         }
         else if (Player.LocalMoveCount == 0 && condition == MoveEffectCondition.OnLast)
         {
-            Debug.Log("PlayerMovedInCurrentTurn is moveCount");
+            //Debug.Log("PlayerMovedInCurrentTurn is moveCount");
             foreach (ITileExtension extension in tile.TileExtensions)
             {
                 if (extension is RessourceTile)
@@ -58,7 +58,7 @@ public class DoubleRewardOnMove : CardEffect
                 }
                 else if (extension is ChestTile)
                 {
-                    Debug.Log("Extra Chest Card Added");
+                    //Debug.Log("Extra Chest Card Added");
                     CardManager.Instance.AddChestCardToPlayerServerRpc(Player.clientId.Value);
                 }
             }

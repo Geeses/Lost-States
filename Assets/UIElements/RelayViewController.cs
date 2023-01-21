@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using System;
 
-public class RelayViewController: NetworkBehaviour
+public class RelayViewController
 {
     Button startHost;
     Button startClient;
@@ -17,7 +17,7 @@ public class RelayViewController: NetworkBehaviour
     private VisualElement _root;
 
     private NetworkVariable<bool> canStartGame = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    
+
     public RelayViewController(VisualElement root) {
         _root = root;
         startHost = _root.Q<Button>("start-host");
@@ -39,15 +39,7 @@ public class RelayViewController: NetworkBehaviour
 
         NetworkManager.Singleton.OnClientConnectedCallback += (id) =>
         {
-            Debug.Log("OnClientConnectedCallback: " + GameObject.FindGameObjectsWithTag("Player").Length);
-            if (GameObject.FindGameObjectsWithTag("Player").Length >= 2)
-            {
-                Debug.Log("OnClientConnectedCallback: All players are here");
-                startGameButton.visible = true;
-                startGameButton.text = "Start";
-                relayInfo.visible = false;
-                startGameButton.clicked += StartGame;
-            }
+            
         };
 
         canStartGame.OnValueChanged += (bool previousValue, bool newValue) => {
@@ -89,6 +81,14 @@ public class RelayViewController: NetworkBehaviour
         if (NetworkManager.Singleton.StartClient())
         {
             Debug.Log("Client started");
+            if (GameObject.FindGameObjectsWithTag("Player").Length >= 2)
+            {
+                Debug.Log("OnClientConnectedCallback: All players are here");
+                startGameButton.visible = true;
+                relayInfo.visible = false;
+                startGameButton.text = "Start";
+                startGameButton.clicked += StartGame;
+            }
             relayInfo.text = "Waiting for server to start Game";
         }
         else {

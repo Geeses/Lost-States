@@ -20,7 +20,6 @@ public class LobbyFactory : NetworkBehaviour
         overlay.Add(relayScreen);
 
         var relayViewLogic = new RelayViewController(root);
-        var lobbyViewLogic = new LobbyViewController(lobbyManager, root, cellTemplate, relayViewLogic);
-        
+        var lobbyViewLogic = new LobbyViewController(lobbyManager, root, cellTemplate, relayViewLogic);   
     }
 }

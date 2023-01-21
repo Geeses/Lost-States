@@ -4,6 +4,8 @@ using Unity.Services.Authentication;
 using UnityEngine;
 using Unity.Services.Analytics;
 using System.Collections.Generic;
+using System.Collections;
+using Unity.Services.Lobbies;
 
 // Game developer code
 public class InitializeServices: Singleton<InitializeServices>
@@ -41,5 +43,21 @@ public class InitializeServices: Singleton<InitializeServices>
         Debug.Log($"Is Authorized: {AuthenticationService.Instance.IsAuthorized}");
         Debug.Log($"Is Expired: {AuthenticationService.Instance.IsExpired}");
         Debug.Log("Analytics UserID: " + AnalyticsService.Instance.GetAnalyticsUserID());
+    }
+
+    public void InitializeHeartbeatLobbyCoroutine(string lobbyId, int seconds)
+    {
+        StartCoroutine(HeartbeatLobbyCoroutine(lobbyId, seconds));
+    }
+
+    IEnumerator HeartbeatLobbyCoroutine(string lobbyId, float waitTimeSeconds)
+    {
+        var delay = new WaitForSecondsRealtime(waitTimeSeconds);
+        while (true)
+        {
+            LobbyService.Instance.SendHeartbeatPingAsync(lobbyId);
+            Debug.Log("Heartbit for lobby sended");
+            yield return delay;
+        }
     }
 }

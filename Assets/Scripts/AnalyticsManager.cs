@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Services.Analytics;
 using UnityEngine;
 using System.IO;
+using Unity.Netcode;
 public class AnalyticsManager : Singleton<AnalyticsManager>
 {
     string filename = "";
@@ -23,11 +24,11 @@ public class AnalyticsManager : Singleton<AnalyticsManager>
     private void SendData(ulong playerId)
     {
         Debug.Log("SavingData");
-        var player = TurnManager.Instance.CurrentTurnPlayer;
+        Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
         var inventoryRessources = player.GetBagRessourcesIndividually(RessourceLocation.inventory);
         var savedRessources = player.GetBagRessourcesIndividually(RessourceLocation.safe);
 
-        dataOnTurnEnd.playerId = playerId;
+        dataOnTurnEnd.playerId = playerId.ToString();
         dataOnTurnEnd.movedInTurn = player.movedInCurrentTurn.Value;
         dataOnTurnEnd.inventoryFoodCount = inventoryRessources.Item1;
         dataOnTurnEnd.inventoryWaterCount = inventoryRessources.Item2;
@@ -57,7 +58,7 @@ public class AnalyticsManager : Singleton<AnalyticsManager>
     public void WriteCSVLine()
     {
         var tw = new StreamWriter(filename, true);
-        tw.WriteLine("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}",
+        tw.WriteLine("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}",
             dataOnTurnEnd.playerId, 
             dataOnTurnEnd.movementCardId, 
             dataOnTurnEnd.movedInTurn, 
@@ -99,7 +100,7 @@ public class AnalyticsManager : Singleton<AnalyticsManager>
             { "savedWoodCount", dataOnTurnEnd.savedWoodCount },
             { "savedSteelCount", dataOnTurnEnd.savedSteelCount },
             { "totalTurnCount", dataOnTurnEnd.totalTurnCount },
-            { "turnNumber", dataOnTurnEnd.turnNumber },
+            { "turnNumber", dataOnTurnEnd.turnNumber }
 //            { "chestCardPlayed", dataOnTurnEnd.chestCardPlayed },
         };
 
@@ -109,7 +110,7 @@ public class AnalyticsManager : Singleton<AnalyticsManager>
 
     public struct DataOnTurnEnd
     {
-        public ulong playerId;
+        public string playerId;
         public int movementCardId;
         public int movedInTurn;
         public int inventoryWaterCount;
