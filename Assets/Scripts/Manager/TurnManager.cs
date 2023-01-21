@@ -139,7 +139,6 @@ public class TurnManager : NetworkBehaviour
         CurrentTurnPlayerId = playerId;
         currentTurnPlayerIdText.text = "Player " + playerId + "´s turn.";
         playerIdText.text = "PlayerId: " + NetworkManager.LocalClientId;
-
         OnTurnStart?.Invoke(playerId);
     }
 

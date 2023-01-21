@@ -4,15 +4,53 @@ using System.Collections.Generic;
 using Unity.Services.Analytics;
 using UnityEngine;
 using System.IO;
-public class AnalyticsManager: MonoBehaviour
+public class AnalyticsManager : Singleton<AnalyticsManager>
 {
     string filename = "";
-    DataOnTurnEnd dataOnTurnEnd = new DataOnTurnEnd();
+    public DataOnTurnEnd dataOnTurnEnd = new DataOnTurnEnd();
     void Start()
     {
         filename = Application.dataPath + "/test.csv";
         WriteHeadings();
-        CreateOnTurnEndDataForAnalyticsServices();
+        
+
+        TurnManager.Instance.OnTurnEnd += SendData;
+        CardManager.Instance.OnChestCardPlayed += GetChestCard;
+        CardManager.Instance.OnMovementCardPlayed += GetMovementCard;
+
+    }
+
+    private void SendData(ulong playerId)
+    {
+        var player = TurnManager.Instance.CurrentTurnPlayer;
+        var inventoryRessources = player.GetBagRessourcesIndividually(RessourceLocation.inventory);
+        var savedRessources = player.GetBagRessourcesIndividually(RessourceLocation.safe);
+
+        dataOnTurnEnd.playerId = playerId;
+        dataOnTurnEnd.movedInTurn = player.movedInCurrentTurn.Value;
+        dataOnTurnEnd.inventoryFoodCount = inventoryRessources.Item1;
+        dataOnTurnEnd.inventoryWaterCount = inventoryRessources.Item2;
+        dataOnTurnEnd.inventorySteelCount = inventoryRessources.Item3;
+        dataOnTurnEnd.inventoryWoodCount = inventoryRessources.Item4;
+        dataOnTurnEnd.savedFoodCount = savedRessources.Item1;
+        dataOnTurnEnd.savedWaterCount = savedRessources.Item2;
+        dataOnTurnEnd.savedSteelCount = savedRessources.Item3;
+        dataOnTurnEnd.savedWoodCount = savedRessources.Item4;
+        dataOnTurnEnd.totalTurnCount = TurnManager.Instance.TotalTurnCount;
+        dataOnTurnEnd.turnNumber = TurnManager.Instance.CurrentTurnNumber;
+
+        QueueOnTurnEndDataForAnalyticsServices();
+        WriteCSVLine();
+    }
+
+    private void GetChestCard(int cardId)
+    {
+        dataOnTurnEnd.chestCardPlayed.Add(cardId);
+    }
+
+    private void GetMovementCard(int cardId)
+    {
+        dataOnTurnEnd.movementCardId = cardId;
     }
 
     public void WriteCSVLine()
@@ -33,8 +71,7 @@ public class AnalyticsManager: MonoBehaviour
             dataOnTurnEnd.savedSteelCount, 
             dataOnTurnEnd.totalTurnCount,
             dataOnTurnEnd.turnNumber, 
-            dataOnTurnEnd.chestCardPlayed,
-            dataOnTurnEnd.isNight
+            dataOnTurnEnd.chestCardPlayed
             );
         tw.Close();
     }
@@ -46,11 +83,11 @@ public class AnalyticsManager: MonoBehaviour
             movedInTurn, inventoryWaterCount, inventoryFoodCount,
             inventoryWoodCount, inventorySteelCount, savedWaterCount,
             savedFoodCount, savedWoodCount, savedSteelCount, 
-            totalTurnCount, turnNumber, chestCardPlayed, isNight", false);
+            totalTurnCount, turnNumber, chestCardPlayed", false);
         tw.Close(); 
     }
 
-    void CreateOnTurnEndDataForAnalyticsServices()
+    void QueueOnTurnEndDataForAnalyticsServices()
     {
         Dictionary<string, object> parameters = new Dictionary<string, object>()
         {
@@ -68,16 +105,15 @@ public class AnalyticsManager: MonoBehaviour
             { "totalTurnCount", dataOnTurnEnd.totalTurnCount },
             { "turnNumber", dataOnTurnEnd.turnNumber },
             { "chestCardPlayed", dataOnTurnEnd.chestCardPlayed },
-            { "isNight", dataOnTurnEnd.isNight },
         };
 
         // The ‘OnTurnEnd’ event will get queued up and sent every minute
         AnalyticsService.Instance.CustomData("OnTurnEnd", parameters);
     }
 
-    struct DataOnTurnEnd
+    public struct DataOnTurnEnd
     {
-        public int playerId;
+        public ulong playerId;
         public int movementCardId;
         public int movedInTurn;
         public int inventoryWaterCount;
@@ -91,7 +127,6 @@ public class AnalyticsManager: MonoBehaviour
         public int totalTurnCount;
         public int turnNumber;
         public List<int> chestCardPlayed;
-        public bool isNight;
     }
 }
 

@@ -371,6 +371,45 @@ public class Player : Selectable
             savedRessources.Add(tmp);
         }
     }
+
+    public Tuple<int, int, int, int> GetBagRessourcesIndividually(RessourceLocation ressourceLocation)
+    {
+        NetworkList<int> ressourceList;
+
+        if (ressourceLocation == RessourceLocation.inventory) {
+            ressourceList = inventoryRessources;
+        }
+        else {
+            ressourceList = savedRessources;
+        }
+        int bagFoodCount = 0;
+        int bagWaterCount = 0;
+        int bagSteelCount = 0;
+        int bagWoodCount = 0;
+
+        foreach (int ressource in ressourceList)
+        {
+            switch (ressource)
+            {
+                case (int)Ressource.fruit:
+                    bagFoodCount += 1;
+                    break;
+                case (int)Ressource.water:
+                    bagWaterCount += 1;
+                    break;
+                case (int)Ressource.steel:
+                    bagSteelCount += 1;
+                    break;
+                case (int)Ressource.wood:
+                    bagWoodCount += 1;
+                    break;
+                case (int)Ressource.none:
+                    Debug.Log("No ressource was found");
+                    break;
+            }
+        }
+        return Tuple.Create(bagFoodCount, bagWaterCount, bagSteelCount, bagWoodCount);
+    }
     #endregion
 
     #region Win Condition
@@ -387,3 +426,9 @@ public class Player : Selectable
 
     #endregion
 }
+
+public enum RessourceLocation
+{
+    inventory,
+    safe
+};
