@@ -5,13 +5,11 @@ using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Unity.Netcode;
-using System.Collections;
-using Unity.Services.Relay.Models;
-
 public class LobbyManager
 {
-    int maxPlayers = 2;
+    int maxPlayers = 3;
     private NetworkVariable<bool> canStartGame = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
     public LobbyManager()
     {
         canStartGame.OnValueChanged += (bool previousValue, bool newValue) => {
@@ -19,11 +17,11 @@ public class LobbyManager
             NetworkManager.Singleton.SceneManager.LoadScene("2PlayerMap", LoadSceneMode.Single);
         };
     }
-    public async Task<Lobby> TryCreatePublicLobbyAsync(string lobbyName)
+    public async Task<Lobby> TryCreateLobbyAsync(string lobbyName, bool isPrivate)
     {
         var relayData = await RelayManager.Instance.SetupRelay();
         CreateLobbyOptions options = new CreateLobbyOptions();
-        options.IsPrivate = false;
+        options.IsPrivate = isPrivate;
         options.Data = new Dictionary<string, DataObject>()
         {
             {
@@ -33,20 +31,14 @@ public class LobbyManager
                     )
             },
         };
+
+
         Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
         Debug.Log("Lobby Was Created");
         InitializeServices.Instance.InitializeHeartbeatLobbyCoroutine(lobby.Id, 15);
         Debug.Log("Heartbit Corroutine Started");
         NetworkManager.Singleton.StartHost();
         Debug.Log("Host Started");
-        return lobby;
-    }
-
-        public async Task<Lobby> TryCreatePrivateLobbyAsync(string lobbyName)
-    {
-        CreateLobbyOptions options = new CreateLobbyOptions();
-        options.IsPrivate = true;
-        Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
         return lobby;
     }
 
@@ -82,9 +74,8 @@ public class LobbyManager
         }
     }
 
-    public async void JoinLobby(string id)
+    public async Task JoinLobby(string id)
     {
-        
         try
         {
             Lobby lobby = await LobbyService.Instance.JoinLobbyByIdAsync(id);
@@ -95,6 +86,7 @@ public class LobbyManager
             Debug.Log("LobbyId: " + lobby.Players.Count);
             Debug.Log("Joined Lobby");
             NetworkManager.Singleton.StartClient();
+            // On clinent joined lobby
         }
         catch (LobbyServiceException e)
         {

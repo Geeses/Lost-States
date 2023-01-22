@@ -208,7 +208,6 @@ public class GridManager : MonoBehaviour
             for (int i = 0; i <= end; i++)
             {
                 var coordinates = new GridCoordinates(origin.TileGridCoordinates.x, origin.TileGridCoordinates.y + i);
-                Debug.Log(coordinates.x + " " + coordinates.y);
                 if (TileGrid.ContainsKey(coordinates))
                 {
                     tiles.Add(TileGrid[coordinates]);
@@ -222,7 +221,6 @@ public class GridManager : MonoBehaviour
             for (int i = 0; i <= end; i++)
             {
                 var coordinates = new GridCoordinates(origin.TileGridCoordinates.x, origin.TileGridCoordinates.y - i);
-                Debug.Log(coordinates.x + " " + coordinates.y);
                 if (TileGrid.ContainsKey(coordinates))
                 {
                     tiles.Add(TileGrid[coordinates]);

@@ -1,29 +1,53 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UIElements/LobbyView/Lobby.uss?fileID=7433441132597879392&amp;guid=f846ca0e00d71a04da7010667a24094e&amp;type=3#Lobby" />
-    <ui:VisualElement name="lobby-screen" style="flex-direction: column; justify-content: space-between; width: 100%; height: 100%; padding-left: 50px; padding-right: 50px; padding-top: 50px; padding-bottom: 50px; visibility: hidden;">
-        <ui:VisualElement style="justify-content: space-between; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.87); border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-left-color: rgba(0, 0, 0, 0.41); border-right-color: rgba(0, 0, 0, 0.41); border-top-color: rgba(0, 0, 0, 0.41); border-bottom-color: rgba(0, 0, 0, 0.41); padding-left: 20px; padding-right: 20px; padding-top: 20px; padding-bottom: 20px;">
-            <ui:VisualElement name="top" style="width: 100%; top: 0; flex-grow: 1;">
-                <ui:ListView focusable="true" name="lobby-list" fixed-item-height="0" virtualization-method="DynamicHeight" style="flex-grow: 1;" />
+    <ui:VisualElement name="screen" style="flex-direction: column; justify-content: space-between; width: 100%; height: 100%; padding-left: 50px; padding-right: 50px; padding-top: 50px; padding-bottom: 50px; visibility: visible;">
+        <ui:VisualElement name="windows" style="width: 100%; height: 100%; visibility: visible;">
+            <ui:VisualElement style="flex-direction: row; background-color: rgba(0, 0, 0, 0.78); border-top-left-radius: 10px; border-top-right-radius: 10px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
+                <ui:Button tabindex="-1" text="Rooms" display-tooltip-when-elided="true" name="show-rooms-button" style="background-color: rgba(255, 255, 255, 0); -unity-font-style: bold; color: rgb(255, 255, 255); border-top-width: 2px; border-bottom-width: 0; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-left-width: 2px; border-right-width: 1px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; border-top-left-radius: 10px;" />
+                <ui:Button tabindex="-1" text="Join With Code" display-tooltip-when-elided="true" name="show-relay-button" style="border-right-width: 2px; border-left-width: 1px; border-top-width: 2px; border-bottom-width: 2px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); background-color: rgba(188, 188, 188, 0); -unity-font-style: bold; color: rgb(255, 255, 255); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
             </ui:VisualElement>
-            <ui:VisualElement name="bottom" style="width: 100%; align-items: center; flex-direction: column-reverse;">
-                <ui:VisualElement style="flex-direction: row; justify-content: center; align-items: center;">
-                    <ui:Button tabindex="-1" text="Create Lobby" display-tooltip-when-elided="true" name="create-lobby-button" style="background-color: rgb(245, 245, 245);" />
-                    <ui:Button tabindex="-1" text="Refresh" display-tooltip-when-elided="true" name="refresh-button" style="background-color: rgb(245, 245, 245);" />
-                    <ui:Button tabindex="-1" text="Join With Code" display-tooltip-when-elided="true" name="join-with-code-button" style="background-color: rgb(245, 245, 245);" />
+            <ui:VisualElement style="width: 100%; height: 100%;">
+                <ui:VisualElement name="rooms-window" style="justify-content: space-between; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.78); border-top-left-radius: 0; border-bottom-left-radius: 10px; border-top-right-radius: 0; border-bottom-right-radius: 10px; border-left-color: rgba(0, 0, 0, 0.41); border-right-color: rgba(0, 0, 0, 0.41); border-top-color: rgba(0, 0, 0, 0.41); border-bottom-color: rgba(0, 0, 0, 0.41); padding-left: 20px; padding-right: 20px; padding-top: 20px; padding-bottom: 20px; position: absolute; left: 0; top: 0; right: 0; bottom: 0;">
+                    <ui:VisualElement name="top" style="width: 100%; top: 0; flex-grow: 1;">
+                        <ui:ListView focusable="true" name="lobby-list" fixed-item-height="0" virtualization-method="DynamicHeight" style="flex-grow: 1;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="bottom" style="width: 100%; align-items: center; flex-direction: column-reverse;">
+                        <ui:VisualElement style="flex-direction: row; justify-content: center; align-items: center;">
+                            <ui:Button tabindex="-1" display-tooltip-when-elided="true" name="refresh-button" style="background-color: rgb(245, 245, 245); background-image: url(&apos;project://database/Packages/com.unity.collab-proxy/Editor/PlasticSCM/Assets/Images/refresh@2x.png?fileID=2800000&amp;guid=59571f82a0dc1a14da606dc0df6f8ea7&amp;type=3#refresh@2x&apos;); -unity-background-image-tint-color: rgb(63, 63, 63);" />
+                            <ui:Button tabindex="-1" text="Create" display-tooltip-when-elided="true" name="create-lobby-button" style="background-color: rgb(245, 245, 245);" />
+                            <ui:Button tabindex="-1" text="Join" display-tooltip-when-elided="true" name="join-private" style="background-color: rgb(245, 245, 245);" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="width: 100%;">
+                            <ui:TextField picking-mode="Ignore" label="Lobby Name" value="filler text" name="lobby-name-text-field" class="my-text-element" style="width: 100%; -unity-font-style: normal; color: rgb(0, 0, 0);" />
+                            <ui:Toggle label="Private" name="is-private-lobby-toggle" style="color: rgb(255, 255, 255); -unity-font-style: bold;" />
+                        </ui:VisualElement>
+                        <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="player-info" style="-unity-font-style: bold; color: rgb(255, 255, 255);" />
+                    </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:VisualElement name="buttons" style="flex-direction: row; justify-content: center;" />
-                <ui:VisualElement style="width: 100%;">
-                    <ui:TextField picking-mode="Ignore" label="Lobby Name" value="filler text" name="lobby-name-text-field" class="my-text-element" style="width: 100%; -unity-font-style: normal; color: rgb(0, 0, 0);" />
-                    <ui:Toggle label="Private" name="is-private-lobby-toggle" style="color: rgb(255, 255, 255); -unity-font-style: bold;" />
+                <ui:VisualElement name="relay-window" style="width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.78); border-top-left-radius: 0; border-bottom-left-radius: 10px; border-top-right-radius: 0; border-bottom-right-radius: 10px; left: 0; top: 0; right: 0; bottom: 0; align-items: center; justify-content: center;">
+                    <ui:VisualElement name="relay-screen" style="width: 60%; align-items: center; background-color: rgba(56, 56, 56, 0); border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; justify-content: center;">
+                        <ui:VisualElement style="flex-direction: row; flex-shrink: 0; width: 100%; align-items: center; justify-content: center;">
+                            <ui:Label tabindex="-1" text="Code" display-tooltip-when-elided="true" />
+                            <ui:TextField picking-mode="Ignore" value="Code" name="join-code-field" style="width: 60%;" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="align-items: center; width: 60%; flex-direction: row; justify-content: center;">
+                            <ui:Button tabindex="-1" text="Start Host" display-tooltip-when-elided="true" name="start-host" />
+                            <ui:Button tabindex="-1" text="Join Game" display-tooltip-when-elided="true" name="start-client" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="width: 100%; align-items: center; justify-content: center;">
+                            <ui:Button tabindex="-1" text="Waiting..." display-tooltip-when-elided="true" name="start-game" style="width: 40%; visibility: hidden;" />
+                            <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="relay-info" style="position: absolute; visibility: hidden; -unity-font-style: bold; color: rgba(255, 255, 255, 255);" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="player-info" style="-unity-font-style: bold; color: rgb(255, 255, 255);" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="overlay" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; align-items: center; justify-content: center; visibility: hidden; display: flex;" />
-    <ui:VisualElement name="authentication-overlay" style="left: 0; top: 0; right: 0; bottom: 0; position: absolute; align-items: center; justify-content: center; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; visibility: visible;">
+    <ui:VisualElement name="relay-overlay" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; align-items: center; justify-content: center; visibility: hidden; display: flex; padding-left: 50px; padding-right: 50px; padding-top: 50px; padding-bottom: 50px;" />
+    <ui:VisualElement name="authentication-overlay" style="left: 0; top: 0; right: 0; bottom: 0; position: absolute; align-items: center; justify-content: center; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
         <ui:VisualElement name="authentication-window" style="background-color: rgba(0, 0, 0, 0.52); padding-left: 20px; padding-right: 20px; padding-top: 20px; padding-bottom: 20px; border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; flex-grow: 0; width: 60%;">
             <ui:TextField picking-mode="Ignore" label="Name" name="username" class="my-text-element" style="align-items: center; justify-content: flex-start;" />
+            <ui:Toggle label="Track Data?" name="track-data" class="my-text-element" />
             <ui:Button tabindex="-1" text="Login" display-tooltip-when-elided="true" name="login-button" />
             <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="authentication-info" style="-unity-font-style: bold; color: rgb(255, 255, 255);" />
         </ui:VisualElement>

@@ -2,6 +2,8 @@ using UnityEditor;
 using UnityEngine.UIElements;
 using Unity.Services.Lobbies.Models;
 using System;
+using Unity.Netcode;
+using UnityEngine;
 
 public class LobbyCell
 {
@@ -11,10 +13,33 @@ public class LobbyCell
 
     private LobbyManager _manager;
     private Lobby _lobby;
+    private bool startedWithLobby;
 
     public LobbyCell(LobbyManager manager)
     {
         _manager = manager;
+        startedWithLobby = true;
+
+        NetworkManager.Singleton.OnClientConnectedCallback += (id) =>
+        {
+            Debug.Log("OnClientConnectedCallback: All players are here");
+            _usersJoined.text = _lobby.Players.Count.ToString() + "/2";
+            if (GameObject.FindGameObjectsWithTag("Player").Length >= 2 && startedWithLobby)
+            {
+                if (NetworkManager.Singleton.IsHost)
+                {
+                    Debug.Log("OnClientConnectedCallback: All players are here");
+                    _joinButton.text = "Start";
+                    _joinButton.clicked += StartGame;
+                    _joinButton.clicked -= JoinLobby;
+                }
+                else
+                {
+                    _joinButton.clicked -= JoinLobby;
+                    _joinButton.text = "Wait";
+                }
+            }
+        };
     }
     public void SetVisualElements(VisualElement cell)
     {
@@ -32,22 +57,20 @@ public class LobbyCell
     {
         _lobby = lobby;
         _nameLabel.text = lobby.Name;
+        _usersJoined.text = _lobby.Players.Count.ToString() + "/2";
 
-        if (_lobby.Players.Count == 2)
-        {
-            _usersJoined.text = _lobby.Players.Count.ToString() + "/2";
-            _joinButton.clicked += StartGame;
-        }
-        else
-        {
-            _usersJoined.text = _lobby.Players.Count.ToString() + "/2";
-            _joinButton.clicked += JoinLobby;
-        }
+        Debug.Log("SetData was called");
+        _joinButton.text = "Join";
+        _joinButton.clicked -= StartGame;
+        _joinButton.clicked += JoinLobby;
     }
 
     public void  JoinLobby()
     {
-        _manager.JoinLobby(_lobby.Id);
+        // await
+        _joinButton.clicked -= JoinLobby;
+        _joinButton.text = "Wait";
+        _ = _manager.JoinLobby(_lobby.Id);
         _usersJoined.text = _lobby.Players.Count.ToString() + "/2";
     }
 }

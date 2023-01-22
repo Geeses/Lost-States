@@ -27,8 +27,8 @@ public class CardManager : NetworkBehaviour
 
     private static CardManager s_instance;
 
-    public event Action<int> OnMovementCardPlayed;
-    public event Action<int> OnChestCardPlayed;
+    public event Action<int, ulong> OnMovementCardPlayed;
+    public event Action<int, ulong> OnChestCardPlayed;
     #endregion
 
     #region Properties
@@ -162,7 +162,7 @@ public class CardManager : NetworkBehaviour
             PlayMovementCardClientRpc(cardId, playerId, temporaryCard);
             player.movementCards.Remove(cardId);
 
-            OnMovementCardPlayed.Invoke(cardId);
+            OnMovementCardPlayed.Invoke(cardId, playerId);
         }
     }
 
@@ -255,7 +255,7 @@ public class CardManager : NetworkBehaviour
             CardEffectManager.Instance.InitializeCardEffectClientRpc(cardId, playerId, CardType.Chest, clientRpcParams);
             player.inventoryChestCards.Remove(cardId);
         }
-        OnChestCardPlayed.Invoke(cardId);
+        OnChestCardPlayed.Invoke(cardId, playerId);
     }
     #endregion
 }

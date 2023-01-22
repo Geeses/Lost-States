@@ -5,23 +5,22 @@ using Unity.Services.Analytics;
 using UnityEngine;
 using System.IO;
 using Unity.Netcode;
-public class AnalyticsManager : Singleton<AnalyticsManager>
+public class AnalyticsManager: MonoBehaviour
 {
     string filename = "";
     public DataOnTurnEnd dataOnTurnEnd = new DataOnTurnEnd();
+    public DataOnCardPlayed dataCardPlayed = new DataOnCardPlayed();
     void Start()
     {
         filename = Application.dataPath + "/test.csv";
         WriteHeadings();
-        
 
-        TurnManager.Instance.OnTurnEnd += SendData;
+        TurnManager.Instance.OnTurnEnd += SendOnTurnEndData;
         CardManager.Instance.OnChestCardPlayed += GetChestCard;
         CardManager.Instance.OnMovementCardPlayed += GetMovementCard;
-
     }
 
-    private void SendData(ulong playerId)
+    private void SendOnTurnEndData(ulong playerId)
     {
         Debug.Log("SavingData");
         Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
@@ -45,22 +44,31 @@ public class AnalyticsManager : Singleton<AnalyticsManager>
         WriteCSVLine();
     }
 
-    private void GetChestCard(int cardId)
+    private void GetChestCard(int cardId, ulong playerId)
     {
-        dataOnTurnEnd.chestCardPlayed.Add(cardId);
+        dataCardPlayed.TurnNumber = TurnManager.Instance.CurrentTurnNumber;
+        dataCardPlayed.TotalTurnCount = TurnManager.Instance.TotalTurnCount;
+        dataCardPlayed.PlayerId = (int)playerId;
+        dataCardPlayed.CardId = cardId;
+        dataCardPlayed.CardType = (int)CardType.Chest;
+        QueueOnCardPlayedDataForAnalyticsServices();
     }
 
-    private void GetMovementCard(int cardId)
+    private void GetMovementCard(int cardId, ulong playerId)
     {
-        dataOnTurnEnd.movementCardId = cardId;
+        dataCardPlayed.TurnNumber = TurnManager.Instance.CurrentTurnNumber;
+        dataCardPlayed.TotalTurnCount = TurnManager.Instance.TotalTurnCount;
+        dataCardPlayed.PlayerId = (int)playerId;
+        dataCardPlayed.CardId = cardId;
+        dataCardPlayed.CardType = (int)CardType.Movement;
+        QueueOnCardPlayedDataForAnalyticsServices();
     }
 
     public void WriteCSVLine()
     {
         var tw = new StreamWriter(filename, true);
-        tw.WriteLine("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}",
+        tw.WriteLine("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}",
             dataOnTurnEnd.playerId, 
-            dataOnTurnEnd.movementCardId, 
             dataOnTurnEnd.movedInTurn, 
             dataOnTurnEnd.inventoryWaterCount,
             dataOnTurnEnd.inventoryFoodCount, 
@@ -71,8 +79,7 @@ public class AnalyticsManager : Singleton<AnalyticsManager>
             dataOnTurnEnd.savedWoodCount,
             dataOnTurnEnd.savedSteelCount, 
             dataOnTurnEnd.totalTurnCount,
-            dataOnTurnEnd.turnNumber, 
-            dataOnTurnEnd.chestCardPlayed
+            dataOnTurnEnd.turnNumber 
             );
         tw.Close();
     }
@@ -80,7 +87,7 @@ public class AnalyticsManager : Singleton<AnalyticsManager>
     void WriteHeadings()
     {
         var tw = new StreamWriter(filename, false);
-        tw.WriteLine("timestamp, playerId, movementCardId, movedInTurn, inventoryWaterCount, inventoryFoodCount, inventoryWoodCount, inventorySteelCount, savedWaterCount, savedFoodCount, savedWoodCount, savedSteelCount, totalTurnCount, turnNumber, chestCardPlayed", false);
+        tw.WriteLine("playerId, movedInTurn, inventoryWaterCount, inventoryFoodCount, inventoryWoodCount, inventorySteelCount, savedWaterCount, savedFoodCount, savedWoodCount, savedSteelCount, totalTurnCount, turnNumber", false);
         tw.Close(); 
     }
 
@@ -88,30 +95,42 @@ public class AnalyticsManager : Singleton<AnalyticsManager>
     {
         Dictionary<string, object> parameters = new Dictionary<string, object>()
         {
-            { "playerId", dataOnTurnEnd.playerId },
-            { "movementCardId", dataOnTurnEnd.movementCardId },
-            { "movedInTurn", dataOnTurnEnd.movedInTurn },
-            { "inventoryWaterCount", dataOnTurnEnd.inventoryWaterCount },
-            { "inventoryFoodCount", dataOnTurnEnd.inventoryFoodCount },
-            { "inventoryWoodCount", dataOnTurnEnd.inventoryWoodCount },
-            { "inventorySteelCount", dataOnTurnEnd.inventorySteelCount },
-            { "savedWaterCount", dataOnTurnEnd.savedWaterCount },
-            { "savedFoodCount", dataOnTurnEnd.savedFoodCount },
-            { "savedWoodCount", dataOnTurnEnd.savedWoodCount },
-            { "savedSteelCount", dataOnTurnEnd.savedSteelCount },
-            { "totalTurnCount", dataOnTurnEnd.totalTurnCount },
-            { "turnNumber", dataOnTurnEnd.turnNumber }
-//            { "chestCardPlayed", dataOnTurnEnd.chestCardPlayed },
+            { "PlayerId", dataOnTurnEnd.playerId },
+            { "MovedInTurn", dataOnTurnEnd.movedInTurn },
+            { "InventoryWaterCount", dataOnTurnEnd.inventoryWaterCount },
+            { "InventoryFoodCount", dataOnTurnEnd.inventoryFoodCount },
+            { "InventoryWoodCount", dataOnTurnEnd.inventoryWoodCount },
+            { "InventorySteelCount", dataOnTurnEnd.inventorySteelCount },
+            { "SavedWaterCount", dataOnTurnEnd.savedWaterCount },
+            { "SavedFoodCount", dataOnTurnEnd.savedFoodCount },
+            { "SavedWoodCount", dataOnTurnEnd.savedWoodCount },
+            { "SavedSteelCount", dataOnTurnEnd.savedSteelCount },
+            { "TotalTurnCount", dataOnTurnEnd.totalTurnCount },
+            { "TurnNumber", dataOnTurnEnd.turnNumber }
         };
 
         // The ‘OnTurnEnd’ event will get queued up and sent every minute
         AnalyticsService.Instance.CustomData("OnTurnEnd", parameters);
     }
 
+    void QueueOnCardPlayedDataForAnalyticsServices()
+    {
+        Dictionary<string, object> parameters = new Dictionary<string, object>()
+        {
+            { "PlayerId", dataCardPlayed.PlayerId },
+            { "CardId", dataCardPlayed.CardId },
+            { "CardType", dataCardPlayed.CardType },
+            { "TotalTurnCount", dataOnTurnEnd.totalTurnCount },
+            { "TurnNumber", dataOnTurnEnd.turnNumber }
+        };
+
+        // The ‘OnTurnEnd’ event will get queued up and sent every minute
+        AnalyticsService.Instance.CustomData("OnCardPlayed", parameters);
+    }
+
     public struct DataOnTurnEnd
     {
         public string playerId;
-        public int movementCardId;
         public int movedInTurn;
         public int inventoryWaterCount;
         public int inventoryFoodCount;
@@ -123,7 +142,15 @@ public class AnalyticsManager : Singleton<AnalyticsManager>
         public int savedSteelCount;
         public int totalTurnCount;
         public int turnNumber;
-        public List<int> chestCardPlayed;
+    }
+
+    public struct DataOnCardPlayed
+    {
+        public int PlayerId;
+        public int CardType;
+        public int CardId;
+        public int TotalTurnCount;
+        public int TurnNumber;
     }
 }
 

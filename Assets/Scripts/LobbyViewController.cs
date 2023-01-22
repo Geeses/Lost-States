@@ -1,11 +1,6 @@
 using UnityEngine.UIElements;
-using Unity.Netcode;
 using System.Collections.Generic;
 using Unity.Services.Lobbies.Models;
-using UnityEngine.SceneManagement;
-using UnityEngine;
-using System;
-
 public class LobbyViewController
 {
     private ListView _lobbyList;
@@ -13,18 +8,24 @@ public class LobbyViewController
     private TextField _lobbyName;
     private Toggle _isPrivate;
     private Button _createButton;
-    private Button _joinWithCodeButton;
     private Button _refreshButton;
-    private TextInputBaseField<string> _nameTextInput;
-    private VisualElement _lobbyScreen;
     private VisualTreeAsset _cellTemplate;
-    private RelayViewController _relayView;
     private VisualElement _root;
     private LobbyManager _manager;
     private TextField _usernameTextField;
     private Button _loginButton;
-    private VisualElement _authenticationWindow;
     private Label _authenticationInfo;
+    private Toggle _allowTrackingToggle;
+
+    // Navigation
+    private Button showRelayButton;
+    private Button showRoomsButton;
+
+    // Windows
+    private VisualElement _authenticationWindow;
+    private VisualElement _roomsWindow;
+    private VisualElement _relayWindow;
+    private VisualElement _windows;
 
     private static List<Lobby> _lobbies = new List<Lobby>();
 
@@ -33,43 +34,86 @@ public class LobbyViewController
         _manager = manager;
         _root = root;
         _cellTemplate = cellTemplate;
-        _relayView = relayView;
 
+        _allowTrackingToggle = _root.Q<Toggle>("track-data");
         _lobbyList = _root.Q<ListView>("lobby-list");
         _playerInfo = _root.Q<Label>("player-info");
         _lobbyName = _root.Q<TextField>("lobby-name-text-field");
         _isPrivate = _root.Q<Toggle>("is-private-lobby-toggle");
         _createButton = _root.Q<Button>("create-lobby-button");
         _refreshButton = _root.Q <Button>("refresh-button");
-        _joinWithCodeButton = _root.Q<Button>("join-with-code-button");
-        _nameTextInput = _root.Q<TextInputBaseField<string>>("unity-text-input");
-        _lobbyScreen = _root.Q<VisualElement>("lobby-screen");
+
+        // Navigation
         _loginButton = root.Q<Button>("login-button");
-        _usernameTextField = root.Q<TextField>("username");
+        showRoomsButton = root.Q<Button>("show-rooms-button");
+        showRelayButton = root.Q<Button>("show-relay-button");
+
+        showRoomsButton.clicked += GoToRooms;
+        showRelayButton.clicked += GoToRelay;
+        _loginButton.clicked += InitializeUnityServices;
+
+        // Windows
         _authenticationWindow = root.Q<VisualElement>("authentication-overlay");
-        _authenticationInfo = root.Q<Label>("authentication-info");
+        _windows = root.Q<VisualElement>("windows");
+        _roomsWindow = root.Q<VisualElement>("rooms-window");
+        _relayWindow = root.Q<VisualElement>("relay-window");
+
+        _windows.visible = false;
+        _authenticationWindow.visible = true;
 
         _createButton.clicked += AddNewLobby;
         _refreshButton.clicked += RefreshLobbies;
-        _lobbyScreen.visible = false;
+
         InitializeList();
 
-        // Relay
-        _joinWithCodeButton.clicked += _relayView.Show;
-        _loginButton.clicked += InitializeUnityServices;
+        //Authentication
+        _usernameTextField = root.Q<TextField>("username");
+        _authenticationInfo = root.Q<Label>("authentication-info");
+
+        
+
     }
 
     private void InitializeUnityServices()
     {
-        if (_usernameTextField.text == "") {
+        if (_usernameTextField.text == "")
+        {
             _authenticationInfo.text = "Please, insert an username";
             return;
         }
-        InitializeServices.Instance.InitializeWithUsername(_usernameTextField.text);
-        _authenticationWindow.visible = false;
-        _lobbyScreen.visible = true;
+        else if (_allowTrackingToggle.value == false)
+        {
+            _authenticationInfo.text = "Please, I really need your data";
+            return;
+        }
+        else
+        {
+            InitializeServices.Instance.InitializeWithUsername(_usernameTextField.text);
+            GoToWindows();
+        }
     }
 
+    private void GoToWindows()
+    {
+        _authenticationWindow.visible = false;
+        _windows.visible = true;
+        GoToRooms();
+    }
+
+    private void GoToRooms()
+    {
+        _roomsWindow.visible = true;
+        _relayWindow.visible = false;
+        showRoomsButton.style.borderBottomWidth = 0;
+        showRelayButton.style.borderBottomWidth = 2;
+    }
+    private void GoToRelay()
+    {
+        _roomsWindow.visible = false;
+        _relayWindow.visible = true;
+        showRoomsButton.style.borderBottomWidth = 2;
+        showRelayButton.style.borderBottomWidth = 0;
+    }
     private void InitializeList()
     {
         _lobbyList.makeItem = () =>
@@ -96,14 +140,9 @@ public class LobbyViewController
         }
 
         _playerInfo.text = "Waiting for other players to join";
-        if (_isPrivate.value)
-        {
-            var lobby = await _manager.TryCreatePrivateLobbyAsync(_lobbyName.text);
-        }
-        else
-        {
-            var lobby = await _manager.TryCreatePublicLobbyAsync(_lobbyName.text);
-        }
+
+        await _manager.TryCreateLobbyAsync(_lobbyName.text, _isPrivate.value);
+
         RefreshLobbies();
     }
 

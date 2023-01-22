@@ -2,22 +2,19 @@ using Unity.Netcode;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using UnityEngine;
-using System;
 
 public class RelayViewController
 {
     Button startHost;
     Button startClient;
     Button startGameButton;
-    Button relayCloseButton;
     TextField joinCodeField;
     Label relayInfo;
-    VisualElement relayScreen;
     RelayHostData result;
     private VisualElement _root;
 
     private NetworkVariable<bool> canStartGame = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-
+    private bool startedWithRelay = false;
     public RelayViewController(VisualElement root) {
         _root = root;
         startHost = _root.Q<Button>("start-host");
@@ -25,8 +22,6 @@ public class RelayViewController
         startGameButton = _root.Q<Button>("start-game");
         joinCodeField = _root.Q<TextField>("join-code-field");
         relayInfo = _root.Q<Label>("relay-info");
-        relayCloseButton = _root.Q<Button>("relay-close");
-        relayScreen = _root.Q<VisualElement>("relay-screen");
 
         startHost.clicked += StartHost;
         startClient.clicked += StartClient;
@@ -34,12 +29,20 @@ public class RelayViewController
         relayInfo.visible = false;
         startGameButton.visible = false;
 
-        relayCloseButton.clicked += Hide;
-        Hide();
-
         NetworkManager.Singleton.OnClientConnectedCallback += (id) =>
         {
-            
+            if (GameObject.FindGameObjectsWithTag("Player").Length >= 2 && startedWithRelay)
+            {
+                if (NetworkManager.Singleton.IsHost)
+                {
+                    Debug.Log("OnClientConnectedCallback: All players are here");
+                    startGameButton.visible = true;
+                    relayInfo.visible = false;
+                    startGameButton.text = "Start";
+                    startGameButton.clicked += StartGame;
+                    relayInfo.visible = false;
+                }
+            }
         };
 
         canStartGame.OnValueChanged += (bool previousValue, bool newValue) => {
@@ -49,6 +52,7 @@ public class RelayViewController
     }
 
     public async void StartHost() {
+        startedWithRelay = true;
         if (RelayManager.Instance.IsRelayEnabled) 
             result = await RelayManager.Instance.SetupRelay();
 
@@ -81,31 +85,11 @@ public class RelayViewController
         if (NetworkManager.Singleton.StartClient())
         {
             Debug.Log("Client started");
-            if (GameObject.FindGameObjectsWithTag("Player").Length >= 2)
-            {
-                Debug.Log("OnClientConnectedCallback: All players are here");
-                startGameButton.visible = true;
-                relayInfo.visible = false;
-                startGameButton.text = "Start";
-                startGameButton.clicked += StartGame;
-            }
             relayInfo.text = "Waiting for server to start Game";
         }
         else {
             Debug.Log("Unable to start client");
             relayInfo.text = "Unable to start client";
         }     
-    }
-
-    public void Show()
-    {
-        relayScreen.visible = true;   
-    }
-
-    public void Hide()
-    {
-        relayScreen.visible = false;
-        startGameButton.visible = false;
-        relayInfo.visible = false;
     }
 }
