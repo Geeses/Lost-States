@@ -11,7 +11,7 @@ public class AnalyticsManager: MonoBehaviour
     public DataOnGameEnd dataOnGameEnd = new DataOnGameEnd();
     void Start()
     {
-        filename = Application.dataPath + "/test.csv";
+        filename = Application.dataPath + "/OnTurnEnd.csv";
         WriteHeadings();
 
         TurnManager.Instance.OnTurnEnd += SendOnTurnEndData;
