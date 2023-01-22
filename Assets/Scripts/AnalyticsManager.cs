@@ -1,15 +1,14 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Unity.Services.Analytics;
 using UnityEngine;
 using System.IO;
-using Unity.Netcode;
+
 public class AnalyticsManager: MonoBehaviour
 {
     string filename = "";
     public DataOnTurnEnd dataOnTurnEnd = new DataOnTurnEnd();
     public DataOnCardPlayed dataCardPlayed = new DataOnCardPlayed();
+    public DataOnGameEnd dataOnGameEnd = new DataOnGameEnd();
     void Start()
     {
         filename = Application.dataPath + "/test.csv";
@@ -18,6 +17,27 @@ public class AnalyticsManager: MonoBehaviour
         TurnManager.Instance.OnTurnEnd += SendOnTurnEndData;
         CardManager.Instance.OnChestCardPlayed += GetChestCard;
         CardManager.Instance.OnMovementCardPlayed += GetMovementCard;
+        GameManager.Instance.OnGameEnd += SendOnGameEndData;
+    }
+
+    private void SendOnGameEndData(ulong playerId)
+    {
+        dataOnGameEnd.PlayerId = (int)playerId;
+        Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
+        dataOnGameEnd.RessourcesSavedCount = player.savedRessourceCount;
+        dataOnGameEnd.TotalRessourcesObtained = player.inventoryRessourceCount;
+        dataOnGameEnd.NeededRessourcesCount = player.RessourceCollectionCard.steelAmount + player.RessourceCollectionCard.waterAmount + player.RessourceCollectionCard.woodAmount + player.RessourceCollectionCard.fruitAmount;
+        
+        Dictionary<string, object> parameters = new Dictionary<string, object>()
+        {
+            { "TotalRessourcesObtained", dataOnGameEnd.PlayerId },
+            { "TotalRessourcesObtained", dataOnGameEnd.TotalRessourcesObtained },
+            { "RessourcesSavedCount", dataOnGameEnd.RessourcesSavedCount },
+            { "NeededRessourcesCount", dataOnGameEnd.NeededRessourcesCount }
+        };
+
+        // The ‘OnTurnEnd’ event will get queued up and sent every minute
+        AnalyticsService.Instance.CustomData("OnGameEnd", parameters);
     }
 
     private void SendOnTurnEndData(ulong playerId)
@@ -27,7 +47,7 @@ public class AnalyticsManager: MonoBehaviour
         var inventoryRessources = player.GetBagRessourcesIndividually(RessourceLocation.inventory);
         var savedRessources = player.GetBagRessourcesIndividually(RessourceLocation.safe);
 
-        dataOnTurnEnd.playerId = playerId.ToString();
+        dataOnTurnEnd.playerId = (int)playerId;
         dataOnTurnEnd.movedInTurn = player.movedInCurrentTurn.Value;
         dataOnTurnEnd.inventoryFoodCount = inventoryRessources.Item1;
         dataOnTurnEnd.inventoryWaterCount = inventoryRessources.Item2;
@@ -130,7 +150,7 @@ public class AnalyticsManager: MonoBehaviour
 
     public struct DataOnTurnEnd
     {
-        public string playerId;
+        public int playerId;
         public int movedInTurn;
         public int inventoryWaterCount;
         public int inventoryFoodCount;
@@ -151,6 +171,14 @@ public class AnalyticsManager: MonoBehaviour
         public int CardId;
         public int TotalTurnCount;
         public int TurnNumber;
+    }
+
+    public struct DataOnGameEnd
+    {
+        public int PlayerId;
+        public int TotalRessourcesObtained;
+        public int RessourcesSavedCount;
+        public int NeededRessourcesCount;
     }
 }
 

@@ -69,7 +69,7 @@ public class OpponentsUI : NetworkBehaviour
 
     private void UpdateRessourcesText(NetworkListEvent<int> changeEvent)
     {
-        Debug.Log("OpponentsUI.UpdateRessourcesText changeEvent: " + changeEvent.Type);
+        //Debug.Log("OpponentsUI.UpdateRessourcesText changeEvent: " + changeEvent.Type);
         ressourcesCount.text = Player.inventoryRessourceCount.ToString();
     }
 

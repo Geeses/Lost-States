@@ -21,7 +21,7 @@ public class GameManager : NetworkBehaviour
     public bool gameOver;
 
     public event Action OnGameStart;
-    public event Action OnGameEnd;
+    public event Action<ulong> OnGameEnd;
 
     private static GameManager s_instance;
 
@@ -198,7 +198,7 @@ public class GameManager : NetworkBehaviour
     private void InitializePlayerWinClientRpc(ulong playerId)
     {
         gameOver = true;
-        OnGameEnd?.Invoke();
+        OnGameEnd?.Invoke(playerId);
         Battlelog.Instance.AddLog(PlayerNetworkManager.Instance.PlayerDictionary[playerId].profileName.Value + " won the game. ez clap");
     }
 }
