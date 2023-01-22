@@ -23,6 +23,7 @@ public class GameManager : NetworkBehaviour
     public event Action OnGameStart;
     public event Action<ulong> OnGameEnd;
 
+    private ulong _winnerPlayerId;
     private static GameManager s_instance;
 
     private List<ulong> _connectedPlayersId = new List<ulong>();
@@ -31,6 +32,7 @@ public class GameManager : NetworkBehaviour
     #region Properties
     public static GameManager Instance { get { return s_instance; } }
     public List<ulong> ConnectedPlayersId { get => _connectedPlayersId; private set => _connectedPlayersId = value; }
+    public ulong WinnerPlayerId { get => _winnerPlayerId; set => _winnerPlayerId = value; }
     #endregion
 
     #region Monobehavior Functions
@@ -198,6 +200,7 @@ public class GameManager : NetworkBehaviour
     private void InitializePlayerWinClientRpc(ulong playerId)
     {
         gameOver = true;
+        WinnerPlayerId = playerId;
         OnGameEnd?.Invoke(playerId);
         Battlelog.Instance.AddLog(PlayerNetworkManager.Instance.PlayerDictionary[playerId].profileName.Value + " won the game. ez clap");
     }
