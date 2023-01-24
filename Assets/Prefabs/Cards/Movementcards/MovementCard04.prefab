@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 469728987098826006, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_text
-      value: bewege andere spieler um 2
+      value: Du kannst einen Gegenspieler um 1 Feld bewegen.
       objectReference: {fileID: 0}
     - target: {fileID: 2306062493240514938, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_Sprite
@@ -31,6 +31,10 @@ PrefabInstance:
     - target: {fileID: 2306062493240514938, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_Color.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923847892337928676, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
+      propertyPath: m_text
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5157082764823254035, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: GlobalObjectIdHash
