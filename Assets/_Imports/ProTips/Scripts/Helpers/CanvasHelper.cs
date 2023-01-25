@@ -17,7 +17,7 @@ namespace ModelShark
             }
             for (int i = 0; i < canvases.Length; i++)
             {
-                if (canvases[i].isRootCanvas)
+                if (canvases[i].isRootCanvas && canvases[i].renderMode != RenderMode.WorldSpace)
                     return canvases[i];
             }
 

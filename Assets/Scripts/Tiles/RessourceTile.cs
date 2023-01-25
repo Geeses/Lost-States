@@ -8,29 +8,55 @@ public class RessourceTile : NetworkBehaviour, ITileExtension
 {
     #region Attributes
     [Header("Options")]
+    public int ressourceCooldown;
     public Ressource ressourceType;
     public int ressourceCount;
 
     [Header("References")]
     [SerializeField] private SpriteRenderer ressourceRenderer;
     [SerializeField] private SpriteRenderer podestRenderer;
+    [SerializeField] private TMPro.TextMeshProUGUI respawnText;
 
     private Tile _tile;
     private Player _cachedPlayer;
+    private int _startRessourceCount;
+    private int _startRessourceCooldown;
+    private int _playerCount;
     #endregion
 
     #region Monobehavior Functions
     private void Start()
     {
         _tile = GetComponent<Tile>();
-        _tile.OnStepOnTile += GivePlayerRessource;
 
-        if(ressourceCount > 0)
+        TurnManager.Instance.OnTurnStart += ChangeRessourceCooldown;
+        GameManager.Instance.OnGameStart += Initialize;
+    }
+
+    private void OnDisable()
+    {
+        _tile.OnStepOnTile -= GivePlayerRessource;
+        TurnManager.Instance.OnTurnStart -= ChangeRessourceCooldown;
+        GameManager.Instance.OnGameStart -= Initialize;
+    }
+
+    #endregion
+
+    private void Initialize()
+    {
+        _playerCount = PlayerNetworkManager.Instance.PlayerDictionary.Count;
+
+        _tile.OnStepOnTile += GivePlayerRessource;
+        _startRessourceCount = ressourceCount;
+        ressourceCooldown *= _playerCount;
+        _startRessourceCooldown = ressourceCooldown;
+        respawnText.gameObject.SetActive(false);
+
+        if (ressourceCount > 0)
         {
             ressourceRenderer.enabled = true;
         }
     }
-    #endregion
 
     private void GivePlayerRessource(Player player)
     {
@@ -63,5 +89,25 @@ public class RessourceTile : NetworkBehaviour, ITileExtension
     {
         ressourceCount = 0;
         ressourceRenderer.enabled = false;
+        respawnText.gameObject.SetActive(true);
+    }
+
+    private void ChangeRessourceCooldown(ulong obj)
+    {
+        Debug.Log("Count: " + ressourceCount + " Cooldown: " + ressourceCooldown);
+
+        if(_startRessourceCount != 0 && ressourceCount == 0 && ressourceCooldown != 0)
+        {
+            respawnText.gameObject.SetActive(true);
+            ressourceCooldown -= 1;
+            respawnText.text = (ressourceCooldown / _playerCount).ToString();
+        }
+        else
+        {
+            respawnText.gameObject.SetActive(false);
+            ressourceCount = _startRessourceCount;
+            ressourceRenderer.enabled = true;
+            ressourceCooldown = _startRessourceCooldown;
+        }
     }
 }

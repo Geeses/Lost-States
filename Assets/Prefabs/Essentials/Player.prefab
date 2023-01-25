@@ -76,7 +76,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedSprite: {fileID: 3543353439402046407, guid: d3bcb1e2aac377147aaa6e752d1eacff, type: 3}
+  enemySelectedSprite: {fileID: 3543353439402046407, guid: 9d110f1dfb2056245bf04471e1bc9466, type: 3}
   selected: 0
+  enemySelected: 0
   _spriteRenderer: {fileID: 0}
   _collider: {fileID: 3667005215213547533}
   profileName:

@@ -158,6 +158,9 @@ public class Player : Selectable
         selectedSprite = Instantiate(selectedSprite, transform);
         selectedSprite.color = Color.green;
 
+        enemySelectedSprite = Instantiate(enemySelectedSprite, transform);
+        enemySelectedSprite.color = Color.red;
+
         if(!IsLocalPlayer)
         {
             selectedSprite.color = Color.red;
