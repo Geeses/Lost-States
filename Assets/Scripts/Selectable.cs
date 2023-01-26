@@ -45,7 +45,7 @@ public class Selectable : NetworkBehaviour, INetworkSerializable
 
     public virtual void Highlight()
     {
-        _spriteRenderer.material.color = Color.green;
+        _spriteRenderer.material.color = new Color(0, 0.6f, 0);
     }
 
     public virtual void Unhighlight()

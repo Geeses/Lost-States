@@ -133,8 +133,8 @@ public class Player : Selectable
 
     private void Initialize()
     {
-        CurrentTile = GridManager.Instance.TileGrid[new GridCoordinates(0, 0)];
-        OldTile = GridManager.Instance.TileGrid[new GridCoordinates(0, 0)];
+        CurrentTile = GridManager.Instance.TileGrid[new GridCoordinates(-(int)clientId.Value, 0)];
+        OldTile = GridManager.Instance.TileGrid[new GridCoordinates(-(int)clientId.Value, 0)];
         inventoryRessources.OnListChanged += ChangeCountInventory;
         savedRessources.OnListChanged += ChangeCountSaved;
         InputManager.Instance.OnSelect += ChangeCurrentSelectedTarget;
@@ -240,6 +240,13 @@ public class Player : Selectable
 
         if (isAdjacent && (moveCount.Value > 0) && (tile.passable || canMoveOverUnpassable.Value) || forceMove)
         {
+            if(tile.PlayerOnTile != null)
+            {
+                GridCoordinates newCoords = coordinates + (coordinates - CurrentTile.TileGridCoordinates);
+                Debug.Log("OldTile: " + CurrentTile.TileGridCoordinates.ToString() + " New Tile: " + coordinates.ToString() + " Direction: " + (coordinates - CurrentTile.TileGridCoordinates).ToString() + " Coords: " + newCoords.ToString()); ;
+                tile.PlayerOnTile.MoveClientRpc(newCoords, false, true);
+            }
+
             if (!forceMove)
             {
                 movedInCurrentTurn.Value += 1;
@@ -268,6 +275,7 @@ public class Player : Selectable
     [ClientRpc]
     public void MoveClientRpc(GridCoordinates coordinates, bool invokeEvent = true, bool forceMove = false)
     {
+        OldTile.PlayerLeavesTile();
         OldTile = CurrentTile;
 
         if (IsLocalPlayer)
@@ -281,6 +289,7 @@ public class Player : Selectable
 
             UnhighlightAdjacentTiles();
         }
+
         CurrentTile = GridManager.Instance.TileGrid[coordinates];
         CurrentTile.PlayerStepOnTile(this);
         Vector3 cellWorldPosition = GridManager.Instance.Tilemap.CellToWorld(new Vector3Int(coordinates.x, coordinates.y, 0));
