@@ -19,8 +19,8 @@ public class CardManager : NetworkBehaviour
     private int moveCardListInStack = 3;
     private int chestCardListInStack = 3;
 
-    public event Action<int> OnMovementCardPlayed;
-    public event Action<int> OnChestCardPlayed;
+    public event Action<int, ulong> OnMovementCardPlayed;
+    public event Action<int, ulong> OnChestCardPlayed;
 
     private List<int> _movementCardStack = new List<int>();
     private List<int> _chestCardStack = new List<int>();
@@ -29,9 +29,6 @@ public class CardManager : NetworkBehaviour
 
 
     private static CardManager s_instance;
-
-    public event Action<int, ulong> OnMovementCardPlayed;
-    public event Action<int, ulong> OnChestCardPlayed;
     #endregion
 
     #region Properties
@@ -182,7 +179,7 @@ public class CardManager : NetworkBehaviour
             player.discardedMovementCards.Add(cardId);
             Battlelog.Instance.AddLog(player.profileName.Value + " hat die Bewegungskarte: \"" + GetMovementCardById(cardId).cardName + "\" gespielt.");
 
-            OnMovementCardPlayed?.Invoke(cardId);
+            OnMovementCardPlayed?.Invoke(cardId, playerId);
         }
     }
 

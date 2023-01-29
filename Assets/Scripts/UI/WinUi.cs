@@ -37,7 +37,7 @@ public class WinUi : NetworkBehaviour
 
     #endregion
 
-    private void SetupText()
+    private void SetupText(ulong playerID)
     {
         if (GameManager.Instance.WinnerPlayerId == NetworkManager.LocalClientId)
         {

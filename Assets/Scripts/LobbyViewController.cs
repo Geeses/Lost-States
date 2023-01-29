@@ -1,6 +1,8 @@
 using UnityEngine.UIElements;
 using System.Collections.Generic;
 using Unity.Services.Lobbies.Models;
+using System;
+
 public class LobbyViewController
 {
     private ListView _lobbyList;
@@ -70,8 +72,13 @@ public class LobbyViewController
         _usernameTextField = root.Q<TextField>("username");
         _authenticationInfo = root.Q<Label>("authentication-info");
 
-        
+        _manager.OnClientJoinedLobby += RefreshPlayerLabels;
 
+    }
+
+    private void RefreshPlayerLabels()
+    {
+        RefreshLobbies();
     }
 
     private void InitializeUnityServices()

@@ -5,10 +5,13 @@ using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Unity.Netcode;
+using System;
+
 public class LobbyManager
 {
     int maxPlayers = 3;
     private NetworkVariable<bool> canStartGame = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public event Action OnClientJoinedLobby;
 
     public LobbyManager()
     {
@@ -31,7 +34,6 @@ public class LobbyManager
                     )
             },
         };
-
 
         Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
         Debug.Log("Lobby Was Created");
@@ -86,7 +88,7 @@ public class LobbyManager
             Debug.Log("LobbyId: " + lobby.Players.Count);
             Debug.Log("Joined Lobby");
             NetworkManager.Singleton.StartClient();
-            // On clinent joined lobby
+            OnClientJoinedLobby.Invoke();
         }
         catch (LobbyServiceException e)
         {
