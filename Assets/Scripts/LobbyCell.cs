@@ -60,9 +60,18 @@ public class LobbyCell
         _usersJoined.text = _lobby.Players.Count.ToString() + "/2";
 
         Debug.Log("SetData was called");
-        _joinButton.text = "Join";
+        if (NetworkManager.Singleton.IsServer) {
+            _joinButton.text = "Wait";
+            _joinButton.clicked -= JoinLobby;
+        }
+        else
+        {
+            _joinButton.text = "Join";
+            _joinButton.clicked += JoinLobby;
+        }
+        
         _joinButton.clicked -= StartGame;
-        _joinButton.clicked += JoinLobby;
+        
     }
 
     public void  JoinLobby()
