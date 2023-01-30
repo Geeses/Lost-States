@@ -59,6 +59,12 @@ public class Tile : Selectable
         }
     }
 
+    public void HighlightUnpassable()
+    {
+        base.Highlight();
+        _spriteRenderer.material.color = new Color(0.39f, 0.936f, 0.475f);
+    }
+
     public override void Unhighlight()
     {
         base.Unhighlight();

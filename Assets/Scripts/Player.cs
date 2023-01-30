@@ -172,7 +172,7 @@ public class Player : Selectable
     public override void Select()
     {
         base.Select();
-        if(IsOwner)
+        if(LocalMoveCount > 0)
             HighlightAdjacentTiles();
     }
 
@@ -186,8 +186,14 @@ public class Player : Selectable
     {
         foreach (Tile tile in GridManager.Instance.GetAdjacentTiles(CurrentTile))
         {
-            if(tile)
+            if (tile && !canMoveOverUnpassable.Value)
+            {
                 tile.Highlight();
+            }
+            else if (tile)
+            {
+                tile.HighlightUnpassable();
+            }
         }
     }
 
@@ -259,8 +265,15 @@ public class Player : Selectable
     [ServerRpc(RequireOwnership = false)]
     public void ChangeMoveCountServerRpc(int count)
     {
+        moveCount.Value = count;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void AddMoveCountServerRpc(int count)
+    {
         moveCount.Value += count;
     }
+
     private void ChangeMoveCountUI(int previousValue, int newValue)
     {
         TurnManager.Instance.currentTurnPlayerMovesText.text = newValue.ToString();
@@ -286,9 +299,8 @@ public class Player : Selectable
                 LocalMoveCount += -1;
                 LocalMovedInCurrentTurn += 1;
             }
-
-            UnhighlightAdjacentTiles();
         }
+        UnhighlightAdjacentTiles();
 
         CurrentTile = GridManager.Instance.TileGrid[coordinates];
         CurrentTile.PlayerStepOnTile(this);
@@ -298,7 +310,7 @@ public class Player : Selectable
 
         LastMoveDirection = GetMoveDirection(OldTile.TileGridCoordinates, CurrentTile.TileGridCoordinates);
 
-        if (IsLocalPlayer)
+        if (IsLocalPlayer && !forceMove)
             HighlightAdjacentTiles();
 
         if(invokeEvent)

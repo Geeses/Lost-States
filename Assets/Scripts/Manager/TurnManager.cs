@@ -124,6 +124,7 @@ public class TurnManager : NetworkBehaviour
             CurrentTurnPlayer.MaximumPlayableMovementCards = 1;
             CurrentTurnPlayer.PlayedMovementCards = 0;
             CurrentTurnPlayer.movedInCurrentTurn.Value = 0;
+            CurrentTurnPlayer.moveCount.Value = 0;
 
             StartTurnClientRpc(playerId);
         }

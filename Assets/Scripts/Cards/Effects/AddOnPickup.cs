@@ -31,7 +31,7 @@ public class AddOnPickup : CardEffect
     {
         if (changeEvent.Type == NetworkListEvent<int>.EventType.Add)
         {
-            Player.ChangeMoveCountServerRpc(moveCount);
+            Player.AddMoveCountServerRpc(moveCount);
         }
     }
 }
