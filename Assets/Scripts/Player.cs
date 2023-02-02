@@ -249,7 +249,7 @@ public class Player : Selectable
             if(tile.PlayerOnTile != null)
             {
                 GridCoordinates newCoords = coordinates + (coordinates - CurrentTile.TileGridCoordinates);
-                Debug.Log("OldTile: " + CurrentTile.TileGridCoordinates.ToString() + " New Tile: " + coordinates.ToString() + " Direction: " + (coordinates - CurrentTile.TileGridCoordinates).ToString() + " Coords: " + newCoords.ToString()); ;
+                //Debug.Log("OldTile: " + CurrentTile.TileGridCoordinates.ToString() + " New Tile: " + coordinates.ToString() + " Direction: " + (coordinates - CurrentTile.TileGridCoordinates).ToString() + " Coords: " + newCoords.ToString()); ;
                 tile.PlayerOnTile.MoveClientRpc(newCoords, false, true);
             }
 
@@ -361,11 +361,11 @@ public class Player : Selectable
     {
         for (int i = 0; i < count; i++)
         {
-            Debug.Log(inventoryRessources.Count);
             if(inventoryRessources.Count > i)
             {
                 int id = inventoryRessources[inventoryRessources.Count - 1];
                 inventoryRessources.Remove(id);
+                Battlelog.Instance.AddLogClientRpc(profileName.Value + " hat " + count + " Ressourcen verloren.");
             }
         }
     }
@@ -378,10 +378,10 @@ public class Player : Selectable
             Debug.Log(inventoryChestCards.Count);
             if (inventoryChestCards.Count > i)
             {
-                Debug.Log("Remove ChestcardId: " + inventoryChestCards[inventoryChestCards.Count - 1] + " at: " + (inventoryChestCards.Count - 1));
                 int id = inventoryChestCards[inventoryChestCards.Count - 1];
                 inventoryChestCards.Remove(id);
                 NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(id, CardType.Chest, -1, true);
+                Battlelog.Instance.AddLogClientRpc(profileName.Value + " hat " + count + " Kistenkarte verloren.");
             }
         }
     }

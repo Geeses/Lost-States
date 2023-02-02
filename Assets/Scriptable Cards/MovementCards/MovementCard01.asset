@@ -15,7 +15,7 @@ MonoBehaviour:
   cardName: Violett
   cardType: 0
   id: 1
-  baseMoveCount: 3
+  baseMoveCount: 4
   CardUi: {fileID: 5015182999776583845, guid: b394187c4eb94fc4bade7a3cc0244924, type: 3}
   cardEffects:
   - {fileID: 11400000, guid: 1d226f1c0ffaf1f42ad7c7ca2743acac, type: 2}

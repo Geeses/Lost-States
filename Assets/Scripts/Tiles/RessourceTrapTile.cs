@@ -21,7 +21,6 @@ public class RessourceTrapTile : NetworkBehaviour, ITileExtension
     {
         _cachedPlayer = player;
         _cachedPlayer.RemoveNewestRessourceServerRpc(count);
-        Battlelog.Instance.AddLog(player.profileName.Value + " hat " + count + " Ressourcen verloren.");
     }
 }
 

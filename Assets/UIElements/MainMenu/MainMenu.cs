@@ -11,6 +11,7 @@ public class MainMenu : NetworkBehaviour
     TextField usernameField;
     TextField joinCodeField;
     RelayHostData result;
+    string mapName = "2PlayerMap_V2";
     
     private NetworkVariable<bool> canStartGame = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public void Start()
@@ -37,8 +38,13 @@ public class MainMenu : NetworkBehaviour
 
         canStartGame.OnValueChanged += (bool previousValue, bool newValue) => {
             Debug.Log($"Starting Game... " + SceneManager.GetSceneByBuildIndex(0).name);
-            NetworkManager.Singleton.SceneManager.LoadScene("2PlayerMap_V2", LoadSceneMode.Single);
+            NetworkManager.Singleton.SceneManager.LoadScene(mapName, LoadSceneMode.Single);
         };
+    }
+
+    public void ChangeMap(string name)
+    {
+        mapName = name;
     }
     
     public async void StartHost() {

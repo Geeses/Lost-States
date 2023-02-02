@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class CardUiScript : NetworkBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
+public class CardUiScript : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     #region Attributes
     [Header("Card Base References")]
@@ -92,9 +92,13 @@ public class CardUiScript : NetworkBehaviour, IPointerDownHandler, IPointerEnter
     public void TryPlayCard()
     {
         if (_card.cardType is CardType.Movement)
-            CardManager.Instance.TryPlayMovementCardServerRpc(CardId, gameObject.GetInstanceID(), NetworkManager.LocalClientId);
-        else if(_card.cardType is CardType.Chest)
-            CardManager.Instance.TryPlayChestCardServerRpc(CardId, gameObject.GetInstanceID(), NetworkManager.LocalClientId);
+        {
+            CardManager.Instance.TryPlayMovementCardServerRpc(CardId, gameObject.GetInstanceID(), PlayerNetworkManager.Instance.LocalClientId);
+        }
+        else if (_card.cardType is CardType.Chest)
+        {
+            CardManager.Instance.TryPlayChestCardServerRpc(CardId, gameObject.GetInstanceID(), PlayerNetworkManager.Instance.LocalClientId);
+        }
     }
 }
 

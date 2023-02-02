@@ -21,7 +21,6 @@ public class ChestCardTrapTile : NetworkBehaviour, ITileExtension
     {
         _cachedPlayer = player;
         _cachedPlayer.RemoveNewestChestcardServerRpc(count);
-        Battlelog.Instance.AddLog(player.profileName.Value + " hat " + count + " Kistenkarten verloren.");
     }
 }
 

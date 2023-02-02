@@ -15282,7 +15282,7 @@ PrefabInstance:
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: movementCards.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 6cacaab7ce8ce2f4da72d4129859dd8c, type: 2}
+      objectReference: {fileID: 11400000, guid: 3c8a72fa0a764c640892ec733c486046, type: 2}
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: movementCards.Array.data[2]
       value: 
