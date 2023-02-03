@@ -14,6 +14,7 @@ public class Card : ScriptableObject
 {
     [Header("Options")]
     public string cardName;
+    public Color color;
     public CardType cardType;
     public int id;
     public int baseMoveCount;

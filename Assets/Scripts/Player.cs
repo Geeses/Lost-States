@@ -249,7 +249,7 @@ public class Player : Selectable
             if(tile.PlayerOnTile != null)
             {
                 GridCoordinates newCoords = coordinates + (coordinates - CurrentTile.TileGridCoordinates);
-                //Debug.Log("OldTile: " + CurrentTile.TileGridCoordinates.ToString() + " New Tile: " + coordinates.ToString() + " Direction: " + (coordinates - CurrentTile.TileGridCoordinates).ToString() + " Coords: " + newCoords.ToString()); ;
+                Debug.Log("OldTile: " + CurrentTile.TileGridCoordinates.ToString() + " New Tile: " + coordinates.ToString() + " Direction: " + (coordinates - CurrentTile.TileGridCoordinates).ToString() + " Coords: " + newCoords.ToString());
                 tile.PlayerOnTile.MoveClientRpc(newCoords, false, true);
             }
 

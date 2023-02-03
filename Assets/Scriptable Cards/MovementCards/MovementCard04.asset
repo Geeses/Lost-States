@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2181118646059948a6d77c41a735863, type: 3}
   m_Name: MovementCard04
   m_EditorClassIdentifier: 
-  cardName: Orange
+  cardName: "T\xFCrkis"
+  color: {r: 0.11747952, g: 0.4716981, b: 0.46501473, a: 1}
   cardType: 0
   id: 4
   baseMoveCount: 4

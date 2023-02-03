@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: MovementCard05
   m_EditorClassIdentifier: 
   cardName: Orange
+  color: {r: 0.5471698, g: 0.41192594, b: 0.1414382, a: 1}
   cardType: 0
   id: 5
   baseMoveCount: 5

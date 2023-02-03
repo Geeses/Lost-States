@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2181118646059948a6d77c41a735863, type: 3}
   m_Name: MovementCard02WIP
   m_EditorClassIdentifier: 
+  cardName: 
+  color: {r: 0, g: 0, b: 0, a: 0}
   cardType: 0
   id: 2
   baseMoveCount: 4

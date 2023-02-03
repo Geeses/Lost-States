@@ -94,8 +94,6 @@ public class RessourceTile : NetworkBehaviour, ITileExtension
 
     private void ChangeRessourceCooldown(ulong obj)
     {
-        Debug.Log("Count: " + ressourceCount + " Cooldown: " + ressourceCooldown);
-
         if(_startRessourceCount != 0 && ressourceCount == 0 && ressourceCooldown != 0)
         {
             respawnText.gameObject.SetActive(true);

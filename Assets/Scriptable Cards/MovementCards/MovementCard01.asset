@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: MovementCard01
   m_EditorClassIdentifier: 
   cardName: Violett
+  color: {r: 0.4744625, g: 0.21302953, b: 0.6037736, a: 1}
   cardType: 0
   id: 1
   baseMoveCount: 4

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: MovementCard03
   m_EditorClassIdentifier: 
   cardName: Gelb
+  color: {r: 0.6415094, g: 0.5839384, b: 0.19003202, a: 1}
   cardType: 0
   id: 3
   baseMoveCount: 4

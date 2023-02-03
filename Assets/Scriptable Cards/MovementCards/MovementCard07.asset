@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: MovementCard07
   m_EditorClassIdentifier: 
   cardName: "Gr\xFCn"
+  color: {r: 0.112459935, g: 0.509434, b: 0.12622781, a: 1}
   cardType: 0
   id: 7
   baseMoveCount: 6
