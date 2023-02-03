@@ -17,8 +17,8 @@ public class MoveUntilNotPassable : CardEffect
 
     public override void RevertEffect()
     {
-        Player.OnPlayerMoved -= MoveInOneDirection;
         base.RevertEffect();
+        Player.OnPlayerMoved -= MoveInOneDirection;
     }
 
     private void MoveInOneDirection(GridCoordinates coordinates)
@@ -36,7 +36,7 @@ public class MoveUntilNotPassable : CardEffect
                     break;
                 }
                 
-                Player.TryMoveServerRpc(tile.TileGridCoordinates, true, false);
+                Player.TryMoveServerRpc(tile.TileGridCoordinates, true, true);
             }
         }
 

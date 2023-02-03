@@ -25,7 +25,7 @@ public class PlayDiscardedCards : CardEffect
             if(Player.discardedMovementCards.Count > i)
             {
                 Card card = CardManager.Instance.GetMovementCardById(Player.discardedMovementCards[Player.discardedMovementCards.Count - i - 1]);
-                Player.ChangeMoveCountServerRpc(card.baseMoveCount);
+                Player.AddMoveCountServerRpc(card.baseMoveCount);
             }
         }
     }

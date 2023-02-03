@@ -17,6 +17,14 @@ public struct GridCoordinates : INetworkSerializable
         this.y = y;
     }
 
+    public override string ToString()
+    {
+        return x + "|" + y;
+    }
+
+    public static GridCoordinates operator -(GridCoordinates a, GridCoordinates b) => new GridCoordinates(a.x - b.x, a.y - b.y);
+    public static GridCoordinates operator +(GridCoordinates a, GridCoordinates b) => new GridCoordinates(a.x + b.x, a.y + b.y);
+
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
     {
         serializer.SerializeValue(ref x);

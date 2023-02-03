@@ -124,6 +124,7 @@ public class TurnManager : NetworkBehaviour
             CurrentTurnPlayer.MaximumPlayableMovementCards = 1;
             CurrentTurnPlayer.PlayedMovementCards = 0;
             CurrentTurnPlayer.movedInCurrentTurn.Value = 0;
+            CurrentTurnPlayer.moveCount.Value = 0;
 
             StartTurnClientRpc(playerId);
         }
@@ -162,7 +163,7 @@ public class TurnManager : NetworkBehaviour
                 CurrentTurnPlayerId = PlayerTurnQueueId.Peek();
             }
             Battlelog.Instance.AddLogClientRpc(CurrentTurnPlayer.profileName.Value + " hat den Zug beendet.");
-            Battlelog.Instance.AddLogClientRpc("----------------------------------");
+            Battlelog.Instance.AddLogClientRpc("-------------------------------------");
             EndTurnClientRpc(playerId);
             StartTurnServerRpc(CurrentTurnPlayerId);
         }

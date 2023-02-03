@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: MovementCard06
   m_EditorClassIdentifier: 
   cardName: Rot
+  color: {r: 0.46226418, g: 0.110768944, b: 0.110768944, a: 1}
   cardType: 0
   id: 6
   baseMoveCount: 6

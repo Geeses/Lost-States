@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9065804601941921938}
   - component: {fileID: 1123490429}
   - component: {fileID: 5940697540612773402}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -76,7 +76,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedSprite: {fileID: 3543353439402046407, guid: d3bcb1e2aac377147aaa6e752d1eacff, type: 3}
+  enemySelectedSprite: {fileID: 3543353439402046407, guid: 9d110f1dfb2056245bf04471e1bc9466, type: 3}
   selected: 0
+  enemySelected: 0
   _spriteRenderer: {fileID: 0}
   _collider: {fileID: 3667005215213547533}
   profileName:
@@ -268,7 +270,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5869287721898435188}
   - component: {fileID: 1719666757961525435}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlayerFigure1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -283,7 +285,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6208973654830189421}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -352,7 +354,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8117429417676267944}
   - component: {fileID: 8840063025877820439}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlayerFigure2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -367,7 +369,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8135269742702146557}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

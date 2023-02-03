@@ -19,17 +19,19 @@ public class Tile : Selectable
     public bool passable;
     public TileZone zoneType;
 
+    public event Action<Player> OnStepOnTile;
+
     private GridCoordinates _tileGridCoordinates;
     private bool _movementAllowed;
-    private List<ITileExtension> tileExtensions = new List<ITileExtension>();
-
-    public event Action<Player> OnStepOnTile;
+    private List<ITileExtension> _tileExtensions = new List<ITileExtension>();
+    private Player _playerOnTile;
     #endregion
 
     #region Properties
     public GridCoordinates TileGridCoordinates { get => _tileGridCoordinates; set => _tileGridCoordinates = value; }
     public bool MovementAllowed { get => _movementAllowed; set => _movementAllowed = value; }
-    public List<ITileExtension> TileExtensions { get => tileExtensions; set => tileExtensions = value; }
+    public List<ITileExtension> TileExtensions { get => _tileExtensions; set => _tileExtensions = value; }
+    public Player PlayerOnTile { get => _playerOnTile; set => _playerOnTile = value; }
     #endregion
 
     #region Monobehaviors
@@ -49,12 +51,18 @@ public class Tile : Selectable
 
         if (!passable)
         {
-            _spriteRenderer.material.color = Color.red;
+            _spriteRenderer.material.color = new Color(0.7264151f, 0.4694286f, 0.4694286f);
         }
         else
         {
-            _spriteRenderer.material.color = Color.green;
+            _spriteRenderer.material.color = new Color(0.39f, 0.936f, 0.475f);
         }
+    }
+
+    public void HighlightUnpassable()
+    {
+        base.Highlight();
+        _spriteRenderer.material.color = new Color(0.39f, 0.936f, 0.475f);
     }
 
     public override void Unhighlight()
@@ -65,7 +73,13 @@ public class Tile : Selectable
 
     public void PlayerStepOnTile(Player player)
     {
+        PlayerOnTile = player;
         OnStepOnTile?.Invoke(player);
+    }
+
+    public void PlayerLeavesTile()
+    {
+        PlayerOnTile = null;
     }
 
     private void GetTileExtensions()

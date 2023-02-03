@@ -145,7 +145,6 @@ public class AnalyticsManager: MonoBehaviour
             { "TotalTurnCount", dataOnTurnEnd.totalTurnCount },
             { "TurnNumber", dataOnTurnEnd.turnNumber },
             { "SessionId", AnalyticsService.Instance.SessionID }
-            { "SessionId", AnalyticsService.Instance.SessionID }
         };
 
         // The ‘OnTurnEnd’ event will get queued up and sent every minute

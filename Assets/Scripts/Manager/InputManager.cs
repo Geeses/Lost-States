@@ -82,7 +82,7 @@ public class InputManager : NetworkBehaviour
 
     private void Move(InputAction.CallbackContext obj)
     {
-        RaycastHit2D hit = Physics2D.Raycast(_cam.ScreenToWorldPoint(new Vector3(_cameraController.MousePosition.x, _cameraController.MousePosition.y, -_cam.transform.position.z)), Vector2.zero);
+        RaycastHit2D hit = Physics2D.Raycast(_cam.ScreenToWorldPoint(new Vector3(_cameraController.MousePosition.x, _cameraController.MousePosition.y, -_cam.transform.position.z)), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Default"));
 
         if (hit.collider != null)
         {

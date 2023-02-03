@@ -133,8 +133,8 @@ public class Player : Selectable
 
     private void Initialize()
     {
-        CurrentTile = GridManager.Instance.TileGrid[new GridCoordinates(0, 0)];
-        OldTile = GridManager.Instance.TileGrid[new GridCoordinates(0, 0)];
+        CurrentTile = GridManager.Instance.TileGrid[new GridCoordinates(-(int)clientId.Value, 0)];
+        OldTile = GridManager.Instance.TileGrid[new GridCoordinates(-(int)clientId.Value, 0)];
         inventoryRessources.OnListChanged += ChangeCountInventory;
         savedRessources.OnListChanged += ChangeCountSaved;
         InputManager.Instance.OnSelect += ChangeCurrentSelectedTarget;
@@ -158,6 +158,9 @@ public class Player : Selectable
         selectedSprite = Instantiate(selectedSprite, transform);
         selectedSprite.color = Color.green;
 
+        enemySelectedSprite = Instantiate(enemySelectedSprite, transform);
+        enemySelectedSprite.color = Color.red;
+
         if(!IsLocalPlayer)
         {
             selectedSprite.color = Color.red;
@@ -169,7 +172,7 @@ public class Player : Selectable
     public override void Select()
     {
         base.Select();
-        if(IsOwner)
+        if(LocalMoveCount > 0)
             HighlightAdjacentTiles();
     }
 
@@ -183,8 +186,14 @@ public class Player : Selectable
     {
         foreach (Tile tile in GridManager.Instance.GetAdjacentTiles(CurrentTile))
         {
-            if(tile)
+            if (tile && !canMoveOverUnpassable.Value)
+            {
                 tile.Highlight();
+            }
+            else if (tile)
+            {
+                tile.HighlightUnpassable();
+            }
         }
     }
 
@@ -237,6 +246,13 @@ public class Player : Selectable
 
         if (isAdjacent && (moveCount.Value > 0) && (tile.passable || canMoveOverUnpassable.Value) || forceMove)
         {
+            if(tile.PlayerOnTile != null)
+            {
+                GridCoordinates newCoords = coordinates + (coordinates - CurrentTile.TileGridCoordinates);
+                Debug.Log("OldTile: " + CurrentTile.TileGridCoordinates.ToString() + " New Tile: " + coordinates.ToString() + " Direction: " + (coordinates - CurrentTile.TileGridCoordinates).ToString() + " Coords: " + newCoords.ToString());
+                tile.PlayerOnTile.MoveClientRpc(newCoords, false, true);
+            }
+
             if (!forceMove)
             {
                 movedInCurrentTurn.Value += 1;
@@ -249,8 +265,15 @@ public class Player : Selectable
     [ServerRpc(RequireOwnership = false)]
     public void ChangeMoveCountServerRpc(int count)
     {
+        moveCount.Value = count;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void AddMoveCountServerRpc(int count)
+    {
         moveCount.Value += count;
     }
+
     private void ChangeMoveCountUI(int previousValue, int newValue)
     {
         TurnManager.Instance.currentTurnPlayerMovesText.text = newValue.ToString();
@@ -265,6 +288,7 @@ public class Player : Selectable
     [ClientRpc]
     public void MoveClientRpc(GridCoordinates coordinates, bool invokeEvent = true, bool forceMove = false)
     {
+        OldTile.PlayerLeavesTile();
         OldTile = CurrentTile;
 
         if (IsLocalPlayer)
@@ -275,9 +299,9 @@ public class Player : Selectable
                 LocalMoveCount += -1;
                 LocalMovedInCurrentTurn += 1;
             }
-
-            UnhighlightAdjacentTiles();
         }
+        UnhighlightAdjacentTiles();
+
         CurrentTile = GridManager.Instance.TileGrid[coordinates];
         CurrentTile.PlayerStepOnTile(this);
         Vector3 cellWorldPosition = GridManager.Instance.Tilemap.CellToWorld(new Vector3Int(coordinates.x, coordinates.y, 0));
@@ -286,7 +310,7 @@ public class Player : Selectable
 
         LastMoveDirection = GetMoveDirection(OldTile.TileGridCoordinates, CurrentTile.TileGridCoordinates);
 
-        if (IsLocalPlayer)
+        if (IsLocalPlayer && !forceMove)
             HighlightAdjacentTiles();
 
         if(invokeEvent)
@@ -337,11 +361,11 @@ public class Player : Selectable
     {
         for (int i = 0; i < count; i++)
         {
-            Debug.Log(inventoryRessources.Count);
             if(inventoryRessources.Count > i)
             {
                 int id = inventoryRessources[inventoryRessources.Count - 1];
                 inventoryRessources.Remove(id);
+                Battlelog.Instance.AddLogClientRpc(profileName.Value + " hat " + count + " Ressourcen verloren.");
             }
         }
     }
@@ -354,10 +378,10 @@ public class Player : Selectable
             Debug.Log(inventoryChestCards.Count);
             if (inventoryChestCards.Count > i)
             {
-                Debug.Log("Remove ChestcardId: " + inventoryChestCards[inventoryChestCards.Count - 1] + " at: " + (inventoryChestCards.Count - 1));
                 int id = inventoryChestCards[inventoryChestCards.Count - 1];
                 inventoryChestCards.Remove(id);
                 NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(id, CardType.Chest, -1, true);
+                Battlelog.Instance.AddLogClientRpc(profileName.Value + " hat " + count + " Kistenkarte verloren.");
             }
         }
     }
