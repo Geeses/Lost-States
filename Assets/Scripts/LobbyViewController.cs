@@ -146,9 +146,11 @@ public class LobbyViewController
             return;
         }
 
-        _playerInfo.text = "Waiting for other players to join";
+        _playerInfo.text = "creating lobby...";
 
         await _manager.TryCreateLobbyAsync(_lobbyName.text, _isPrivate.value);
+
+        _playerInfo.text = "Waiting for other players to Join...";
 
         RefreshLobbies();
     }

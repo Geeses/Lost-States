@@ -27,13 +27,14 @@ public class AnalyticsManager: MonoBehaviour
         dataOnGameEnd.RessourcesSavedCount = player.savedRessourceCount;
         dataOnGameEnd.TotalRessourcesObtained = player.inventoryRessourceCount;
         dataOnGameEnd.NeededRessourcesCount = player.RessourceCollectionCard.steelAmount + player.RessourceCollectionCard.waterAmount + player.RessourceCollectionCard.woodAmount + player.RessourceCollectionCard.fruitAmount;
-        
+
         Dictionary<string, object> parameters = new Dictionary<string, object>()
         {
             { "TotalRessourcesObtained", dataOnGameEnd.PlayerId },
             { "TotalRessourcesObtained", dataOnGameEnd.TotalRessourcesObtained },
             { "RessourcesSavedCount", dataOnGameEnd.RessourcesSavedCount },
-            { "NeededRessourcesCount", dataOnGameEnd.NeededRessourcesCount }
+            { "NeededRessourcesCount", dataOnGameEnd.NeededRessourcesCount },
+            { "SessionId", AnalyticsService.Instance.SessionID }
         };
 
         // The ‘OnTurnEnd’ event will get queued up and sent every minute
@@ -126,7 +127,8 @@ public class AnalyticsManager: MonoBehaviour
             { "SavedWoodCount", dataOnTurnEnd.savedWoodCount },
             { "SavedSteelCount", dataOnTurnEnd.savedSteelCount },
             { "TotalTurnCount", dataOnTurnEnd.totalTurnCount },
-            { "TurnNumber", dataOnTurnEnd.turnNumber }
+            { "TurnNumber", dataOnTurnEnd.turnNumber },
+            { "SessionId", AnalyticsService.Instance.SessionID }
         };
 
         // The ‘OnTurnEnd’ event will get queued up and sent every minute
@@ -141,7 +143,9 @@ public class AnalyticsManager: MonoBehaviour
             { "CardId", dataCardPlayed.CardId },
             { "CardType", dataCardPlayed.CardType },
             { "TotalTurnCount", dataOnTurnEnd.totalTurnCount },
-            { "TurnNumber", dataOnTurnEnd.turnNumber }
+            { "TurnNumber", dataOnTurnEnd.turnNumber },
+            { "SessionId", AnalyticsService.Instance.SessionID }
+            { "SessionId", AnalyticsService.Instance.SessionID }
         };
 
         // The ‘OnTurnEnd’ event will get queued up and sent every minute

@@ -10,14 +10,9 @@ using Unity.Services.Lobbies;
 // Game developer code
 public class InitializeServices: Singleton<InitializeServices>
 {
-
-    [SerializeField]
-    private string environment = "production";
-
     public async void InitializeWithUsername(string username)
     {
         var options = new InitializationOptions();
-        options.SetEnvironmentName(environment);
         options.SetProfile(username);
 
         try

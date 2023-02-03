@@ -29,22 +29,6 @@ public class RelayViewController
         relayInfo.visible = false;
         startGameButton.visible = false;
 
-        NetworkManager.Singleton.OnClientConnectedCallback += (id) =>
-        {
-            if (GameObject.FindGameObjectsWithTag("Player").Length >= 2 && startedWithRelay)
-            {
-                if (NetworkManager.Singleton.IsHost)
-                {
-                    Debug.Log("OnClientConnectedCallback: All players are here");
-                    startGameButton.visible = true;
-                    relayInfo.visible = false;
-                    startGameButton.text = "Start";
-                    startGameButton.clicked += StartGame;
-                    relayInfo.visible = false;
-                }
-            }
-        };
-
         canStartGame.OnValueChanged += (bool previousValue, bool newValue) => {
             Debug.Log($"Starting Game... " + SceneManager.GetSceneByBuildIndex(0).name);
             NetworkManager.Singleton.SceneManager.LoadScene("2PlayerMap", LoadSceneMode.Single);
@@ -71,6 +55,22 @@ public class RelayViewController
             // fix: see if possible to remove old host and create a new room
             relayInfo.text = "Unable to start host";
         }
+
+        NetworkManager.Singleton.OnClientConnectedCallback += (id) =>
+        {
+            if (GameObject.FindGameObjectsWithTag("Player").Length >= 2 && startedWithRelay)
+            {
+                if (NetworkManager.Singleton.IsHost)
+                {
+                    Debug.Log("OnClientConnectedCallback: All players are here");
+                    startGameButton.visible = true;
+                    relayInfo.visible = false;
+                    startGameButton.text = "Start";
+                    startGameButton.clicked += StartGame;
+                    relayInfo.visible = false;
+                }
+            }
+        };
     }
 
     public void StartGame()
