@@ -10,6 +10,7 @@ public class LobbyViewController
     private TextField _lobbyName;
     private Toggle _isPrivate;
     private Button _createButton;
+    private Button _joinButton;
     private Button _refreshButton;
     private VisualTreeAsset _cellTemplate;
     private VisualElement _root;
@@ -43,6 +44,7 @@ public class LobbyViewController
         _lobbyName = _root.Q<TextField>("lobby-name-text-field");
         _isPrivate = _root.Q<Toggle>("is-private-lobby-toggle");
         _createButton = _root.Q<Button>("create-lobby-button");
+        _joinButton = _root.Q<Button>("join-private");
         _refreshButton = _root.Q <Button>("refresh-button");
 
         // Navigation
@@ -64,6 +66,7 @@ public class LobbyViewController
         _authenticationWindow.visible = true;
 
         _createButton.clicked += AddNewLobby;
+        _joinButton.clicked += JoinExistingLobby;
         _refreshButton.clicked += RefreshLobbies;
 
         InitializeList();
@@ -74,6 +77,19 @@ public class LobbyViewController
 
         _manager.OnClientJoinedLobby += RefreshPlayerLabels;
 
+    }
+
+    private async void JoinExistingLobby()
+    {
+        _playerInfo.text = "Joining Lobby";
+        var errorCode = await _manager.JoinLobby(_lobbyName.value);
+        if (errorCode < 0) {
+            _playerInfo.text = "Lobby Joined";
+        }
+        else
+        {
+            _playerInfo.text = "Error Code: " + errorCode;
+        }
     }
 
     private void RefreshPlayerLabels()

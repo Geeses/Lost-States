@@ -31,6 +31,7 @@ public class InitializeServices: Singleton<InitializeServices>
         }
 
         // General Player Info
+        Debug.Log($"PlayerPrefs: {PlayerPrefs.GetInt("GameCount")}");
         Debug.Log(UnityServices.State);
         Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
         Debug.Log($"Profile: {AuthenticationService.Instance.Profile}");
@@ -38,6 +39,7 @@ public class InitializeServices: Singleton<InitializeServices>
         Debug.Log($"Is Authorized: {AuthenticationService.Instance.IsAuthorized}");
         Debug.Log($"Is Expired: {AuthenticationService.Instance.IsExpired}");
         Debug.Log("Analytics UserID: " + AnalyticsService.Instance.GetAnalyticsUserID());
+        Debug.Log("Analytics SessionID: " + AnalyticsService.Instance.SessionID); 
     }
 
     public void InitializeHeartbeatLobbyCoroutine(string lobbyId, int seconds)

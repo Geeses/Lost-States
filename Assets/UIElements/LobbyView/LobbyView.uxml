@@ -12,14 +12,14 @@
                         <ui:ListView focusable="true" name="lobby-list" fixed-item-height="0" virtualization-method="DynamicHeight" style="flex-grow: 1;" />
                     </ui:VisualElement>
                     <ui:VisualElement name="bottom" style="width: 100%; align-items: center; flex-direction: column-reverse;">
-                        <ui:VisualElement style="flex-direction: row; justify-content: center; align-items: center;">
+                        <ui:VisualElement name="buttons" style="flex-direction: row; justify-content: center; align-items: center;">
                             <ui:Button tabindex="-1" display-tooltip-when-elided="true" name="refresh-button" style="background-color: rgb(245, 245, 245); background-image: url(&apos;project://database/Packages/com.unity.collab-proxy/Editor/PlasticSCM/Assets/Images/refresh@2x.png?fileID=2800000&amp;guid=59571f82a0dc1a14da606dc0df6f8ea7&amp;type=3#refresh@2x&apos;); -unity-background-image-tint-color: rgb(63, 63, 63);" />
                             <ui:Button tabindex="-1" text="Create" display-tooltip-when-elided="true" name="create-lobby-button" style="background-color: rgb(245, 245, 245);" />
-                            <ui:Button tabindex="-1" text="Join" display-tooltip-when-elided="true" name="join-private" style="background-color: rgb(245, 245, 245);" />
+                            <ui:Button tabindex="-1" text="Join" display-tooltip-when-elided="true" name="join-private" style="background-color: rgb(245, 245, 245); display: none;" />
                         </ui:VisualElement>
                         <ui:VisualElement style="width: 100%;">
                             <ui:TextField picking-mode="Ignore" label="Lobby Name" value="filler text" name="lobby-name-text-field" class="my-text-element" style="width: 100%; -unity-font-style: normal; color: rgb(0, 0, 0);" />
-                            <ui:Toggle label="Private" name="is-private-lobby-toggle" style="color: rgb(255, 255, 255); -unity-font-style: bold;" />
+                            <ui:Toggle label="Private" name="is-private-lobby-toggle" style="color: rgb(255, 255, 255); -unity-font-style: bold; display: none;" />
                         </ui:VisualElement>
                         <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="player-info" style="-unity-font-style: bold; color: rgb(255, 255, 255);" />
                     </ui:VisualElement>
@@ -36,7 +36,7 @@
                         </ui:VisualElement>
                         <ui:VisualElement style="width: 100%; align-items: center; justify-content: center;">
                             <ui:Button tabindex="-1" text="Waiting..." display-tooltip-when-elided="true" name="start-game" style="width: 40%; visibility: hidden;" />
-                            <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="relay-info" style="position: absolute; visibility: hidden; -unity-font-style: bold; color: rgba(255, 255, 255, 255);" />
+                            <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="relay-info" style="position: absolute; visibility: hidden; -unity-font-style: bold; color: rgb(255, 255, 255);" />
                         </ui:VisualElement>
                     </ui:VisualElement>
                 </ui:VisualElement>

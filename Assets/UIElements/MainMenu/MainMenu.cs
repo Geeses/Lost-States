@@ -49,7 +49,7 @@ public class MainMenu : NetworkBehaviour
     
     public async void StartHost() {
         if (RelayManager.Instance.IsRelayEnabled) 
-            result = await RelayManager.Instance.SetupRelay(usernameField.text);
+            result = await RelayManager.Instance.SetupRelay();
 
         joinCodeField.SetEnabled(true);
         joinCodeField.value = result.JoinCode;
@@ -69,7 +69,7 @@ public class MainMenu : NetworkBehaviour
     public async void StartClient()
     {
         if (RelayManager.Instance.IsRelayEnabled && !string.IsNullOrEmpty(joinCodeField.text))
-            await RelayManager.Instance.JoinRelay(joinCodeField.text, usernameField.text);
+            await RelayManager.Instance.JoinRelay(joinCodeField.text);
 
         if (NetworkManager.Singleton.StartClient())
             Debug.Log("Client started");

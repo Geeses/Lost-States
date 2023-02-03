@@ -20,7 +20,7 @@ public class AnalyticsManager: MonoBehaviour
         GameManager.Instance.OnGameEnd += SendOnGameEndData;
     }
 
-    private void SendOnGameEndData(ulong playerId)
+    private void SendOnGameEndData(ulong playerId, bool hasWon)
     {
         dataOnGameEnd.PlayerId = (int)playerId;
         Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
@@ -30,14 +30,17 @@ public class AnalyticsManager: MonoBehaviour
 
         Dictionary<string, object> parameters = new Dictionary<string, object>()
         {
-            { "TotalRessourcesObtained", dataOnGameEnd.PlayerId },
+            { "GameCount", PlayerPrefs.GetInt("GameCount") },
+            { "PlayerID", playerId },
             { "TotalRessourcesObtained", dataOnGameEnd.TotalRessourcesObtained },
             { "RessourcesSavedCount", dataOnGameEnd.RessourcesSavedCount },
             { "NeededRessourcesCount", dataOnGameEnd.NeededRessourcesCount },
-            { "SessionId", AnalyticsService.Instance.SessionID }
+            { "HasWon", hasWon },
+            { "RessourceCollectionCardId", player.RessourceCollectionCardId }
+
         };
 
-        // The ‘OnTurnEnd’ event will get queued up and sent every minute
+        // The ‘OnGameEnd’ event will get queued up and sent every minute
         AnalyticsService.Instance.CustomData("OnGameEnd", parameters);
     }
 
@@ -116,6 +119,7 @@ public class AnalyticsManager: MonoBehaviour
     {
         Dictionary<string, object> parameters = new Dictionary<string, object>()
         {
+            { "GameCount", PlayerPrefs.GetInt("GameCount") },
             { "PlayerId", dataOnTurnEnd.playerId },
             { "MovedInTurn", dataOnTurnEnd.movedInTurn },
             { "InventoryWaterCount", dataOnTurnEnd.inventoryWaterCount },
@@ -127,8 +131,8 @@ public class AnalyticsManager: MonoBehaviour
             { "SavedWoodCount", dataOnTurnEnd.savedWoodCount },
             { "SavedSteelCount", dataOnTurnEnd.savedSteelCount },
             { "TotalTurnCount", dataOnTurnEnd.totalTurnCount },
-            { "TurnNumber", dataOnTurnEnd.turnNumber },
-            { "SessionId", AnalyticsService.Instance.SessionID }
+            { "TurnNumber", dataOnTurnEnd.turnNumber }
+            
         };
 
         // The ‘OnTurnEnd’ event will get queued up and sent every minute
@@ -144,10 +148,11 @@ public class AnalyticsManager: MonoBehaviour
             { "CardType", dataCardPlayed.CardType },
             { "TotalTurnCount", dataOnTurnEnd.totalTurnCount },
             { "TurnNumber", dataOnTurnEnd.turnNumber },
-            { "SessionId", AnalyticsService.Instance.SessionID }
+            { "GameCount",  PlayerPrefs.GetInt("GameCount") }
+
         };
 
-        // The ‘OnTurnEnd’ event will get queued up and sent every minute
+        // The ‘OnCardPlayed’ event will get queued up and sent every minute
         AnalyticsService.Instance.CustomData("OnCardPlayed", parameters);
     }
 

@@ -21,7 +21,7 @@ public class GameManager : NetworkBehaviour
     public bool gameOver;
 
     public event Action OnGameStart;
-    public event Action<ulong> OnGameEnd;
+    public event Action<ulong, bool> OnGameEnd;
 
     private ulong _winnerPlayerId;
     private static GameManager s_instance;
@@ -137,6 +137,8 @@ public class GameManager : NetworkBehaviour
     [ClientRpc]
     private void StartGameClientRpc()
     {
+        var gameCount = PlayerPrefs.GetInt("GameCount");
+        PlayerPrefs.SetInt("GameCount", gameCount + 1);
         gameHasStarted = true;
         OnGameStart?.Invoke();
     }
@@ -201,7 +203,14 @@ public class GameManager : NetworkBehaviour
     {
         gameOver = true;
         WinnerPlayerId = playerId;
-        OnGameEnd?.Invoke(playerId);
+        if (WinnerPlayerId == NetworkManager.Singleton.LocalClientId)
+        {
+            OnGameEnd?.Invoke(playerId, true);
+        } else
+        {
+            OnGameEnd?.Invoke(playerId, false);
+        }
+        
         Battlelog.Instance.AddLog(PlayerNetworkManager.Instance.PlayerDictionary[playerId].profileName.Value + " won the game. ez clap");
     }
 }

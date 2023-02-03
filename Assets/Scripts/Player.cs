@@ -57,6 +57,7 @@ public class Player : Selectable
     private int _playedMovementCards;
     private Selectable _currentSelectedTarget;
     private RessourceCollectionCard _ressourceCollectionCard;
+    private int _ressourceCollectionCardId;
     private int _localMoveCount;
     private int _localMovedInCurrentTurn;
     #endregion
@@ -70,6 +71,7 @@ public class Player : Selectable
     public Direction LastMoveDirection { get => _lastMoveDirection; private set => _lastMoveDirection = value; }
     public Selectable CurrentSelectedTarget { get => _currentSelectedTarget; set => _currentSelectedTarget = value; }
     public RessourceCollectionCard RessourceCollectionCard { get => _ressourceCollectionCard; set => _ressourceCollectionCard = value; }
+    public int RessourceCollectionCardId { get => _ressourceCollectionCardId; set => _ressourceCollectionCardId = value; }
     public int LocalMoveCount { get => _localMoveCount; set => _localMoveCount = value; }
     public int LocalMovedInCurrentTurn { get => _localMovedInCurrentTurn; set => _localMovedInCurrentTurn = value; }
     #endregion
@@ -441,6 +443,7 @@ public class Player : Selectable
     public void AssignRessourceCollectionCardClientRpc(int ressourceCollectionCardId)
     {
         RessourceCollectionCard = GameManager.Instance.ressourceCollectionCards[ressourceCollectionCardId];
+        RessourceCollectionCardId = ressourceCollectionCardId;
     }
 
     private void CheckForWin(NetworkListEvent<int> changeEvent)

@@ -76,7 +76,7 @@ public class LobbyManager
         }
     }
 
-    public async Task JoinLobby(string id)
+    public async Task<int> JoinLobby(string id)
     {
         try
         {
@@ -93,7 +93,9 @@ public class LobbyManager
         catch (LobbyServiceException e)
         {
             Debug.Log(e);
+            return e.ErrorCode;
         }
+        return -1;
     }
 
     public void StartGame()
