@@ -111,6 +111,12 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    public Tile GetTileOnWorldPosition(Vector3 worldPosition)
+    {
+        Vector3Int tileGridPos = Tilemap.WorldToCell(worldPosition);
+        return TileGrid[new GridCoordinates(tileGridPos.x, tileGridPos.y)];
+    }
+
     public Tile[] GetAdjacentTiles(Tile tile)
     {
         Tile[] adjacentTiles = new Tile[4];

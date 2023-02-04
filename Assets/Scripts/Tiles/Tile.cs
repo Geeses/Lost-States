@@ -73,12 +73,14 @@ public class Tile : Selectable
 
     public void PlayerStepOnTile(Player player)
     {
+        Debug.Log("Player steps on Tile: " + gameObject.name, this);
         PlayerOnTile = player;
         OnStepOnTile?.Invoke(player);
     }
 
     public void PlayerLeavesTile()
     {
+        Debug.Log("Player leaves Tile: " + gameObject.name, this);
         PlayerOnTile = null;
     }
 
