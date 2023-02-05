@@ -185,6 +185,11 @@ public class LobbyViewController
             _playerInfo.text = "Please, enter a lobby name";
             return;
         }
+        if (NetworkManager.Singleton.IsClient)
+        {
+            _playerInfo.text = "you already have a room";
+            return;
+        }
 
         _playerInfo.text = "creating lobby...";
 

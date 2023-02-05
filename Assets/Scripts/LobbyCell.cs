@@ -30,8 +30,7 @@ public class LobbyCell
     }
 
     private void StartGame()
-    {
-        
+    {       
         _manager.StartGame();
     }
 
@@ -42,9 +41,6 @@ public class LobbyCell
         _usersJoined.text = _lobby.Players.Count.ToString() + "/2";
         _joinButton.clicked -= StartGame;   
         _usersJoined.text = lobby.Players.Count + "/2";
-
-        Debug.Log("LobbyOwnerId: " + lobby.HostId);
-        Debug.Log("PlayerId: " + AuthenticationService.Instance.PlayerId);
 
         if (lobby.Players.Count >= 2 && startedWithLobby)
         {
