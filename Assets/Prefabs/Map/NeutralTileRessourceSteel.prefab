@@ -32,6 +32,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NeutralTileRessourceSteel
       objectReference: {fileID: 0}
+    - target: {fileID: 4271369642293788470, guid: 575a289dcf2ac2c489a01b54b55926b1, type: 3}
+      propertyPath: parameterizedTextFields.Array.data[0].value
+      value: Dies ist eine Stahl Ressource.
+      objectReference: {fileID: 0}
     - target: {fileID: 4442700359635214403, guid: 575a289dcf2ac2c489a01b54b55926b1, type: 3}
       propertyPath: ressourceType
       value: 2

@@ -40,6 +40,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5920138399030999684, guid: f4e36c8de08e3264f845d0dcf38f1a17, type: 3}
+      propertyPath: parameterizedTextFields.Array.data[0].value
+      value: Dies ist eine Holz Ressource.
+      objectReference: {fileID: 0}
     - target: {fileID: 6010706210623089554, guid: f4e36c8de08e3264f845d0dcf38f1a17, type: 3}
       propertyPath: m_RootOrder
       value: 0

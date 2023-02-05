@@ -135,8 +135,7 @@ public class Player : Selectable
 
     private void Initialize()
     {
-        CurrentTile = GridManager.Instance.TileGrid[new GridCoordinates(-(int)clientId.Value, 0)];
-        OldTile = GridManager.Instance.TileGrid[new GridCoordinates(-(int)clientId.Value, 0)];
+        CurrentTile = GridManager.Instance.GetTileOnWorldPosition(transform.position);
         inventoryRessources.OnListChanged += ChangeCountInventory;
         savedRessources.OnListChanged += ChangeCountSaved;
         InputManager.Instance.OnSelect += ChangeCurrentSelectedTarget;
@@ -248,11 +247,11 @@ public class Player : Selectable
 
         if (isAdjacent && (moveCount.Value > 0) && (tile.passable || canMoveOverUnpassable.Value) || forceMove)
         {
-            if(tile.PlayerOnTile != null)
+            if (tile.PlayerOnTile != null)
             {
                 GridCoordinates newCoords = coordinates + (coordinates - CurrentTile.TileGridCoordinates);
                 Debug.Log("OldTile: " + CurrentTile.TileGridCoordinates.ToString() + " New Tile: " + coordinates.ToString() + " Direction: " + (coordinates - CurrentTile.TileGridCoordinates).ToString() + " Coords: " + newCoords.ToString());
-                tile.PlayerOnTile.MoveClientRpc(newCoords, false, true);
+                tile.PlayerOnTile.MoveClientRpc(newCoords, true, true);
             }
 
             if (!forceMove)
@@ -290,8 +289,8 @@ public class Player : Selectable
     [ClientRpc]
     public void MoveClientRpc(GridCoordinates coordinates, bool invokeEvent = true, bool forceMove = false)
     {
-        OldTile.PlayerLeavesTile();
         OldTile = CurrentTile;
+        OldTile.PlayerLeavesTile();
 
         if (IsLocalPlayer)
         {
@@ -311,7 +310,6 @@ public class Player : Selectable
         transform.DOMove(cellWorldPosition + new Vector3(0, 0, -0.1f), 0.5f);
 
         LastMoveDirection = GetMoveDirection(OldTile.TileGridCoordinates, CurrentTile.TileGridCoordinates);
-
         if (IsLocalPlayer && !forceMove)
             HighlightAdjacentTiles();
 
