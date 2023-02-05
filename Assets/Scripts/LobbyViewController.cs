@@ -2,6 +2,8 @@ using UnityEngine.UIElements;
 using System.Collections.Generic;
 using Unity.Services.Lobbies.Models;
 using System;
+using Unity.Netcode;
+using UnityEngine;
 
 public class LobbyViewController
 {
@@ -76,7 +78,6 @@ public class LobbyViewController
         _authenticationInfo = root.Q<Label>("authentication-info");
 
         _manager.OnClientJoinedLobby += RefreshPlayerLabels;
-
     }
 
     private async void JoinExistingLobby()
@@ -94,6 +95,13 @@ public class LobbyViewController
 
     private void RefreshPlayerLabels()
     {
+        if (NetworkManager.Singleton.IsHost)
+        {
+            _playerInfo.text = "You can now start the game";
+        } else
+        {
+            _playerInfo.text = "Waiting for Host to start game";
+        }
         RefreshLobbies();
     }
 
@@ -114,6 +122,22 @@ public class LobbyViewController
             InitializeServices.Instance.InitializeWithUsername(_usernameTextField.text);
             GoToWindows();
         }
+
+        NetworkManager.Singleton.OnClientConnectedCallback += (id) =>
+        {
+            if (GameObject.FindGameObjectsWithTag("Player").Length >= 2)
+            {
+                if (NetworkManager.Singleton.IsHost)
+                {
+                    _playerInfo.text = "You can now start the game";
+                }
+                else
+                {
+                    _playerInfo.text = "Waiting for server to start the game";
+                }
+                RefreshLobbies();
+            }
+        };
     }
 
     private void GoToWindows()
@@ -175,10 +199,15 @@ public class LobbyViewController
     { 
         _lobbies = await _manager.GetAllLobbies();
         if (_lobbies.Count == 0) {
-            _playerInfo.text = "Timeout: Please create a new Lobby";
+            _playerInfo.text = "Please create a new Lobby";
             _createButton.clicked += AddNewLobby;
         }
         _lobbyList.itemsSource = _lobbies;
         _lobbyList.Rebuild();
+    }
+
+    public void SetPlayerInfo(string message)
+    {
+        _playerInfo.text = message;
     }
 }

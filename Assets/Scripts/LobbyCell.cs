@@ -4,6 +4,8 @@ using Unity.Services.Lobbies.Models;
 using System;
 using Unity.Netcode;
 using UnityEngine;
+using Unity.Services.Authentication;
+using System.Collections.Generic;
 
 public class LobbyCell
 {
@@ -19,27 +21,6 @@ public class LobbyCell
     {
         _manager = manager;
         startedWithLobby = true;
-
-        NetworkManager.Singleton.OnClientConnectedCallback += (id) =>
-        {
-            Debug.Log("OnClientConnectedCallback: All players are here");
-            _usersJoined.text = _lobby.Players.Count.ToString() + "/2";
-            if (GameObject.FindGameObjectsWithTag("Player").Length >= 2 && startedWithLobby)
-            {
-                if (NetworkManager.Singleton.IsHost)
-                {
-                    Debug.Log("OnClientConnectedCallback: All players are here");
-                    _joinButton.text = "Start";
-                    _joinButton.clicked += StartGame;
-                    _joinButton.clicked -= JoinLobby;
-                }
-                else
-                {
-                    _joinButton.clicked -= JoinLobby;
-                    _joinButton.text = "Wait";
-                }
-            }
-        };
     }
     public void SetVisualElements(VisualElement cell)
     {
@@ -50,6 +31,7 @@ public class LobbyCell
 
     private void StartGame()
     {
+        
         _manager.StartGame();
     }
 
@@ -58,28 +40,55 @@ public class LobbyCell
         _lobby = lobby;
         _nameLabel.text = lobby.Name;
         _usersJoined.text = _lobby.Players.Count.ToString() + "/2";
+        _joinButton.clicked -= StartGame;   
+        _usersJoined.text = lobby.Players.Count + "/2";
 
-        Debug.Log("SetData was called");
-        if (NetworkManager.Singleton.IsServer) {
-            _joinButton.text = "Wait";
-            _joinButton.clicked -= JoinLobby;
-        }
-        else
+        Debug.Log("LobbyOwnerId: " + lobby.HostId);
+        Debug.Log("PlayerId: " + AuthenticationService.Instance.PlayerId);
+
+        if (lobby.Players.Count >= 2 && startedWithLobby)
         {
-            _joinButton.text = "Join";
-            _joinButton.clicked += JoinLobby;
+            if (lobby.HostId == AuthenticationService.Instance.PlayerId)
+            {
+
+                _joinButton.text = "Start";
+                _joinButton.clicked += StartGame;
+                _joinButton.clicked -= JoinLobby;
+            }
+            else
+            {
+                _joinButton.clicked -= JoinLobby;
+                _joinButton.text = "Wait";
+            }
         }
-        
-        _joinButton.clicked -= StartGame;
-        
+
+
+        else 
+        {
+            if (lobby.HostId == AuthenticationService.Instance.PlayerId)
+            {
+                _joinButton.text = "Wait";
+                _joinButton.clicked -= JoinLobby;
+            }
+            else
+            {
+                _joinButton.text = "Join";
+                _joinButton.clicked += JoinLobby;
+            }
+        }
     }
 
-    public void  JoinLobby()
+    public async void  JoinLobby()
     {
-        // await
         _joinButton.clicked -= JoinLobby;
+        // only server can start the game ...
+        if (NetworkManager.Singleton.IsHost)
+        {
+            _manager.SetPlayerInfo("Can't be in 2 rooms");
+            return;
+        }
         _joinButton.text = "Wait";
-        _ = _manager.JoinLobby(_lobby.Id);
         _usersJoined.text = _lobby.Players.Count.ToString() + "/2";
+        _ = await _manager.JoinLobby(_lobby.Id);
     }
 }

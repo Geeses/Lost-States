@@ -92,6 +92,7 @@ public class CardUiScript : MonoBehaviour, IPointerDownHandler, IPointerEnterHan
     {
         if (_card.cardType is CardType.Movement)
         {
+            Debug.Log("Card Manager: " + CardManager.Instance.name); 
             CardManager.Instance.TryPlayMovementCardServerRpc(CardId, gameObject.GetInstanceID(), PlayerNetworkManager.Instance.LocalClientId);
         }
         else if (_card.cardType is CardType.Chest)

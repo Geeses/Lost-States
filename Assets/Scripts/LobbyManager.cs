@@ -12,6 +12,7 @@ public class LobbyManager
     int maxPlayers = 3;
     private NetworkVariable<bool> canStartGame = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public event Action OnClientJoinedLobby;
+    public LobbyViewController view;
 
     public LobbyManager()
     {
@@ -78,6 +79,10 @@ public class LobbyManager
 
     public async Task<int> JoinLobby(string id)
     {
+        if (NetworkManager.Singleton.IsHost)
+        {
+            return -2;
+        }
         try
         {
             Lobby lobby = await LobbyService.Instance.JoinLobbyByIdAsync(id);
@@ -101,5 +106,10 @@ public class LobbyManager
     public void StartGame()
     {
         canStartGame.Value = true;
+    }
+
+    public void SetPlayerInfo(string message)
+    {
+        view.SetPlayerInfo(message);
     }
 }

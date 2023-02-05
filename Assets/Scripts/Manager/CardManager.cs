@@ -162,6 +162,9 @@ public class CardManager : NetworkBehaviour
             PlayMovementCardClientRpc(cardId, playerId, temporaryCard);
             player.movementCards.Remove(cardId);
 
+            Debug.Log("[CardManager:165] PlayerId: " + playerId);
+            Debug.Log("[CardManager:166] CardId: " + cardId);
+
             OnMovementCardPlayed.Invoke(cardId, playerId);
         }
     }
