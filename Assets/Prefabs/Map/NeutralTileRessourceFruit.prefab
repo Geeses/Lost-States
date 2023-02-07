@@ -96,7 +96,8 @@ PrefabInstance:
       propertyPath: ressourceRenderer
       value: 
       objectReference: {fileID: 3443272606354972915}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -2715622242190638224, guid: 575a289dcf2ac2c489a01b54b55926b1, type: 3}
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 575a289dcf2ac2c489a01b54b55926b1, type: 3}
 --- !u!212 &3443272606354972915 stripped

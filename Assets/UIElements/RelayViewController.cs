@@ -31,7 +31,7 @@ public class RelayViewController
 
         canStartGame.OnValueChanged += (bool previousValue, bool newValue) => {
             Debug.Log($"Starting Game... " + SceneManager.GetSceneByBuildIndex(0).name);
-            NetworkManager.Singleton.SceneManager.LoadScene("2PlayerMap", LoadSceneMode.Single);
+            NetworkManager.Singleton.SceneManager.LoadScene("2PlayerMap_V2", LoadSceneMode.Single);
         };
     }
 

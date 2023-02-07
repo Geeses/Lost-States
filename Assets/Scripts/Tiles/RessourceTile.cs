@@ -28,16 +28,15 @@ public class RessourceTile : NetworkBehaviour, ITileExtension
     private void Start()
     {
         _tile = GetComponent<Tile>();
-
+        ressourceCount = 1;
         TurnManager.Instance.OnTurnStart += ChangeRessourceCooldown;
-        GameManager.Instance.OnGameStart += Initialize;
+        Initialize();
     }
 
     private void OnDisable()
     {
-        _tile.OnStepOnTile -= GivePlayerRessource;
         TurnManager.Instance.OnTurnStart -= ChangeRessourceCooldown;
-        GameManager.Instance.OnGameStart -= Initialize;
+        //GameManager.Instance.OnGameStart -= Initialize;
     }
 
     #endregion
@@ -47,7 +46,7 @@ public class RessourceTile : NetworkBehaviour, ITileExtension
         _playerCount = PlayerNetworkManager.Instance.PlayerDictionary.Count;
 
         _tile.OnStepOnTile += GivePlayerRessource;
-        _startRessourceCount = ressourceCount;
+        _startRessourceCount = ressourceCount;  
         ressourceCooldown *= _playerCount;
         _startRessourceCooldown = ressourceCooldown;
         respawnText.gameObject.SetActive(false);

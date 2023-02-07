@@ -165,7 +165,7 @@ public class CardManager : NetworkBehaviour
             Debug.Log("[CardManager:165] PlayerId: " + playerId);
             Debug.Log("[CardManager:166] CardId: " + cardId);
 
-            OnMovementCardPlayed.Invoke(cardId, playerId);
+            OnMovementCardPlayed?.Invoke(cardId, playerId);
         }
     }
 

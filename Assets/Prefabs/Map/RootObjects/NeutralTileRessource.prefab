@@ -517,18 +517,6 @@ MonoBehaviour:
   ressourceRenderer: {fileID: 1151956697635024506}
   podestRenderer: {fileID: 4470024433116670008}
   respawnText: {fileID: 8823409335364231165}
---- !u!114 &-2715622242190638224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2168988233032047696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 815939864170c4f4aa4943bf9912040d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &5674074421713569497 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7750515430129909978, guid: add4e4101ecaf984e809a999fdeafcf4, type: 3}
