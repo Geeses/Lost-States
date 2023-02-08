@@ -62,4 +62,10 @@ public class Battlelog : NetworkBehaviour
     {
         AddLog(content);
     }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void AddLogServerRpc(string content)
+    {
+        AddLogClientRpc(content);
+    }
 }

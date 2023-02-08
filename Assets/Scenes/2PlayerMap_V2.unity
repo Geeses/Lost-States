@@ -60177,7 +60177,7 @@ PrefabInstance:
       objectReference: {fileID: 1928889730}
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: chestCards.Array.size
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: chestCards.Array.data[0]
@@ -60207,6 +60207,10 @@ PrefabInstance:
       propertyPath: chestCards.Array.data[6]
       value: 
       objectReference: {fileID: 11400000, guid: 5f1208bcd2811dd40a4fd4d8782e7a36, type: 2}
+    - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
+      propertyPath: chestCards.Array.data[7]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0d2a1d743253d7f45aa04de3e817dfa6, type: 2}
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: movementCards.Array.size
       value: 7

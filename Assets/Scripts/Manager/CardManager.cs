@@ -255,6 +255,10 @@ public class CardManager : NetworkBehaviour
                     TargetClientIds = new ulong[] { playerId }
                 }
             };
+
+            Card card = GetChestCardById(cardId);
+            player.moveCount.Value += card.baseMoveCount;
+
             // remove UI object from player that sent the request
             NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(cardId, CardType.Chest, instanceId, false, clientRpcParams);
             Battlelog.Instance.AddLogClientRpc(player.profileName.Value + " hat die Kistenkarte: <b>" + GetChestCardById(cardId).cardName + "</b> gespielt.");

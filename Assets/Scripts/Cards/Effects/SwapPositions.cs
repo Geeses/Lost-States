@@ -6,8 +6,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Effect", menuName = "Scriptable Cards/SwapPositions", order = 1)]
 public class SwapPositions : CardEffect
 {
-    private ulong _currentSelectedPlayerId;
-
     public override void ExecuteEffect()
     {
         base.ExecuteEffect();
@@ -22,8 +20,6 @@ public class SwapPositions : CardEffect
     private void SwapPlayers(ulong playerId)
     {
         Player selectedPlayer = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
-
-        Debug.Log(selectedPlayer, selectedPlayer);
 
         if (selectedPlayer != null)
         {
