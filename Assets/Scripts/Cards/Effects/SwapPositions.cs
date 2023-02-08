@@ -29,6 +29,11 @@ public class SwapPositions : CardEffect
         {
             GridCoordinates playerCoords = Player.CurrentTile.TileGridCoordinates;
             GridCoordinates enemyCoords = selectedPlayer.CurrentTile.TileGridCoordinates;
+            Debug.Log("Player coords: " + playerCoords.ToString() + "| Enemy Coords: " + enemyCoords.ToString());
+
+            // empty tiles to Swap Players without issues (otherwise PlayerPushing mechanics activate)
+            GridManager.Instance.TileGrid[playerCoords].PlayerLeavesTileServerRpc();
+            GridManager.Instance.TileGrid[enemyCoords].PlayerLeavesTileServerRpc();
 
             Player.TryMoveServerRpc(enemyCoords, true, false);
             selectedPlayer.TryMoveServerRpc(playerCoords, true, false);

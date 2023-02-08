@@ -20,7 +20,10 @@ public class RessourceTrapTile : NetworkBehaviour, ITileExtension
     public void RemovePlayerRessources(Player player)
     {
         _cachedPlayer = player;
-        _cachedPlayer.RemoveNewestRessourceServerRpc(count);
+
+        // only one player sends the ServerRpc, the player who steps on it
+        if (_cachedPlayer.IsLocalPlayer)
+            _cachedPlayer.RemoveNewestRessourceServerRpc(count);
     }
 }
 

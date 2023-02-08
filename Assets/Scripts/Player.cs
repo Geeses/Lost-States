@@ -247,6 +247,8 @@ public class Player : Selectable
 
         if (isAdjacent && (moveCount.Value > 0) && (tile.passable || canMoveOverUnpassable.Value) || forceMove)
         {
+            // Function bracked to move other players, when the tile we try to move on has a player on it
+            //      this bracked would also run on "SwapPositions" chestcard, since we move
             if (tile.PlayerOnTile != null)
             {
                 GridCoordinates newCoords = coordinates + (coordinates - CurrentTile.TileGridCoordinates);
@@ -365,9 +367,10 @@ public class Player : Selectable
             {
                 int id = inventoryRessources[inventoryRessources.Count - 1];
                 inventoryRessources.Remove(id);
-                Battlelog.Instance.AddLogClientRpc(profileName.Value + " hat " + count + " Ressourcen verloren.");
             }
         }
+
+        Battlelog.Instance.AddLogClientRpc(profileName.Value + " hat " + count + " Ressourcen verloren.");
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -381,9 +384,10 @@ public class Player : Selectable
                 int id = inventoryChestCards[inventoryChestCards.Count - 1];
                 inventoryChestCards.Remove(id);
                 NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(id, CardType.Chest, -1, true);
-                Battlelog.Instance.AddLogClientRpc(profileName.Value + " hat " + count + " Kistenkarte verloren.");
             }
         }
+
+        Battlelog.Instance.AddLogClientRpc(profileName.Value + " hat " + count + " Kistenkarte verloren.");
     }
 
     public void SafePlayerRessources()

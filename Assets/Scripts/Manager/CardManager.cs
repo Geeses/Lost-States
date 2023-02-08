@@ -260,8 +260,8 @@ public class CardManager : NetworkBehaviour
             Battlelog.Instance.AddLogClientRpc(player.profileName.Value + " hat die Kistenkarte: <b>" + GetChestCardById(cardId).cardName + "</b> gespielt.");
             CardEffectManager.Instance.InitializeCardEffectClientRpc(cardId, playerId, CardType.Chest, clientRpcParams);
             player.inventoryChestCards.Remove(cardId);
+            OnChestCardPlayed?.Invoke(cardId, playerId);
         }
-        OnChestCardPlayed.Invoke(cardId, playerId);
     }
     #endregion
 }

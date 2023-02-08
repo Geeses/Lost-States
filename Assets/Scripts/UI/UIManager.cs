@@ -107,9 +107,6 @@ public class UIManager : NetworkBehaviour
 
     private void UpdateRessourcesLabels(NetworkListEvent<int> changeEvent)
     {
-        // change Value is the Objects.Count
-        Debug.Log("UIManager.UpdateRessourcesLabels changeEvent.Value: " + changeEvent.Value);
-
         int bagFruitCount = 0;
         int bagWaterCount = 0;
         int bagSteelCount = 0;

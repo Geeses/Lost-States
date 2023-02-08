@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Netcode;
 using UnityEngine;
 
 public enum TileZone
@@ -87,5 +88,12 @@ public class Tile : Selectable
     private void GetTileExtensions()
     {
         TileExtensions = GetComponents<ITileExtension>().ToList();
+    }
+
+    // chestcard SwapPositions needs empty tiles to swap players
+    [ServerRpc(RequireOwnership = false)]
+    public void PlayerLeavesTileServerRpc()
+    {
+        PlayerLeavesTile();
     }
 }

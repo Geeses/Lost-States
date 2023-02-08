@@ -37,7 +37,6 @@ public class Battlelog : NetworkBehaviour
 
     private void Awake()
     {
-        Debug.Log("Battlelog singleton Initialized");
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
@@ -61,7 +60,6 @@ public class Battlelog : NetworkBehaviour
     [ClientRpc]
     public void AddLogClientRpc(string content)
     {
-        Debug.Log("Battle Log called");
         AddLog(content);
     }
 }

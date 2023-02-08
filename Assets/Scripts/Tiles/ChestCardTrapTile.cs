@@ -20,7 +20,10 @@ public class ChestCardTrapTile : NetworkBehaviour, ITileExtension
     public void RemovePlayerChestCards(Player player)
     {
         _cachedPlayer = player;
-        _cachedPlayer.RemoveNewestChestcardServerRpc(count);
+
+        // only one player sends the ServerRpc, the player who steps on it
+        if (_cachedPlayer.IsLocalPlayer)
+            _cachedPlayer.RemoveNewestChestcardServerRpc(count);
     }
 }
 

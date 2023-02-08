@@ -20,7 +20,11 @@ public class MoveCountTrapTile : NetworkBehaviour, ITileExtension
     public void RemovePlayerMoveCount(Player player)
     {
         _cachedPlayer = player;
-        _cachedPlayer.ChangeMoveCountServerRpc(count);
+
+        // only one player sends the ServerRpc, the player who steps on it
+        if (_cachedPlayer.IsLocalPlayer)
+            _cachedPlayer.ChangeMoveCountServerRpc(count);
+
         Battlelog.Instance.AddLog(player.profileName.Value + " hat seine Bewegungsanzahl verloren.");
     }
 }
