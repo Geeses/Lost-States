@@ -14,14 +14,28 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 5ea4fefff6e39e442aca6f192865c426, type: 3}
     - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_text
-      value: "Wenn es Nacht ist, setze einen Countdown von einem Zug. Wenn du wieder
-        dran bist, und Spieler befinden sich in der gef\xE4hrlichen Zone, dann entferne
-        ihnen die 4 neuesten Ressourcen und die neuesten 2 Kistenkarten."
+      value: 'Der Karteneffekt aktiviert sich wenn du wieder dran bist.
+
+
+        Bei
+        <color=#4E89E7>Nacht</color> und Spieler steht auf <color=#AE4343>Rotem Feld</color>:
+
+
+        Entferne
+        dem Spieler 4 neuesten Ressourcen und 2 neueste Kistenkarten.'
       objectReference: {fileID: 0}
     - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_fontSize
-      value: 6.4
+      value: 5.25
       objectReference: {fileID: 0}
+    - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 1690342784632638810, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_Name
       value: ChestCard06

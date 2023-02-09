@@ -14,12 +14,39 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: bea340d4ca3ba6f49b4084f26f5e8294, type: 3}
     - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_text
-      value: "Klaue von jedem Spieler die neueste Ressource, wenn sie sich bei Nacht
-        in der gef\xE4hrlichen Zone befinden."
+      value: 'Bei <color=#4E89E7>Nacht</color> und Spieler steht auf <color=#AE4343>Rotem
+        Feld</color>:
+
+
+        Klaue dem Spieler die neueste eingesammelte Ressource.'
       objectReference: {fileID: 0}
     - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_fontSize
-      value: 8
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
+      propertyPath: m_StyleSheet
+      value: 
+      objectReference: {fileID: 11400000, guid: f952c082cb03451daed3ee968ac6c63e, type: 2}
+    - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1690342784632638810, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_Name

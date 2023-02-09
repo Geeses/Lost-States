@@ -16,8 +16,8 @@ public class CardManager : NetworkBehaviour
     public HorizontalLayoutGroup cardParent;
 
     [Header("Options")]
-    private int moveCardListInStack = 3;
-    private int chestCardListInStack = 3;
+    [SerializeField] private int moveCardListInStack = 3;
+    [SerializeField] private int chestCardListInStack = 3;
 
     public event Action<int, ulong> OnMovementCardPlayed;
     public event Action<int, ulong> OnChestCardPlayed;
@@ -53,14 +53,17 @@ public class CardManager : NetworkBehaviour
         {
             s_instance = this;
         }
-
-        CreateMovementCardStack();
-        CreateChestCardStack();
     }
 
     private void Start()
     {
-        TurnManager.Instance.OnTurnStart += TryAddMovementCardsToPlayer;
+        CreateMovementCardStack();
+        CreateChestCardStack();
+
+        if (IsServer)
+            TurnManager.Instance.OnTurnStart += TryAddMovementCardsToPlayerServerRpc;
+
+        Battlelog.Instance.AddLog("Spieleinstellung: Es sind " + MoveCardListInStack + " Kopien von Bewegungskarten in einem Deck, und " + ChestCardListInStack + " Kopien von Kistenkarten.");
     }
     #endregion
 
@@ -81,7 +84,9 @@ public class CardManager : NetworkBehaviour
 
     private void CreateMovementCardStack()
     {
-        Battlelog.Instance.AddLogClientRpc("Es wurde ein frisches Bewegungskartendeck erstellt.");
+        if (TurnManager.Instance.TotalTurnCount != 0)
+            Battlelog.Instance.AddLogClientRpc("Es wurde ein frisches Bewegungskartendeck erstellt.");
+
         MovementCardStack.Clear();
         MovementCardStackPosition = 0;
 
@@ -96,26 +101,26 @@ public class CardManager : NetworkBehaviour
         MovementCardStack.Shuffle();
     }
 
-    private void TryAddMovementCardsToPlayer(ulong playerId)
+    [ServerRpc]
+    private void TryAddMovementCardsToPlayerServerRpc(ulong playerId)
     {
-        // only execute function if its the server
-        if (!IsServer)
-            return;
-
         if (TurnManager.Instance.CurrentTurnNumber == 1 || TurnManager.Instance.CurrentTurnNumber == 6)
         {
-            AddMovementCardsToPlayer(playerId);
+            AddMovementCardsToPlayerServerRpc(playerId);
         }
     }
 
-    private void AddMovementCardsToPlayer(ulong playerId)
+    [ServerRpc]
+    private void AddMovementCardsToPlayerServerRpc(ulong playerId)
     {
         Player player = NetworkManager.ConnectedClients[playerId].PlayerObject.GetComponent<Player>();
         int addCardAmount = player.MovementCardAmountPerCycle;
 
         // if its the total beginning of the game, we give each player 2 more cards 
-        if(TurnManager.Instance.TotalTurnCount == 1)
+        if (TurnManager.Instance.TotalTurnCount == 1)
+        {
             addCardAmount += 2;
+        }
 
         for (int i = 0; i < addCardAmount; i++)
         {
@@ -123,6 +128,9 @@ public class CardManager : NetworkBehaviour
             if (MovementCardStack.Count == MovementCardStackPosition)
             {
                 CreateMovementCardStack();
+
+                if (TurnManager.Instance.TotalTurnCount != 1)
+                    Battlelog.Instance.AddLogClientRpc("Es wurden " + (addCardAmount - i) + " Bewegungskarten nach Erstellung verteilt.");
             }
 
             player.movementCards.Add(MovementCardStack[MovementCardStackPosition]);
@@ -206,7 +214,9 @@ public class CardManager : NetworkBehaviour
 
     private void CreateChestCardStack()
     {
-        Battlelog.Instance.AddLogClientRpc("Es wurde ein frisches Kistenkartendeck erstellt.");
+        if (TurnManager.Instance.TotalTurnCount != 0)
+            Battlelog.Instance.AddLogClientRpc("Es wurde ein frisches Kistenkartendeck erstellt.");
+
         ChestCardStack.Clear();
         ChestCardStackPosition = 0;
 

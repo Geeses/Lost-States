@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: c75bcbfca9643c743a840abe60bb66c7, type: 3}
     - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_text
-      value: "Wenn ein Gegner 3 Felder in der N\xE4he ist, kannst du ihn um 4 Felder
+      value: "Wenn dein Gegner 3 Felder in der N\xE4he ist, kannst du ihn um 4 Felder
         bewegen."
       objectReference: {fileID: 0}
     - target: {fileID: 1690342784632638810, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}

@@ -44,20 +44,20 @@ public class CameraController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (MousePositionScreenRelative.x >= 0.95f && cam.transform.position.x <= panningZone.x + panningZoneStartPoint.x)
+        if (MousePositionScreenRelative.x >= 0.98f && cam.transform.position.x <= panningZone.x + panningZoneStartPoint.x)
         {
             PanCamera(Vector2.right);
         }
-        if (MousePositionScreenRelative.x <= 0.05f && cam.transform.position.x >= -panningZone.x + panningZoneStartPoint.x)
+        if (MousePositionScreenRelative.x <= 0.02f && cam.transform.position.x >= -panningZone.x + panningZoneStartPoint.x)
         {
             PanCamera(Vector2.left);
         }
 
-        if (MousePositionScreenRelative.y >= 0.95f && cam.transform.position.y <= panningZone.y + panningZoneStartPoint.y)
+        if (MousePositionScreenRelative.y >= 0.98f && cam.transform.position.y <= panningZone.y + panningZoneStartPoint.y)
         {
             PanCamera(Vector2.up);
         }
-        if (MousePositionScreenRelative.y <= 0.05f && cam.transform.position.y >= -panningZone.y + panningZoneStartPoint.y)
+        if (MousePositionScreenRelative.y <= 0.02f && cam.transform.position.y >= -panningZone.y + panningZoneStartPoint.y)
         {
             PanCamera(Vector2.down);
         }

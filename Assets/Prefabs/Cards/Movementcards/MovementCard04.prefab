@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 469728987098826006, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_text
-      value: Du kannst einen Gegenspieler um 1 Feld bewegen.
+      value: Du kannst deinen Gegner um 1 Feld bewegen.
       objectReference: {fileID: 0}
     - target: {fileID: 2306062493240514938, guid: 7e363339d9f7fe84dbceba3981e2eb26, type: 3}
       propertyPath: m_Sprite
