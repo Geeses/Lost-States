@@ -15207,7 +15207,7 @@ PrefabInstance:
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: chestCards.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 0d2a1d743253d7f45aa04de3e817dfa6, type: 2}
+      objectReference: {fileID: 11400000, guid: 95a5f922ea0c8e04ab9ec0e52226fe64, type: 2}
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: chestCards.Array.data[1]
       value: 

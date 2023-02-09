@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 918372357797268562}
   - component: {fileID: 918372357797268653}
   - component: {fileID: 1439303633}
+  - component: {fileID: 733824345}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -134,7 +135,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 0}
   panSpeed: 0.4
-  panningZone: {x: 5, y: 18}
+  panningZone: {x: 8, y: 18}
+  panningZoneStartPoint: {x: -2, y: 9}
   cursorMode: 0
   minZoomValue: 0.5
   maxZoomValue: 1.5
@@ -157,3 +159,17 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   sharedProfile: {fileID: 11400000, guid: 218a0dabed35b5a48b14abfc0219be6a, type: 2}
+--- !u!114 &733824345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918372357797268560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aece6bdf9ef8daf41836dc5aebe20911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeDuration: 0.5
+  shakeStrength: 3

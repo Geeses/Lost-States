@@ -166,7 +166,7 @@ public class GameManager : NetworkBehaviour
         List<int> steel = new List<int>();
         List<int> water = new List<int>();
 
-        foreach (int id in player.inventoryRessources)
+        foreach (int id in player.savedRessources)
         {
             if ((Ressource)id == Ressource.fruit)
             {

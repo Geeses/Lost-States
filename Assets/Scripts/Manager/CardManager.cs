@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using Unity.Netcode;
+using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -271,11 +272,20 @@ public class CardManager : NetworkBehaviour
 
             // remove UI object from player that sent the request
             NetworkManagerUI.Instance.RemoveCardFromPlayerUiClientRpc(cardId, CardType.Chest, instanceId, false, clientRpcParams);
-            Battlelog.Instance.AddLogClientRpc(player.profileName.Value + " hat die Kistenkarte: <b>" + GetChestCardById(cardId).cardName + "</b> gespielt.");
             CardEffectManager.Instance.InitializeCardEffectClientRpc(cardId, playerId, CardType.Chest, clientRpcParams);
             player.inventoryChestCards.Remove(cardId);
-            OnChestCardPlayed?.Invoke(cardId, playerId);
+
+            PlayChestCardClientRpc(cardId, playerId);
         }
+    }
+
+    [ClientRpc]
+    private void PlayChestCardClientRpc(int cardId, ulong playerId)
+    {
+        Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
+
+        Battlelog.Instance.AddLog(player.profileName.Value + " hat die Kistenkarte: <b>" + GetChestCardById(cardId).cardName + "</b> gespielt.");
+        OnChestCardPlayed?.Invoke(cardId, playerId);
     }
     #endregion
 }
