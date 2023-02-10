@@ -316,9 +316,27 @@ public class Player : Selectable
         if (IsLocalPlayer && !forceMove)
             HighlightAdjacentTiles();
 
-        if(invokeEvent)
+        QueueOnPlayerMovedForAnalyticsServices();
+
+        if (invokeEvent)
             OnPlayerMoved?.Invoke(coordinates);
     }
+    void QueueOnPlayerMovedForAnalyticsServices()
+    {
+        Dictionary<string, object> parameters = new Dictionary<string, object>()
+        {
+            { "GameCount", PlayerPrefs.GetInt("GameCount") },
+            { "PlayerId",  this.clientId},
+            { "NewPositionX", CurrentTile.TileGridCoordinates.x },
+            { "NewPositionY", CurrentTile.TileGridCoordinates.y },
+            { "OldPositionX", OldTile.TileGridCoordinates.x },
+            { "OldPositionY", OldTile.TileGridCoordinates.y }
+        };
+
+        // The ‘OnTurnEnd’ event will get queued up and sent every minute
+        AnalyticsService.Instance.CustomData("OnPlayerMoved", parameters);
+    }
+
 
     Direction GetMoveDirection(GridCoordinates positionBefore, GridCoordinates positionAfter)
     {
