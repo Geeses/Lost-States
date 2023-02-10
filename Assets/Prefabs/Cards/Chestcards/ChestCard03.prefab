@@ -18,7 +18,8 @@ PrefabInstance:
         Feld</color>:
 
 
-        Klaue dem Spieler die neueste eingesammelte Ressource.'
+        Dem Spieler wird die neueste eingesammelte Ressource
+        geklaut.'
       objectReference: {fileID: 0}
     - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_fontSize
