@@ -328,14 +328,14 @@ public class Player : Selectable
         Dictionary<string, object> parameters = new Dictionary<string, object>()
         {
             { "GameCount", PlayerPrefs.GetInt("GameCount") },
-            { "PlayerId",  this.clientId},
+            { "PlayerId",  GetInstanceID()},
             { "NewPositionX", CurrentTile.TileGridCoordinates.x },
             { "NewPositionY", CurrentTile.TileGridCoordinates.y },
             { "OldPositionX", OldTile.TileGridCoordinates.x },
             { "OldPositionY", OldTile.TileGridCoordinates.y },
-            { "NewZoneType", CurrentTile.zoneType },
-            { "OldZoneType", OldTile.zoneType },
-            { "TurnType",TurnManager.Instance.TurnType },
+            { "NewZoneType", (int)CurrentTile.zoneType },
+            { "OldZoneType", (int)OldTile.zoneType },
+            { "TurnType", (int)TurnManager.Instance.TurnType },
             { "TurnNumber",TurnManager.Instance.CurrentTurnNumber },
             { "TotalTurnCount",TurnManager.Instance.TotalTurnCount },
             { "SessionIdCustom", AnalyticsService.Instance.SessionID }
