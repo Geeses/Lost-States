@@ -331,6 +331,11 @@ public class Player : Selectable
             { "NewPositionY", CurrentTile.TileGridCoordinates.y },
             { "OldPositionX", OldTile.TileGridCoordinates.x },
             { "OldPositionY", OldTile.TileGridCoordinates.y },
+            { "NewZoneType", CurrentTile.zoneType },
+            { "OldZoneType", OldTile.zoneType },
+            { "TurnType",TurnManager.Instance.TurnType },
+            { "TurnNumber",TurnManager.Instance.CurrentTurnNumber },
+            { "TotalTurnCount",TurnManager.Instance.TotalTurnCount },
             { "SessionIdCustom", AnalyticsService.Instance.SessionID }
 
         };
