@@ -36,7 +36,8 @@ public class AnalyticsManager: MonoBehaviour
             { "RessourcesSavedCount", dataOnGameEnd.RessourcesSavedCount },
             { "NeededRessourcesCount", dataOnGameEnd.NeededRessourcesCount },
             { "HasWon", hasWon },
-            { "RessourceCollectionCardId", player.RessourceCollectionCardId }
+            { "RessourceCollectionCardId", player.RessourceCollectionCardId },
+             { "SessionIdCustom", AnalyticsService.Instance.SessionID }
 
         };
 
@@ -131,8 +132,9 @@ public class AnalyticsManager: MonoBehaviour
             { "SavedWoodCount", dataOnTurnEnd.savedWoodCount },
             { "SavedSteelCount", dataOnTurnEnd.savedSteelCount },
             { "TotalTurnCount", dataOnTurnEnd.totalTurnCount },
-            { "TurnNumber", dataOnTurnEnd.turnNumber }
-            
+            { "TurnNumber", dataOnTurnEnd.turnNumber },
+             { "SessionIdCustom", AnalyticsService.Instance.SessionID }
+
         };
 
         // The ‘OnTurnEnd’ event will get queued up and sent every minute
@@ -148,7 +150,8 @@ public class AnalyticsManager: MonoBehaviour
             { "CardType", dataCardPlayed.CardType },
             { "TotalTurnCount", dataOnTurnEnd.totalTurnCount },
             { "TurnNumber", dataOnTurnEnd.turnNumber },
-            { "GameCount",  PlayerPrefs.GetInt("GameCount") }
+            { "GameCount",  PlayerPrefs.GetInt("GameCount") },
+             { "SessionIdCustom", AnalyticsService.Instance.SessionID }
 
         };
 

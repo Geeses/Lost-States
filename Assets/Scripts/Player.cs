@@ -330,7 +330,9 @@ public class Player : Selectable
             { "NewPositionX", CurrentTile.TileGridCoordinates.x },
             { "NewPositionY", CurrentTile.TileGridCoordinates.y },
             { "OldPositionX", OldTile.TileGridCoordinates.x },
-            { "OldPositionY", OldTile.TileGridCoordinates.y }
+            { "OldPositionY", OldTile.TileGridCoordinates.y },
+            { "SessionIdCustom", AnalyticsService.Instance.SessionID }
+
         };
 
         // The ‘OnTurnEnd’ event will get queued up and sent every minute
@@ -386,7 +388,8 @@ public class Player : Selectable
             { "PlayerID", this.clientId },
             { "RessourceType", ressource },
             { "TotalTurnCount", TurnManager.Instance.TotalTurnCount },
-            { "TurnNumber", TurnManager.Instance.CurrentTurnNumber }
+            { "TurnNumber", TurnManager.Instance.CurrentTurnNumber },
+             { "SessionIdCustom", AnalyticsService.Instance.SessionID }
         };
 
         // The ‘OnRessourceCollected’ event will get queued up and sent every minute
