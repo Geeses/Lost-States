@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using Unity.Services.Authentication;
 using Unity.Collections;
 using System.Collections;
+using Unity.Services.Analytics;
 
 public enum Ressource
 {
@@ -44,12 +45,7 @@ public class Player : Selectable
     public int inventoryRessourceCount;
     public int savedRessourceCount;
     public ulong currentSelectedPlayerId;
-
-    public event Action<ulong> OnEnemyPlayerSelected;
-    public event Action<GridCoordinates> OnPlayerMoved;
-
     private int _movementCardAmountPerCycle = 5;
-
     private Direction _lastMoveDirection;
     private Tile _currentTile;
     private Tile _oldTile;
@@ -60,6 +56,11 @@ public class Player : Selectable
     private int _ressourceCollectionCardId;
     private int _localMoveCount;
     private int _localMovedInCurrentTurn;
+
+    // Events
+    public event Action<ulong> OnEnemyPlayerSelected;
+    public event Action<GridCoordinates> OnPlayerMoved;
+    public event Action<Ressource>OnRessourceCollected;
     #endregion
 
     #region Properties
@@ -356,6 +357,22 @@ public class Player : Selectable
     public void AddRessourceServerRpc(Ressource ressource)
     {
         inventoryRessources.Add((int)ressource);
+        SendRessourcesEvent(ressource);
+    }
+
+    private void SendRessourcesEvent(Ressource ressource)
+    {
+        Dictionary<string, object> parameters = new Dictionary<string, object>()
+        {
+            { "GameCount", PlayerPrefs.GetInt("GameCount") },
+            { "PlayerID", this.clientId },
+            { "RessourceType", ressource },
+            { "TotalTurnCount", TurnManager.Instance.TotalTurnCount },
+            { "TurnNumber", TurnManager.Instance.CurrentTurnNumber }
+        };
+
+        // The ‘OnRessourceCollected’ event will get queued up and sent every minute
+        AnalyticsService.Instance.CustomData("OnRessourceCollected", parameters);
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -438,6 +455,7 @@ public class Player : Selectable
         }
         return Tuple.Create(bagFoodCount, bagWaterCount, bagSteelCount, bagWoodCount);
     }
+
     #endregion
 
     #region Win Condition
