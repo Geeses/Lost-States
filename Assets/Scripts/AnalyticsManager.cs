@@ -25,7 +25,7 @@ public class AnalyticsManager: MonoBehaviour
         dataOnGameEnd.PlayerId = (int)playerId;
         Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
         dataOnGameEnd.RessourcesSavedCount = player.savedRessourceCount;
-        dataOnGameEnd.TotalRessourcesObtained = player.inventoryRessourceCount;
+        dataOnGameEnd.TotalRessourcesObtained = player.TotalRessourcesObtained;
         dataOnGameEnd.NeededRessourcesCount = player.RessourceCollectionCard.steelAmount + player.RessourceCollectionCard.waterAmount + player.RessourceCollectionCard.woodAmount + player.RessourceCollectionCard.fruitAmount;
 
         Dictionary<string, object> parameters = new Dictionary<string, object>()
