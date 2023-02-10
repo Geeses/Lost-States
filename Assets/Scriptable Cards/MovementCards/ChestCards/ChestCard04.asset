@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2181118646059948a6d77c41a735863, type: 3}
-  m_Name: ChestCard07
+  m_Name: ChestCard04
   m_EditorClassIdentifier: 
-  cardName: Gedankenkontrolle
+  cardName: Positionsvertauscher
+  color: {r: 0, g: 0, b: 0, a: 0}
   cardType: 1
-  id: 6
+  id: 3
   baseMoveCount: 0
-  CardUi: {fileID: 4139268481292667685, guid: 716f4956e88b88b4590d6433543581e2, type: 3}
+  CardUi: {fileID: 8838427553029843629, guid: 208c520f89b01f847b6be2a38cfb4711, type: 3}
   cardEffects:
-  - {fileID: 11400000, guid: c2ab2547437a70b419c7e81ff468d65f, type: 2}
+  - {fileID: 11400000, guid: 690ddfb8d9a89e14181ba0dcbff65215, type: 2}

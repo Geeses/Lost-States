@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2181118646059948a6d77c41a735863, type: 3}
-  m_Name: ChestCard05
+  m_Name: ChestCard07
   m_EditorClassIdentifier: 
-  cardName: Recycling
+  cardName: Gedankenkontrolle
+  color: {r: 0, g: 0, b: 0, a: 0}
   cardType: 1
-  id: 4
+  id: 6
   baseMoveCount: 0
-  CardUi: {fileID: 8838427553029843629, guid: 39560107deef6ef41bb3794965f7524a, type: 3}
+  CardUi: {fileID: 4139268481292667685, guid: 716f4956e88b88b4590d6433543581e2, type: 3}
   cardEffects:
-  - {fileID: 11400000, guid: 13ee3e4f476d65041b1c0e76231a42f2, type: 2}
+  - {fileID: 11400000, guid: c2ab2547437a70b419c7e81ff468d65f, type: 2}

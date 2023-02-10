@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ChestCard06
   m_EditorClassIdentifier: 
   cardName: Die Nacht lockt!
+  color: {r: 0, g: 0, b: 0, a: 0}
   cardType: 1
   id: 5
   baseMoveCount: 0
