@@ -16,7 +16,7 @@ public class MoveNearbyPlayers : CardEffect
         {
             if(tile.PlayerOnTile != null && tile.PlayerOnTile != Player)
             {
-                tile.PlayerOnTile.ChangeMoveCountServerRpc(moveCount);
+                tile.PlayerOnTile.AddMoveCountServerRpc(moveCount);
             }
         }
     }

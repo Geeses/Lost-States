@@ -15,13 +15,18 @@ public class ScreenShake : MonoBehaviour
     private Camera _cam;
 
 #endregion
-
+    
 #region Monobehavior Functions
 
     void Start()
     {
         _cam = GetComponent<Camera>();
         CardManager.Instance.OnChestCardPlayed += ShakeScreen;
+    }
+
+    private void OnDisable()
+    {
+        CardManager.Instance.OnChestCardPlayed -= ShakeScreen;
     }
 
     private void ShakeScreen(int cardId, ulong playerId)

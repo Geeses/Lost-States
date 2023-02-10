@@ -10,7 +10,7 @@ public class MoveEnemyPlayer : CardEffect
         base.ExecuteEffect();
         foreach (var enemy in EnemyPlayers)
         {
-            enemy.ChangeMoveCountServerRpc(1);
+            enemy.AddMoveCountServerRpc(1);
         }
     }
 
