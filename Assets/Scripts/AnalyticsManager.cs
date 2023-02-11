@@ -31,7 +31,7 @@ public class AnalyticsManager: MonoBehaviour
         Dictionary<string, object> parameters = new Dictionary<string, object>()
         {
             { "GameCount", PlayerPrefs.GetInt("GameCount") },
-            { "PlayerID", (int)playerId },
+            { "PlayerId", (int)playerId },
             { "TotalRessourcesObtained", dataOnGameEnd.TotalRessourcesObtained },
             { "RessourcesSavedCount", dataOnGameEnd.RessourcesSavedCount },
             { "NeededRessourcesCount", dataOnGameEnd.NeededRessourcesCount },

@@ -397,7 +397,7 @@ public class Player : Selectable
         Dictionary<string, object> parameters = new Dictionary<string, object>()
         {
             { "GameCount", PlayerPrefs.GetInt("GameCount") },
-            { "PlayerID", (int)clientId.Value },
+            { "PlayerId", (int)clientId.Value },
             { "RessourceType", ressource },
             { "TotalTurnCount", TurnManager.Instance.TotalTurnCount },
             { "TurnNumber", TurnManager.Instance.CurrentTurnNumber },
