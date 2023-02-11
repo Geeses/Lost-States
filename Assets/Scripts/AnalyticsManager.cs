@@ -36,7 +36,7 @@ public class AnalyticsManager: MonoBehaviour
             { "RessourcesSavedCount", dataOnGameEnd.RessourcesSavedCount },
             { "NeededRessourcesCount", dataOnGameEnd.NeededRessourcesCount },
             { "HasWon", hasWon },
-            { "RessourceCollectionCardId", player.RessourceCollectionCardId },
+            { "RessourceCollectionCardID", player.RessourceCollectionCardId },
              { "SessionIdCustom", AnalyticsService.Instance.SessionID }
 
         };
