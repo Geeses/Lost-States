@@ -18,8 +18,8 @@ PrefabInstance:
         Feld</color>:
 
 
-        Der Spieler verliert die 2 zuletzt eingesammelten
-        Ressourcen, und die zuletzt eingesammelte Kistenkarte.'
+        Der Spieler verliert die zuletzt eingesammelte Kistenkarte,
+        und die 2 zuletzt eingesammelten Ressourcen.'
       objectReference: {fileID: 0}
     - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_fontSize

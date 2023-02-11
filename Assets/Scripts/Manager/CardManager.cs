@@ -99,6 +99,19 @@ public class CardManager : NetworkBehaviour
             }
         }
 
+        // easy implementation of a deck creation of the discarded cards
+        // we just create the same new deck, but subtract the cards the players still have on hand
+        if (TurnManager.Instance.TotalTurnCount != 0)
+        {
+            foreach (KeyValuePair<ulong, Player> entry in PlayerNetworkManager.Instance.PlayerDictionary)
+            {
+                foreach (int card in entry.Value.movementCards)
+                {
+                    MovementCardStack.Remove(card);
+                }
+            }
+        }
+
         MovementCardStack.Shuffle();
     }
 

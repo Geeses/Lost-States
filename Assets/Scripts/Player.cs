@@ -56,6 +56,7 @@ public class Player : Selectable
     private int _ressourceCollectionCardId;
     private int _localMoveCount;
     private int _localMovedInCurrentTurn;
+    private int _totalRessourcesObtained;
 
     // Events
     public event Action<ulong> OnEnemyPlayerSelected;
@@ -75,6 +76,7 @@ public class Player : Selectable
     public int RessourceCollectionCardId { get => _ressourceCollectionCardId; set => _ressourceCollectionCardId = value; }
     public int LocalMoveCount { get => _localMoveCount; set => _localMoveCount = value; }
     public int LocalMovedInCurrentTurn { get => _localMovedInCurrentTurn; set => _localMovedInCurrentTurn = value; }
+    public int TotalRessourcesObtained { get => _totalRessourcesObtained; set => _totalRessourcesObtained = value; }
     #endregion
 
     #region Monobehavior Functions
@@ -371,6 +373,12 @@ public class Player : Selectable
     public void ChangeCountInventory(NetworkListEvent<int> changeEvent)
     {
         inventoryRessourceCount = inventoryRessources.Count;
+
+        if(changeEvent.Type == NetworkListEvent<int>.EventType.Add)
+        {
+            SendRessourcesEvent(changeEvent.Value);
+            TotalRessourcesObtained += changeEvent.Value;
+        }
     }
 
     public void ChangeCountSaved(NetworkListEvent<int> changeEvent)
@@ -382,10 +390,9 @@ public class Player : Selectable
     public void AddRessourceServerRpc(Ressource ressource)
     {
         inventoryRessources.Add((int)ressource);
-        SendRessourcesEvent(ressource);
     }
 
-    private void SendRessourcesEvent(Ressource ressource)
+    private void SendRessourcesEvent(int ressource)
     {
         Dictionary<string, object> parameters = new Dictionary<string, object>()
         {

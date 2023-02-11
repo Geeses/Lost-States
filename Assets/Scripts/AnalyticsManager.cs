@@ -25,7 +25,7 @@ public class AnalyticsManager: MonoBehaviour
         dataOnGameEnd.PlayerId = (int)playerId;
         Player player = PlayerNetworkManager.Instance.PlayerDictionary[playerId];
         dataOnGameEnd.RessourcesSavedCount = player.savedRessourceCount;
-        dataOnGameEnd.TotalRessourcesObtained = player.inventoryRessourceCount;
+        dataOnGameEnd.TotalRessourcesObtained = player.TotalRessourcesObtained;
         dataOnGameEnd.NeededRessourcesCount = player.RessourceCollectionCard.steelAmount + player.RessourceCollectionCard.waterAmount + player.RessourceCollectionCard.woodAmount + player.RessourceCollectionCard.fruitAmount;
 
         Dictionary<string, object> parameters = new Dictionary<string, object>()
@@ -36,9 +36,10 @@ public class AnalyticsManager: MonoBehaviour
             { "RessourcesSavedCount", dataOnGameEnd.RessourcesSavedCount },
             { "NeededRessourcesCount", dataOnGameEnd.NeededRessourcesCount },
             { "HasWon", hasWon },
-            { "RessourceCollectionCardId", player.RessourceCollectionCardId },
-             { "SessionIdCustom", AnalyticsService.Instance.SessionID }
-
+            { "RessourceCollectionCardID", player.RessourceCollectionCardId },
+            { "SessionIdCustom", AnalyticsService.Instance.SessionID },
+            { "TotalTurnCount", dataOnTurnEnd.totalTurnCount },
+            { "TurnNumber", dataOnTurnEnd.turnNumber }
         };
 
         // The ‘OnGameEnd’ event will get queued up and sent every minute
@@ -133,7 +134,7 @@ public class AnalyticsManager: MonoBehaviour
             { "SavedSteelCount", dataOnTurnEnd.savedSteelCount },
             { "TotalTurnCount", dataOnTurnEnd.totalTurnCount },
             { "TurnNumber", dataOnTurnEnd.turnNumber },
-             { "SessionIdCustom", AnalyticsService.Instance.SessionID }
+            { "SessionIdCustom", AnalyticsService.Instance.SessionID }
 
         };
 

@@ -14,12 +14,12 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 502363ad051916347ac6d9006c7ba2a6, type: 3}
     - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_text
-      value: Wenn sich im Abstand von 2 Feldern Ressourcen bei Gegnern befinden,
-        sammle diese ein.
+      value: Wenn sich im Abstand von 2 Feldern Ressourcen beim Gegner befinden,
+        werden diese eingesammelt.
       objectReference: {fileID: 0}
     - target: {fileID: 1509961295722865966, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_fontSize
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1690342784632638810, guid: ef22e57a422cfd843b497e8d1e9ce0e3, type: 3}
       propertyPath: m_Name
