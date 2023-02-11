@@ -20638,6 +20638,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 733824345, guid: 8240ec721de203c42ae993c7ffad6f6b, type: 3}
+      propertyPath: shakeStrength
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 918372357797268560, guid: 8240ec721de203c42ae993c7ffad6f6b, type: 3}
       propertyPath: m_Name
       value: MainCamera
@@ -31457,13 +31461,29 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1138773022, guid: 9e68581bb0f59654e92c00ae46a91be7, type: 3}
+      propertyPath: cantEndTurnTextColor.a
+      value: 0.49411765
+      objectReference: {fileID: 0}
+    - target: {fileID: 1138773022, guid: 9e68581bb0f59654e92c00ae46a91be7, type: 3}
+      propertyPath: cantEndTurnTextColor.b
+      value: 0.54901963
+      objectReference: {fileID: 0}
+    - target: {fileID: 1138773022, guid: 9e68581bb0f59654e92c00ae46a91be7, type: 3}
+      propertyPath: cantEndTurnTextColor.g
+      value: 0.54901963
+      objectReference: {fileID: 0}
+    - target: {fileID: 1138773022, guid: 9e68581bb0f59654e92c00ae46a91be7, type: 3}
+      propertyPath: cantEndTurnTextColor.r
+      value: 0.8235294
+      objectReference: {fileID: 0}
     - target: {fileID: 4228801040326498391, guid: 9e68581bb0f59654e92c00ae46a91be7, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4228801040326498391, guid: 9e68581bb0f59654e92c00ae46a91be7, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000046515637
+      value: -0.00012312134
       objectReference: {fileID: 0}
     - target: {fileID: 4228801040600560804, guid: 9e68581bb0f59654e92c00ae46a91be7, type: 3}
       propertyPath: m_AnchorMax.y
@@ -31597,10 +31617,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4228801041837916890, guid: 9e68581bb0f59654e92c00ae46a91be7, type: 3}
-      propertyPath: m_Interactable
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5157794493529157414, guid: 9e68581bb0f59654e92c00ae46a91be7, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -31627,31 +31643,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7561018538938179009, guid: 9e68581bb0f59654e92c00ae46a91be7, type: 3}
       propertyPath: m_Size
-      value: 0.683354
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e68581bb0f59654e92c00ae46a91be7, type: 3}
---- !u!1 &1138773021 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4228801041837916888, guid: 9e68581bb0f59654e92c00ae46a91be7, type: 3}
-  m_PrefabInstance: {fileID: 1138773020}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1138773022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1138773021}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee4a8fefdd54e9448881341810aaf234, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  punchHeight: 10
-  punchDuration: 1
-  cantEndTurnColor: {r: 0.6415094, g: 0.29896757, b: 0.29896757, a: 1}
 --- !u!1001 &1139787820
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60146,36 +60142,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: chestCards.Array.size
-      value: 8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: chestCards.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 9f47a8ea2c71af44abc955e783c6d328, type: 2}
+      objectReference: {fileID: 11400000, guid: 5c4cfa10647681546b0ac62fc8b233ec, type: 2}
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: chestCards.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: a7fe730b1ea4e3146af80973d0c3f4c9, type: 2}
+      objectReference: {fileID: 11400000, guid: 5c4cfa10647681546b0ac62fc8b233ec, type: 2}
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: chestCards.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: 3fb2b25b2e93f0b4783cc7d56d61ad89, type: 2}
+      objectReference: {fileID: 11400000, guid: 5c4cfa10647681546b0ac62fc8b233ec, type: 2}
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: chestCards.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: 73c485db139e9d84c86f591c2cf47b05, type: 2}
+      objectReference: {fileID: 11400000, guid: 5c4cfa10647681546b0ac62fc8b233ec, type: 2}
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: chestCards.Array.data[4]
       value: 
-      objectReference: {fileID: 11400000, guid: 95a5f922ea0c8e04ab9ec0e52226fe64, type: 2}
+      objectReference: {fileID: 11400000, guid: 5c4cfa10647681546b0ac62fc8b233ec, type: 2}
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: chestCards.Array.data[5]
       value: 
-      objectReference: {fileID: 11400000, guid: 5c4cfa10647681546b0ac62fc8b233ec, type: 2}
+      objectReference: {fileID: 11400000, guid: 5f1208bcd2811dd40a4fd4d8782e7a36, type: 2}
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: chestCards.Array.data[6]
       value: 
-      objectReference: {fileID: 11400000, guid: 5f1208bcd2811dd40a4fd4d8782e7a36, type: 2}
+      objectReference: {fileID: 11400000, guid: 0d2a1d743253d7f45aa04de3e817dfa6, type: 2}
     - target: {fileID: 1401356937006920635, guid: 6ead6d46ac3e0c44b89e101c52e8bc68, type: 3}
       propertyPath: chestCards.Array.data[7]
       value: 
