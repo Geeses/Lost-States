@@ -38,8 +38,8 @@ public class AnalyticsManager: MonoBehaviour
             { "HasWon", hasWon },
             { "RessourceCollectionCardID", player.RessourceCollectionCardId },
             { "SessionIdCustom", AnalyticsService.Instance.SessionID },
-            { "TotalTurnCount", dataOnTurnEnd.totalTurnCount },
-            { "TurnNumber", dataOnTurnEnd.turnNumber }
+            { "TotalTurnCount", TurnManager.Instance.TotalTurnCount },
+            { "TurnNumber", TurnManager.Instance.CurrentTurnNumber }
         };
 
         // The ‘OnGameEnd’ event will get queued up and sent every minute
