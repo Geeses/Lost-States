@@ -31,13 +31,13 @@ public class AnalyticsManager: MonoBehaviour
         Dictionary<string, object> parameters = new Dictionary<string, object>()
         {
             { "GameCount", PlayerPrefs.GetInt("GameCount") },
-            { "PlayerID", playerId },
+            { "PlayerID", (int)playerId },
             { "TotalRessourcesObtained", dataOnGameEnd.TotalRessourcesObtained },
             { "RessourcesSavedCount", dataOnGameEnd.RessourcesSavedCount },
             { "NeededRessourcesCount", dataOnGameEnd.NeededRessourcesCount },
             { "HasWon", hasWon },
             { "RessourceCollectionCardID", player.RessourceCollectionCardId },
-             { "SessionIdCustom", AnalyticsService.Instance.SessionID }
+            { "SessionIdCustom", AnalyticsService.Instance.SessionID }
 
         };
 
@@ -133,7 +133,7 @@ public class AnalyticsManager: MonoBehaviour
             { "SavedSteelCount", dataOnTurnEnd.savedSteelCount },
             { "TotalTurnCount", dataOnTurnEnd.totalTurnCount },
             { "TurnNumber", dataOnTurnEnd.turnNumber },
-             { "SessionIdCustom", AnalyticsService.Instance.SessionID }
+            { "SessionIdCustom", AnalyticsService.Instance.SessionID }
 
         };
 

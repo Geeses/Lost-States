@@ -328,7 +328,7 @@ public class Player : Selectable
         Dictionary<string, object> parameters = new Dictionary<string, object>()
         {
             { "GameCount", PlayerPrefs.GetInt("GameCount") },
-            { "PlayerId",  GetInstanceID()},
+            { "PlayerId",  (int)clientId.Value},
             { "NewPositionX", CurrentTile.TileGridCoordinates.x },
             { "NewPositionY", CurrentTile.TileGridCoordinates.y },
             { "OldPositionX", OldTile.TileGridCoordinates.x },
@@ -397,7 +397,7 @@ public class Player : Selectable
         Dictionary<string, object> parameters = new Dictionary<string, object>()
         {
             { "GameCount", PlayerPrefs.GetInt("GameCount") },
-            { "PlayerID", this.clientId },
+            { "PlayerID", (int)clientId.Value },
             { "RessourceType", ressource },
             { "TotalTurnCount", TurnManager.Instance.TotalTurnCount },
             { "TurnNumber", TurnManager.Instance.CurrentTurnNumber },
