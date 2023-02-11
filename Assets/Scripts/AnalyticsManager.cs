@@ -37,8 +37,9 @@ public class AnalyticsManager: MonoBehaviour
             { "NeededRessourcesCount", dataOnGameEnd.NeededRessourcesCount },
             { "HasWon", hasWon },
             { "RessourceCollectionCardID", player.RessourceCollectionCardId },
-             { "SessionIdCustom", AnalyticsService.Instance.SessionID }
-
+            { "SessionIdCustom", AnalyticsService.Instance.SessionID },
+            { "TotalTurnCount", dataOnTurnEnd.totalTurnCount },
+            { "TurnNumber", dataOnTurnEnd.turnNumber }
         };
 
         // The ‘OnGameEnd’ event will get queued up and sent every minute
@@ -133,7 +134,7 @@ public class AnalyticsManager: MonoBehaviour
             { "SavedSteelCount", dataOnTurnEnd.savedSteelCount },
             { "TotalTurnCount", dataOnTurnEnd.totalTurnCount },
             { "TurnNumber", dataOnTurnEnd.turnNumber },
-             { "SessionIdCustom", AnalyticsService.Instance.SessionID }
+            { "SessionIdCustom", AnalyticsService.Instance.SessionID }
 
         };
 
