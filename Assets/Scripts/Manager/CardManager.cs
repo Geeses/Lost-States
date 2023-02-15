@@ -58,11 +58,16 @@ public class CardManager : NetworkBehaviour
 
     private void Start()
     {
-        CreateMovementCardStack();
-        CreateChestCardStack();
-
         if (IsServer)
+        {
+            CreateMovementCardStack();
+            CreateChestCardStack();
             TurnManager.Instance.OnTurnStart += TryAddMovementCardsToPlayerServerRpc;
+        }
+        else if (GameManager.Instance.isTestScene)
+        {
+            GameManager.Instance.OnGameStart += () => TurnManager.Instance.OnTurnStart += TryAddMovementCardsToPlayerServerRpc;
+        }
 
         Battlelog.Instance.AddLog("Spieleinstellung: Es sind " + MoveCardListInStack + " Kopien von Bewegungskarten in einem Deck, und " + ChestCardListInStack + " Kopien von Kistenkarten.");
     }
@@ -118,6 +123,7 @@ public class CardManager : NetworkBehaviour
     [ServerRpc]
     private void TryAddMovementCardsToPlayerServerRpc(ulong playerId)
     {
+        Debug.Log("try add move cards");
         if (TurnManager.Instance.CurrentTurnNumber == 1 || TurnManager.Instance.CurrentTurnNumber == 6)
         {
             AddMovementCardsToPlayerServerRpc(playerId);
@@ -147,6 +153,7 @@ public class CardManager : NetworkBehaviour
                     Battlelog.Instance.AddLogClientRpc("Es wurden " + (addCardAmount - i) + " Bewegungskarten nach Erstellung verteilt.");
             }
 
+            Debug.Log("added card " + MovementCardStack[MovementCardStackPosition]);
             player.movementCards.Add(MovementCardStack[MovementCardStackPosition]);
 
             MovementCardStackPosition += 1;
